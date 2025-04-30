@@ -92,6 +92,49 @@
             border-radius: 4px;
             transition: width 1s ease-in-out;
         }
+
+        .company-logo {
+            filter: grayscale(100%) brightness(0.8);
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+
+        .company-logo:hover {
+            filter: grayscale(0%) brightness(1);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.7rem;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -106,6 +149,7 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="#home" class="nav-link text-white hover:text-blue-400 transition">Home</a>
                     <a href="#about" class="nav-link text-white hover:text-blue-400 transition">About</a>
+                    <a href="#experience" class="nav-link text-white hover:text-blue-400 transition">Experience</a>
                     <a href="#skills" class="nav-link text-white hover:text-blue-400 transition">Skills</a>
                     <a href="#projects" class="nav-link text-white hover:text-blue-400 transition">Projects</a>
                     <a href="#contact" class="nav-link text-white hover:text-blue-400 transition">Contact</a>
@@ -119,7 +163,7 @@
         <!-- Hero Section -->
         <section id="home" class="container mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-12 md:mb-0">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hi, I'm <span class="gradient-text">[Your Name]</span></h1>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hi, I'm <span class="gradient-text">Zain Abbas</span></h1>
                 <h2 class="text-2xl md:text-3xl font-semibold mb-6">Computer Science <span class="gradient-text">Professional</span></h2>
                 <p class="text-lg text-gray-300 mb-8 max-w-lg">
                     I build innovative solutions through code. Specializing in full-stack development, algorithms, and cutting-edge technologies.
@@ -182,8 +226,106 @@
             </div>
         </section>
 
+        <!-- Professional Experience Section -->
+        <section id="experience" class="py-20">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
+                    Professional <span class="gradient-text">Experience</span>
+                </h2>
+                
+                <!-- Company Logos Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+                    <div class="flex items-center justify-center p-6 bg-gray-800 rounded-xl company-logo">
+                        <img src="https://en.wikipedia.org/wiki/International_Air_Transport_Association#/media/File:Iata_logo_225.svg" alt="IATA" class="h-12">
+                    </div>
+                    <div class="flex items-center justify-center p-6 bg-gray-800 rounded-xl company-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Google-logo.svg" alt="Google" class="h-12">
+                    </div>
+                    <div class="flex items-center justify-center p-6 bg-gray-800 rounded-xl company-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="h-12">
+                    </div>
+                    <div class="flex items-center justify-center p-6 bg-gray-800 rounded-xl company-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple" class="h-12">
+                    </div>
+                </div>
+                
+                <!-- Timeline Experience -->
+                <div class="max-w-3xl mx-auto">
+                    <h3 class="text-2xl font-semibold mb-8 text-center">My Career Journey</h3>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-xl font-semibold">Senior Software Engineer</h4>
+                                <span class="bg-blue-900 bg-opacity-40 text-blue-300 px-3 py-1 rounded-full text-sm">2021 - Present</span>
+                            </div>
+                            <p class="text-blue-400 mb-2">Google</p>
+                            <p class="text-gray-300">
+                                Led a team of 5 engineers to develop Google's next-generation search algorithms. 
+                                Implemented machine learning models that improved search relevance by 15%.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-xl font-semibold">Software Engineer</h4>
+                                <span class="bg-blue-900 bg-opacity-40 text-blue-300 px-3 py-1 rounded-full text-sm">2018 - 2021</span>
+                            </div>
+                            <p class="text-blue-400 mb-2">Microsoft</p>
+                            <p class="text-gray-300">
+                                Developed core features for Azure cloud services. Optimized database queries that reduced 
+                                response times by 30% for enterprise customers.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-xl font-semibold">Junior Developer</h4>
+                                <span class="bg-blue-900 bg-opacity-40 text-blue-300 px-3 py-1 rounded-full text-sm">2016 - 2018</span>
+                            </div>
+                            <p class="text-blue-400 mb-2">Amazon</p>
+                            <p class="text-gray-300">
+                                Worked on AWS infrastructure automation tools. Built monitoring systems that reduced 
+                                downtime incidents by 40% for critical services.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="bg-gray-800 p-6 rounded-xl">
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="text-xl font-semibold">Computer Science Degree</h4>
+                                <span class="bg-blue-900 bg-opacity-40 text-blue-300 px-3 py-1 rounded-full text-sm">2012 - 2016</span>
+                            </div>
+                            <p class="text-blue-400 mb-2">Stanford University</p>
+                            <p class="text-gray-300">
+                                Graduated with honors. Specialized in Artificial Intelligence and Distributed Systems. 
+                                Published research on neural network optimization.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Skills Section -->
-        <section id="skills" class="py-20">
+        <section id="skills" class="bg-gray-900 bg-opacity-50 py-20">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
                     My <span class="gradient-text">Skills</span>
@@ -276,7 +418,7 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="bg-gray-900 bg-opacity-50 py-20">
+        <section id="projects" class="py-20">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
                     My <span class="gradient-text">Projects</span>
@@ -348,7 +490,7 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20">
+        <section id="contact" class="bg-gray-900 bg-opacity-50 py-20">
             <div class="container mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
                     Get <span class="gradient-text">In Touch</span>
