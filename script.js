@@ -207,5 +207,25 @@ function init3DScene() {
     controls.autoRotate = true;
     controls.autoRotateSpeed = 0.5;
     
-    // Handle window resize
-    window.addEventListener('res
+     // Handle window resize
+     window.addEventListener('resize', () => {
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+    });
+    
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        
+        techSphere.rotation.x += 0.001;
+        techSphere.rotation.y += 0.001;
+        
+        particlesMesh.rotation.x += 0.0005;
+        particlesMesh.rotation.y -= 0.0005;
+        
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    
+    animate();
