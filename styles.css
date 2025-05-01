@@ -83,6 +83,7 @@ body {
 }
 
 .company-logo {
+    position: center;
     filter: grayscale(100%) brightness(0.8);
     transition: all 0.3s ease;
     opacity: 0.7;
