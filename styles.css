@@ -95,6 +95,16 @@ body {
     transform: scale(1.05);
 }
 
+.brightness {
+    filter: brightness(1.2); /* Makes the logo brighter */
+    opacity: 1; /* Ensures full visibility */
+    transition: all 0.3s ease-in-out; /* Smooth hover effect */
+}
+
+.brightness:hover {
+    filter: brightness(1.5); /* Increases brightness on hover */
+}
+
 .timeline-item {
     position: relative;
     padding-left: 3rem;
