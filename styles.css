@@ -83,6 +83,14 @@ body {
 }
 
 .company-logo {
+    padding: 10px; /* Adjust the padding for less width */
+    width: 150px; /* Set a specific width for the container */
+    height: 150px; /* Set a specific height for the container */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2d3748; /* Use a dark gray background */
+    border-radius: 12px;
     filter: brightness(1.5);
     transition: all 0.3s ease-in-out;
     opacity: 1;
