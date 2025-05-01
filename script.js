@@ -229,3 +229,4 @@ function init3DScene() {
     }
     
     animate();
+}
