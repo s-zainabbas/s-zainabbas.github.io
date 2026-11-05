@@ -2,82 +2,148 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zain Abbas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <title>Zain Abbas — Computer Science Professional</title>
+    <meta name="description" content="Zain Abbas — Computer Science graduate specializing in data analysis, process automation and web development. Portfolio of experience, projects and skills.">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)">
+
+    <!-- Apply the saved (or system) theme before first paint to avoid a flash -->
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem('theme'); } catch (e) {}
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <!-- Open Graph / Social preview -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Zain Abbas — Computer Science Professional">
+    <meta property="og:description" content="Data analysis, process automation and web development. Explore my experience, projects and skills.">
+    <meta property="og:image" content="Images/me-web.jpg?v=20261105">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="favicon_io/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="tailwind.css?v=20261105">
+    <link rel="stylesheet" href="styles.css?v=20261105">
 </head>
-<body class="min-h-screen bg-white text-black">
+<body class="min-h-screen bg-page text-ink">
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+
     <!-- Particles Background -->
     <div id="particles-js"></div>
 
     <div class="content-wrapper">
         <!-- Navigation -->
-        <nav class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="text-2xl font-bold">©SZA</div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#home" class="nav-link hover:text-black-600 transition">Home</a>
-                    <a href="#about" class="nav-link hover:text-black-600 transition">About</a>
-                    <a href="#experience" class="nav-link hover:text-black-600 transition">Experience</a>
-                    <a href="#skills" class="nav-link hover:text-black-600 transition">Skills</a>
-                    <a href="#projects" class="nav-link hover:text-black-600 transition">Projects</a>
-                    <a href="#contact" class="nav-link hover:text-black-600 transition">Contact</a>
+        <nav id="mainNav" class="site-nav">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <a href="#home" class="text-2xl font-bold tracking-tight">&copy;SZA</a>
+                    <div class="flex items-center gap-4 md:gap-8">
+                    <div class="hidden md:flex items-center space-x-8" id="navLinks">
+                        <a href="#home" class="nav-link" data-section="home">Home</a>
+                        <a href="#about" class="nav-link" data-section="about">About</a>
+                        <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                        <a href="#education" class="nav-link" data-section="education">Education</a>
+                        <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
+                        <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+                        <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+                        <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+                    </div>
+                    <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" title="Toggle dark mode">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                        <i class="fas fa-sun" aria-hidden="true"></i>
+                    </button>
+                    <button id="menuToggle" class="md:hidden focus:outline-none relative w-8 h-8" aria-label="Toggle navigation menu" aria-expanded="false">
+                        <span class="hamburger-line line-1"></span>
+                        <span class="hamburger-line line-2"></span>
+                        <span class="hamburger-line line-3"></span>
+                    </button>
+                    </div>
                 </div>
-                <button class="md:hidden focus:outline-none">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
+                <div id="mobileMenu" class="mobile-menu">
+                    <div class="mobile-menu-inner">
+                        <a href="#home" class="nav-link">Home</a>
+                        <a href="#about" class="nav-link">About</a>
+                        <a href="#experience" class="nav-link">Experience</a>
+                        <a href="#education" class="nav-link">Education</a>
+                        <a href="#certifications" class="nav-link">Certifications</a>
+                        <a href="#skills" class="nav-link">Skills</a>
+                        <a href="#projects" class="nav-link">Projects</a>
+                        <a href="#contact" class="nav-link">Contact</a>
+                    </div>
+                </div>
             </div>
         </nav>
 
         <!-- Intro Section -->
         <section id="home" class="container mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-12 md:mb-0">
-                <h1 class="text-4xl md:text-6xl font-bold mb-4">Hello. <br>I'm <span class="font-black">Zain.</span></h1></br>
+            <div class="md:w-1/2 mb-12 md:mb-0 reveal-up">
+                <p class="eyebrow mb-4">Hello, welcome to my corner of the internet</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">I'm <span class="font-black">Zain</span><span class="wave" aria-hidden="true">🖐🏽</span></h1>
                 <h2 class="text-2xl md:text-3xl font-semibold mb-6">Computer Science <span class="font-black">Professional</span></h2>
-                <p class="text-lg mb-8 max-w-lg">
+                <p class="text-lg mb-8 max-w-lg text-muted">
                     My focus is on practical solutions: cleaner data, smoother processes, and strategies that drive real growth.
                 </p>
-                <div class="flex space-x-4">
-                    <a href="#contact" class="action-button px-6 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition">Hire Me</a>
-                    <a href="#projects" class="action-button px-6 py-3 border border-black rounded-lg font-medium hover:bg-black-100 transition">View Work</a>
+                <div class="flex flex-wrap gap-4 mb-10">
+                    <a href="#contact" class="action-button action-button-primary px-6 py-3 rounded-lg font-medium">Hire Me</a>
+                    <a href="#projects" class="action-button action-button-outline px-6 py-3 rounded-lg font-medium">View Work</a>
+                </div>
+                <div class="flex flex-wrap gap-8 stat-row">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="6" data-suffix="+">0</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="8">0</span>
+                        <span class="stat-label">Organizations</span>
+                    </div>
                 </div>
             </div>
-            <div class="md:w-1/2">
-                <div class="three-d-container" id="3d-container"></div>
+            <div class="md:w-1/2 w-full">
+                <div class="three-d-container w-full" id="3d-container"></div>
             </div>
         </section>
+        <div class="scroll-cue" aria-hidden="true"><i class="fas fa-chevron-down"></i></div>
 
         <!-- About Section -->
         <section id="about" class="py-20">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                    About Me
-                </h2>
+                <h2 class="section-title reveal-up">About Me</h2>
                 <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
-                        <div class="w-64 h-64 rounded-full border-2 border-black p-1">
-                            <div class="w-full h-full rounded-full overflow-hidden">
-                                <img src="Images/me.jpg" alt="Zain Abbas" class="w-full h-full object-cover">
-                                <div class="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center reveal-up">
+                        <div class="w-64 h-64 rounded-full border-2 border-ink p-1 avatar-ring">
+                            <div class="w-full h-full rounded-full overflow-hidden relative avatar-frame">
+                                <img src="Images/me-web.jpg?v=20261105" alt="Zain Abbas" width="600" height="900" decoding="async" class="w-full h-full object-cover relative z-10"
+                                     onerror="this.style.display='none'">
+                                <div class="avatar-fallback">
                                     <i class="fas fa-user text-6xl"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="md:w-2/3 md:pl-12">
+                    <div class="md:w-2/3 md:pl-12 reveal-up">
                         <p class="mb-6 leading-relaxed">
-                            I'm a passionate Computer Science graduate with expertise in software development, data structures, and system design. 
-                            With 3 years of experience in the tech industry, I've worked on diverse projects ranging from website development 
+                            I'm a passionate Computer Science graduate with expertise in software development, data structures, and system design.
+                            With 6+ years of experience in the tech industry, I've worked on diverse projects ranging from website development
                             to automated workflow models.
                         </p>
                         <p class="mb-6 leading-relaxed">
-                            My approach combines technical excellence with creative problem-solving. I thrive in challenging environments 
+                            My approach combines technical excellence with creative problem-solving. I thrive in challenging environments
                             where I can apply my knowledge to build efficient, scalable data solutions.
                         </p>
                         <div class="grid grid-cols-2 gap-4">
@@ -91,7 +157,7 @@
                             </div>
                         </div>
                         <div class="mt-8">
-                            <a href="cv/zain_abbas_cv.pdf" download class="action-button inline-flex items-center px-6 py-3 border border-black rounded-lg font-medium hover:bg-black-100 transition">
+                            <a href="cv/Zain_Abbas_CV_2026.pdf" download class="action-button action-button-outline inline-flex items-center px-6 py-3 rounded-lg font-medium">
                                 Download CV <i class="fas fa-download ml-2"></i>
                             </a>
                         </div>
@@ -101,45 +167,92 @@
         </section>
 
         <!-- Organizations Section -->
-        <section class="py-20 bg-white">
+        <section class="py-20 bg-page overflow-hidden">
             <div class="container mx-auto px-2">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                    Organizations I've Contributed or Collaborated With
-                </h2>
-                <div class="flex flex-nowrap justify-center items-center gap-2 px-2 mx-auto overflow-x-auto">
-                    <div class="company-logo-container flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
-                        <a href="https://home.cern/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28">
-                            <img src="Images/cern_logo.png" alt="CERN" class="company-logo w-20 h-12 object-contain">
+                <h2 class="section-title reveal-up">Organizations I've Contributed or Collaborated With</h2>
+            </div>
+            <div class="logo-marquee reveal-up">
+                <div class="logo-marquee-track">
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://home.cern/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="CERN website">
+                            <img src="Images/cern_logo.png" alt="CERN" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
-                    <div class="company-logo-container flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
-                        <a href="https://www.iata.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28">
-                            <img src="Images/iata_logo.png" alt="IATA" class="company-logo w-20 h-12 object-contain">
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://www.iata.org" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="IATA website">
+                            <img src="Images/iata_logo.png" alt="IATA" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
-                    <div class="company-logo-container flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
-                        <a href="https://jacobandco.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28">
-                            <img src="Images/jacob_logo.png" alt="Jacob&Co" class="company-logo w-20 h-12 object-contain">
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://jacobandco.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="Jacob&Co website">
+                            <img src="Images/jacob_logo.png" alt="Jacob&Co" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
-                    <div class="company-logo-container flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
-                        <a href="https://www.unhcr.org/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28">
-                            <img src="Images/unhcr_logo.png" alt="UNHCR" class="company-logo w-20 h-12 object-contain">
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://www.unhcr.org/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="UNHCR website">
+                            <img src="Images/unhcr_logo.png" alt="UNHCR" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
-                    <div class="company-logo-container flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
-                        <a href="https://paddleforcancer.ch/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28">
-                            <img src="Images/esca_logo.png" alt="ESCA" class="company-logo w-20 h-12 object-contain">
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://paddleforcancer.ch/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="ESCA website">
+                            <img src="Images/esca_logo.png" alt="ESCA" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
-                    <div class="company-logo-container flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
-                        <a href="https://geneva.webster.edu/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28">
-                            <img src="Images/webster_logo.png" alt="Webster University" class="company-logo w-20 h-12 object-contain">
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://geneva.webster.edu/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="Webster University website">
+                            <img src="Images/webster_logo.png" alt="Webster University" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
-                    <div class="company-logo-container flex-shrink-0 transform hover:scale-105 transition-transform duration-300">
-                        <a href="https://www.bbold.ch" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28">
-                            <img src="Images/bbold_logo.jpg" alt="BBold" class="company-logo w-20 h-12 object-contain">
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://www.bbold.ch" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="BBold website">
+                            <img src="Images/bbold_logo.jpg" alt="BBold" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://www.univ-smb.fr/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="Université de Savoie website">
+                            <img src="Images/savoie_logo1.png" alt="Université de Savoie" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <!-- Duplicate set — the track scrolls exactly -50% then loops, so this
+                         second copy must be identical for a seamless, continuous loop -->
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://home.cern/" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/cern_logo.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://www.iata.org" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/iata_logo.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://jacobandco.com/" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/jacob_logo.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://www.unhcr.org/" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/unhcr_logo.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://paddleforcancer.ch/" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/esca_logo.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://geneva.webster.edu/" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/webster_logo.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://www.bbold.ch" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/bbold_logo.jpg" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://www.univ-smb.fr/" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/savoie_logo1.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
                 </div>
@@ -147,21 +260,18 @@
         </section>
 
         <!-- Professional Experience Section -->
-        <section id="experience" class="py-20 bg-gray-50">
+        <section id="experience" class="py-20 bg-page-alt">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                    Professional Experience
-                </h2>
-                
-                <!-- Experience Cards -->
-                <div class="max-w-4xl mx-auto space-y-8">
+                <h2 class="section-title reveal-up">Professional Experience</h2>
+
+                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- IATA Experience -->
-                    <div class="experience-card">
+                    <div class="experience-card reveal-up">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">Business Data Analyst</h3>
                                 <div class="experience-company">
-                                    <img src="Images/iata_logo.png" alt="IATA" class="w-6 h-6 object-contain">
+                                    <img src="Images/iata_logo.png" alt="IATA" class="w-6 h-6 object-contain" loading="lazy">
                                     International Air Transport Association - IATA
                                 </div>
                             </div>
@@ -182,22 +292,23 @@
                             </li>
                         </ul>
                         <div class="experience-skills">
-                            <span class="experience-skill">SAP ERP</span>
-                            <span class="experience-skill">Salesforce</span>
-                            <span class="experience-skill">Figma</span>
-                            <span class="experience-skill">Excel</span>
-                            <span class="experience-skill">Power BI</span>
+                            <div class="experience-skill">SAP ERP</div>
+                            <div class="experience-skill">Salesforce</div>
+                            <div class="experience-skill">Figma</div>
+                            <div class="experience-skill">Excel</div>
+                            <div class="experience-skill">Power BI</div>
+                            <div class="experience-skill">MySQL</div>
                         </div>
                     </div>
 
                     <!-- BBold Experience -->
-                    <div class="experience-card">
+                    <div class="experience-card reveal-up">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">Technical Consultant</h3>
                                 <div class="experience-company">
-                                    <img src="Images/bbold_logo.jpg" alt="BBold" class="w-6 h-6 object-contain">
-                                    BBold SÀRL - Career & Corporate Consultancy
+                                    <img src="Images/bbold_logo.jpg" alt="BBold" class="w-6 h-6 object-contain" loading="lazy">
+                                    BBold SARL - Career & Corporate Consultancy
                                 </div>
                             </div>
                             <span class="experience-date">Dec 2021 - Aug 2023</span>
@@ -220,22 +331,23 @@
                             <span class="experience-skill">Hubspot</span>
                             <span class="experience-skill">Zoho</span>
                             <span class="experience-skill">Canva</span>
-                            <span class="experience-skill">Optimizely</span>
+                            <span class="experience-skill">Google Analytics</span>
                             <span class="experience-skill">Power BI</span>
+                            <span class="experience-skill">Web Development</span>
                         </div>
                     </div>
 
                     <!-- Student Ambassador Experience -->
-                    <div class="experience-card">
+                    <div class="experience-card reveal-up">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">Student Ambassador</h3>
                                 <div class="experience-company">
-                                    <img src="Images/webster_logo.png" alt="Webster University" class="w-6 h-6 object-contain">
+                                    <img src="Images/webster_logo.png" alt="Webster University" class="w-6 h-6 object-contain" loading="lazy">
                                     Webster University Geneva, Switzerland
                                 </div>
                             </div>
-                            <span class="experience-date">Spring 2018 - Fall 2021</span> 
+                            <span class="experience-date">Spring 2018 - Fall 2021</span>
                         </div>
                         <div class="experience-description">
                             Led digital initiatives and student engagement strategies while managing online platforms and data analytics for the university.
@@ -253,20 +365,19 @@
                         </ul>
                         <div class="experience-skills">
                             <span class="experience-skill">Web Development</span>
-                            <span class="experience-skill">Power BI</span>
-                            <span class="experience-skill">Content Creation</span>
-                            <span class="experience-skill">Student Engagement</span>
-                            <span class="experience-skill">Data Analytics</span>
+                            <span class="experience-skill">Data Analysis</span>
+                            <span class="experience-skill">Data Visualization</span>
+                            <span class="experience-skill">Reporting</span>
                         </div>
                     </div>
 
                     <!-- CERN Experience -->
-                    <div class="experience-card">
+                    <div class="experience-card reveal-up">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">Distributed Data Manager</h3>
                                 <div class="experience-company">
-                                    <img src="Images/cern_logo.png" alt="CERN" class="w-6 h-6 object-contain">
+                                    <img src="Images/cern_logo.png" alt="CERN" class="w-6 h-6 object-contain" loading="lazy">
                                     CERN
                                 </div>
                             </div>
@@ -287,10 +398,10 @@
                             </li>
                         </ul>
                         <div class="experience-skills">
-                            <span class="experience-skill">Docker</span>
                             <span class="experience-skill">Python</span>
                             <span class="experience-skill">C++</span>
                             <span class="experience-skill">MySQL</span>
+                            <span class="experience-skill">Docker</span>
                             <span class="experience-skill">Power BI</span>
                         </div>
                     </div>
@@ -299,17 +410,17 @@
         </section>
 
         <!-- Education Section -->
-        <section id="education" class="py-20 bg-white">
+        <section id="education" class="py-20 bg-page">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">Education</h2>
+                <h2 class="section-title reveal-up">Education</h2>
                 <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Education Item 1 -->
-                    <div class="experience-card">
+                    <div class="experience-card reveal-up">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">BSc Computer Science</h3>
                                 <div class="experience-company">
-                                    <img src="Images/webster_logo.png" alt="Webster University" class="w-6 h-6 object-contain">
+                                    <img src="Images/webster_logo.png" alt="Webster University" class="w-6 h-6 object-contain" loading="lazy">
                                     Webster University Geneva, Switzerland
                                 </div>
                             </div>
@@ -329,20 +440,14 @@
                                 <span>Studies in media communications and digital marketing</span>
                             </li>
                         </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">Software Engineering</span>
-                            <span class="experience-skill">Data Analysis</span>
-                            <span class="experience-skill">Media Communication</span>
-                        </div>
                     </div>
-                    
                     <!-- Education Item 2 -->
-                    <div class="experience-card">
+                    <div class="experience-card reveal-up">
                         <div class="experience-header">
                             <div>
                                 <h3 class="experience-title">BSc Information Technology</h3>
                                 <div class="experience-company">
-                                    <i class="fas fa-university w-6 h-6 mr-2"></i>
+                                    <img src="Images/savoie_logo1.png" alt="Université de Savoie" class="w-6 h-6 object-contain" loading="lazy">
                                     Université de Savoie, France
                                 </div>
                             </div>
@@ -362,103 +467,128 @@
                                 <span>Practical training in network configuration and maintenance</span>
                             </li>
                         </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">Networking</span>
-                            <span class="experience-skill">System Administration</span>
-                            <span class="experience-skill">IT Infrastructure</span>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Skills Section -->
-        <section id="skills" class="py-20 bg-white">
+        <!-- Certifications Section -->
+        <section id="certifications" class="py-20 bg-page-alt">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                    My Skills
-                </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 class="text-xl font-semibold mb-6">Technical Skills</h3>
-                        <div class="space-y-6">
+                <h2 class="section-title reveal-up">Certifications</h2>
+                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Certification 1 -->
+                    <a href="https://www.credly.com/badges/c0e40250-f173-4a53-9b0d-040472d6cf3a/public_url" target="_blank" rel="noopener noreferrer" class="experience-card cert-card reveal-up">
+                        <div class="experience-header">
                             <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>JavaScript</span>
-                                    <span>75%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 75%"></div>
+                                <h3 class="experience-title">Data Fundamentals</h3>
+                                <div class="experience-company">
+                                    <i class="fas fa-certificate w-6 h-6 mr-2"></i>
+                                    IBM
                                 </div>
                             </div>
+                            <span class="text-ink hover:text-muted transition" aria-label="View certificate">
+                                <i class="fas fa-external-link-alt"></i>
+                            </span>
+                        </div>
+                        <div class="experience-description">
+                            Verified credential covering core data concepts, terminology, and foundational data literacy skills.
+                        </div>
+                    </a>
+
+                    <!-- Certification 2 -->
+                    <a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_DJzxwFBhgskjzBaY4_1759234666422_completion_certificate.pdf" target="_blank" rel="noopener noreferrer" class="experience-card cert-card reveal-up">
+                        <div class="experience-header">
                             <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>Python</span>
-                                    <span>80%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 80%"></div>
+                                <h3 class="experience-title">Data Analytics</h3>
+                                <div class="experience-company">
+                                    <i class="fas fa-certificate w-6 h-6 mr-2"></i>
+                                    Deloitte
                                 </div>
                             </div>
+                            <span class="text-ink hover:text-muted transition" aria-label="View certificate">
+                                <i class="fas fa-external-link-alt"></i>
+                            </span>
+                        </div>
+                        <div class="experience-description">
+                            Job simulation completion certificate focused on forensic data analytics and client reporting.
+                        </div>
+                    </a>
+
+                    <!-- Certification 3 -->
+                    <a href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/SKZxezskWgmFjRvj9/cT6tMKSaMryk6PGaF_SKZxezskWgmFjRvj9_DJzxwFBhgskjzBaY4_1756136537344_completion_certificate.pdf" target="_blank" rel="noopener noreferrer" class="experience-card cert-card reveal-up">
+                        <div class="experience-header">
                             <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>C++</span>
-                                    <span>70%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 70%"></div>
+                                <h3 class="experience-title">Digital Transformation</h3>
+                                <div class="experience-company">
+                                    <i class="fas fa-certificate w-6 h-6 mr-2"></i>
+                                    BCG
                                 </div>
                             </div>
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>MySQL</span>
-                                    <span>88%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 88%"></div>
-                                </div>
-                            </div>
+                            <span class="text-ink hover:text-muted transition" aria-label="View certificate">
+                                <i class="fas fa-external-link-alt"></i>
+                            </span>
+                        </div>
+                        <div class="experience-description">
+                            Job simulation completion certificate on digital strategy and technology-driven transformation.
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20 bg-page">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title reveal-up">Skills & Tools</h2>
+                <p class="section-subtitle reveal-up">Platforms and technologies I work with day to day</p>
+
+                <div class="max-w-7xl mx-auto skills-row mt-12">
+                    <div class="skill-category reveal-up">
+                        <div class="skill-category-header">
+                            <i class="fas fa-database"></i>
+                            <h3>Data & Analytics</h3>
+                        </div>
+                        <div class="skill-chip-group">
+                            <span class="tool-item">Power BI</span>
+                            <span class="tool-item">Excel</span>
+                            <span class="tool-item">MySQL</span>
+                            <span class="tool-item">Google Analytics</span>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-semibold mb-6">Professional Skills</h3>
-                        <div class="space-y-6">
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>Problem Solving</span>
-                                    <span>90%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 90%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>Teamwork</span>
-                                    <span>85%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>Communication</span>
-                                    <span>90%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 90%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-2">
-                                    <span>Collaboration & Coordination</span>
-                                    <span>75%</span>
-                                </div>
-                                <div class="skill-bar bg-gray-200">
-                                    <div class="skill-progress bg-black" style="width: 75%"></div>
-                                </div>
-                            </div>
+                    <div class="skill-category reveal-up">
+                        <div class="skill-category-header">
+                            <i class="fas fa-briefcase"></i>
+                            <h3>Business & CRM</h3>
+                        </div>
+                        <div class="skill-chip-group">
+                            <span class="tool-item">SAP / ERP</span>
+                            <span class="tool-item">Salesforce</span>
+                            <span class="tool-item">Hubspot</span>
+                            <span class="tool-item">Zoho</span>
+                        </div>
+                    </div>
+                    <div class="skill-category reveal-up">
+                        <div class="skill-category-header">
+                            <i class="fas fa-code"></i>
+                            <h3>Design & Development</h3>
+                        </div>
+                        <div class="skill-chip-group">
+                            <span class="tool-item">Figma</span>
+                            <span class="tool-item">Canva</span>
+                            <span class="tool-item">Python</span>
+                            <span class="tool-item">C++</span>
+                            <span class="tool-item">Docker</span>
+                        </div>
+                    </div>
+                    <div class="skill-category reveal-up">
+                        <div class="skill-category-header">
+                            <i class="fas fa-microchip"></i>
+                            <h3>Engineering & Hardware</h3>
+                        </div>
+                        <div class="skill-chip-group">
+                            <span class="tool-item">LabVIEW</span>
+                            <span class="tool-item">Arduino</span>
                         </div>
                     </div>
                 </div>
@@ -466,260 +596,218 @@
         </section>
 
         <!-- Projects Section -->
-        <section id="projects" class="py-20 bg-gray-50">
+        <section id="projects" class="py-20 bg-page-alt">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                    My Projects
-                </h2>
-                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Project 1 -->
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">AI-Powered Chat Application</h3>
-                                <div class="experience-company">
-                                    <i class="fas fa-code w-6 h-6 mr-2"></i>
-                                    Personal Project
-                                </div>
+                <h2 class="section-title reveal-up">Featured Projects</h2>
+                <p class="section-subtitle reveal-up">What I built, how it works, and the tools behind it. The previews below are live, so try them.</p>
+
+                <div class="max-w-6xl mx-auto space-y-10">
+                    <!-- Case study: Game of Life -->
+                    <article class="case-study reveal-up">
+                        <div class="case-visual">
+                            <div class="life-frame">
+                                <canvas id="lifeCanvas" aria-label="Interactive Game of Life simulation. Click or drag to draw cells." role="img"></canvas>
                             </div>
-                            <a href="#" class="text-black hover:text-gray-600 transition">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                        <div class="experience-description">
-                            A real-time chat application with NLP capabilities for smart replies and sentiment analysis.
-                        </div>
-                        <iframe 
-                            src="https://becb0b9b-f954-4f0f-9972-94952741577e.created.app"
-                            title="Data Visualization Dashboard Preview"
-                            width="100%"
-                            height="569"
-                            frameborder="0"
-                            loading="lazy"
-                            style="border-radius: 12px;">
-                        </iframe>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Implemented real-time messaging using WebSocket technology</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Integrated natural language processing for automated response suggestions</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Developed sentiment analysis feature for message tone detection</span>
-                            </li>
-                        </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">React</span>
-                            <span class="experience-skill">Node.js</span>
-                            <span class="experience-skill">TensorFlow</span>
-                            <span class="experience-skill">WebSocket</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 2 -->
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Data Visualization Dashboard</h3>
-                                <div class="experience-company">
-                                    <i class="fas fa-chart-line w-6 h-6 mr-2"></i>
-                                    Client Project
+                            <div class="case-visual-bar">
+                                <div class="flex items-center gap-2">
+                                    <button type="button" class="mini-btn" id="lifePlay" aria-label="Pause simulation"><i class="fas fa-pause" aria-hidden="true"></i></button>
+                                    <button type="button" class="mini-btn" id="lifeStep" aria-label="Advance one generation"><i class="fas fa-forward-step" aria-hidden="true"></i></button>
+                                    <button type="button" class="mini-btn" id="lifeShuffle" aria-label="Randomise the grid"><i class="fas fa-shuffle" aria-hidden="true"></i></button>
                                 </div>
+                                <span class="case-visual-meta">Generation <span id="lifeGen">0</span> · click to draw</span>
                             </div>
-                            <a href="#" class="text-black hover:text-gray-600 transition">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
                         </div>
-                        <div class="experience-description">
-                            Interactive dashboard for analyzing and visualizing complex datasets with custom filtering.
-                        </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Built responsive data visualizations using D3.js</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Implemented advanced filtering and data manipulation features</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Created RESTful API endpoints for data retrieval and processing</span>
-                            </li>
-                        </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">D3.js</span>
-                            <span class="experience-skill">Python</span>
-                            <span class="experience-skill">Flask</span>
-                            <span class="experience-skill">PostgreSQL</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 3 -->
-                    <div class="experience-card">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Blockchain Authentication System</h3>
-                                <div class="experience-company">
-                                    <i class="fas fa-lock w-6 h-6 mr-2"></i>
-                                    Research Project
+                        <div class="case-body">
+                            <p class="case-eyebrow">Personal project · Simulation</p>
+                            <h3 class="case-title">Game of Life</h3>
+                            <p class="case-summary">
+                                A browser version of Conway's Game of Life, where four simple rules applied to every cell create patterns that move, grow and die.
+                            </p>
+                            <dl class="case-points">
+                                <div>
+                                    <dt>What I built</dt>
+                                    <dd>A canvas simulation with a random starting grid, play/pause control and a zoom slider that rebuilds the grid at a new cell size.</dd>
                                 </div>
+                                <div>
+                                    <dt>How it works</dt>
+                                    <dd>Each generation counts the eight neighbours of every cell, builds the next grid from the rules, then redraws it with the Canvas API.</dd>
+                                </div>
+                            </dl>
+                            <div class="case-tags">
+                                <span>JavaScript</span><span>Canvas API</span><span>HTML</span><span>CSS</span>
                             </div>
-                            <a href="#" class="text-black hover:text-gray-600 transition">
-                                <i class="fas fa-external-link-alt"></i>
-                            </a>
+                            <div class="case-links">
+                                <a href="https://s-zainabbas.github.io/gameoflife.github.io/" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    Live demo <i class="fas fa-arrow-up-right-from-square ml-2 text-sm" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://github.com/s-zainabbas/gameoflife.github.io" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    <i class="fab fa-github mr-2" aria-hidden="true"></i> Code
+                                </a>
+                            </div>
                         </div>
-                        <div class="experience-description">
-                            Decentralized authentication protocol using blockchain technology for enhanced security.
+                    </article>
+
+                    <!-- Case study: Stockify -->
+                    <article class="case-study case-study-flip reveal-up">
+                        <div class="case-visual">
+                            <div class="stock-frame">
+                                <div class="stock-legend" aria-hidden="true">
+                                    <span><i class="legend-dot legend-price"></i>Price</span>
+                                    <span><i class="legend-dot legend-short"></i>20-day avg</span>
+                                    <span><i class="legend-dot legend-long"></i>50-day avg</span>
+                                </div>
+                                <svg id="stockChart" class="stock-chart" viewBox="0 0 600 300" role="img" aria-label="Example price chart with 20-day and 50-day moving averages and a marked bullish crossover"></svg>
+                            </div>
+                            <div class="case-visual-bar">
+                                <button type="button" class="mini-btn" id="stockRegenerate" aria-label="Generate a new example chart"><i class="fas fa-rotate" aria-hidden="true"></i></button>
+                                <span class="case-visual-meta">Example data · averages calculated live</span>
+                            </div>
                         </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Developed smart contracts for secure user authentication</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Implemented blockchain-based data verification system</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Created user-friendly interface for managing digital identities</span>
-                            </li>
-                        </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">Solidity</span>
-                            <span class="experience-skill">Ethereum</span>
-                            <span class="experience-skill">Web3.js</span>
-                            <span class="experience-skill">React</span>
+                        <div class="case-body">
+                            <p class="case-eyebrow">Personal project · Full-stack</p>
+                            <h3 class="case-title">Stockify</h3>
+                            <p class="case-summary">
+                                A stock tracker I use every day: live quotes, interactive charts, a plain-English trend read, a watchlist and price alerts.
+                            </p>
+                            <dl class="case-points">
+                                <div>
+                                    <dt>What I built</dt>
+                                    <dd>A static web app on GitHub Pages. A scheduled GitHub Action fetches prices with a secret key and publishes them as data files, so the key stays private and the site costs nothing to run. The front end adds search, a watchlist and price alerts.</dd>
+                                </div>
+                                <div>
+                                    <dt>How it works</dt>
+                                    <dd>It calculates 20-, 50- and 200-day moving averages and RSI from raw prices, spots golden and death crosses, and scores six rules into a Bullish, Neutral or Bearish read. The maths is unit-tested.</dd>
+                                </div>
+                            </dl>
+                            <div class="case-tags">
+                                <span>JavaScript</span><span>Chart.js</span><span>Node.js</span><span>GitHub Actions</span><span>GitHub Pages</span><span>Unit tests</span>
+                            </div>
+                            <div class="case-links">
+                                <a href="https://s-zainabbas.github.io/stockify/" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    Live demo <i class="fas fa-arrow-up-right-from-square ml-2 text-sm" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://github.com/s-zainabbas/stockify" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    <i class="fab fa-github mr-2" aria-hidden="true"></i> Code
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="text-center mt-12">
-                    <a href="#" class="action-button px-6 py-3 border border-black rounded-lg font-medium hover:bg-black hover:text-white transition inline-flex items-center">
-                        View All Projects <i class="fas fa-arrow-right ml-2"></i>
+                    </article>
+
+                    <!-- More on GitHub -->
+                    <a href="https://github.com/s-zainabbas" target="_blank" rel="noopener noreferrer" class="github-strip reveal-up">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg">More on GitHub</h3>
+                            <p class="text-muted text-sm">Experiments, data tools and work in progress.</p>
+                        </div>
+                        <span class="github-strip-cta">Visit GitHub <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i></span>
                     </a>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-20 bg-white">
+        <section id="contact" class="py-20 bg-page">
             <div class="container mx-auto px-6">
-                <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center">
-                    Get In Touch
-                </h2>
-                <div class="flex flex-col md:flex-row">
-                    <div class="md:w-1/2 mb-8 md:mb-0">
+                <h2 class="section-title reveal-up">Get In Touch</h2>
+                <div class="flex flex-col md:flex-row justify-between items-start max-w-6xl mx-auto gap-12">
+                    <!-- Contact Info - Left Column -->
+                    <div class="w-full md:w-2/5 reveal-up">
                         <h3 class="text-2xl font-semibold mb-4">Contact Information</h3>
-                        <p class="mb-6">
+                        <p class="mb-6 text-muted">
                             Feel free to reach out to me for job opportunities, collaborations, or just to say hello :)
                         </p>
-                        <div class="space-y-4">
+                        <div class="space-y-4 mb-8">
                             <div class="flex items-center">
-                                <div class="w-12 h-12 rounded-full border border-black flex items-center justify-center mr-4">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <p>Email</p>
-                                    <p class="font-medium">zzain.abbas@hotmail.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 rounded-full border border-black flex items-center justify-center mr-4">
+                                <div class="w-12 h-12 rounded-full border border-ink flex items-center justify-center mr-4 flex-shrink-0">
                                     <i class="fas fa-phone-alt"></i>
                                 </div>
                                 <div>
-                                    <p>Phone</p>
+                                    <p class="text-sm text-muted">Phone</p>
                                     <p class="font-medium">+33 78 29 42 444</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
-                                <div class="w-12 h-12 rounded-full border border-black flex items-center justify-center mr-4">
+                                <div class="w-12 h-12 rounded-full border border-ink flex items-center justify-center mr-4 flex-shrink-0">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
                                 <div>
-                                    <p>Location</p>
+                                    <p class="text-sm text-muted">Location</p>
                                     <p class="font-medium">Saint Genis, France</p>
                                 </div>
                             </div>
+                            <div class="flex items-center">
+                                <button type="button" id="copyEmailBtn" class="w-12 h-12 rounded-full border border-ink flex items-center justify-center mr-4 flex-shrink-0 hover:bg-ink hover:text-page transition" aria-label="Copy email address">
+                                    <i class="fas fa-envelope" id="copyEmailIcon"></i>
+                                </button>
+                                <div>
+                                    <p class="text-sm text-muted">Email</p>
+                                    <p class="font-medium">zzain.abbas@hotmail.com <span id="copyEmailFeedback" class="copy-feedback"></span></p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="mt-8 flex space-x-4">
-                            <a href="https://www.linkedin.com/in/zain-abbas-/" target="_blank" class="contact-link w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-100 transition">
+                        <div class="flex space-x-4">
+                            <a href="https://www.linkedin.com/in/zain-abbas-/" target="_blank" rel="noopener noreferrer" class="contact-link w-12 h-12 rounded-full border border-ink flex items-center justify-center" aria-label="LinkedIn profile">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
-                            <a href="#" class="contact-link w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-100 transition">
+                            <a href="https://github.com/s-zainabbas" target="_blank" rel="noopener noreferrer" class="contact-link w-12 h-12 rounded-full border border-ink flex items-center justify-center" aria-label="GitHub profile">
                                 <i class="fab fa-github"></i>
-                            </a>
-                            <a href="#" class="contact-link w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-gray-100 transition">
-                                <i class="fab fa-twitter"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="md:w-1/2 md:pl-12">
-                        <form id="contactForm" class="space-y-6">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label for="name" class="block mb-2">Your Name</label>
-                                    <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-black rounded-lg focus:outline-none focus:ring-1 focus:ring-black" required>
+
+                    <!-- Contact Form - Right Column -->
+                    <div class="w-full md:w-3/5 reveal-up">
+                        <form id="contactForm" class="contact-form" novalidate>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div class="form-field">
+                                    <label for="name">Name</label>
+                                    <input type="text" id="name" name="name" required autocomplete="name">
                                 </div>
-                                <div>
-                                    <label for="email" class="block mb-2">Your Email</label>
-                                    <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-black rounded-lg focus:outline-none focus:ring-1 focus:ring-black" required>
+                                <div class="form-field">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" required autocomplete="email">
                                 </div>
                             </div>
-                            <div>
-                                <label for="subject" class="block mb-2">Subject</label>
-                                <input type="text" id="subject" name="subject" class="w-full px-4 py-3 border border-black rounded-lg focus:outline-none focus:ring-1 focus:ring-black" required>
+                            <div class="form-field mb-4">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" name="subject" required>
                             </div>
-                            <div>
-                                <label for="message" class="block mb-2">Message</label>
-                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-black rounded-lg focus:outline-none focus:ring-1 focus:ring-black" required></textarea>
+                            <div class="form-field mb-6">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
                             </div>
-                            <button type="submit" class="w-full px-6 py-3 bg-black text-white rounded-lg font-medium hover:bg-gray-800 transition">
+                            <button type="submit" class="action-button action-button-primary px-6 py-3 rounded-lg font-medium inline-flex items-center">
                                 Send Message <i class="fas fa-paper-plane ml-2"></i>
                             </button>
+                            <p class="text-xs text-muted mt-3">
+                                This opens your email client with the message pre-filled, addressed to zzain.abbas@hotmail.com.
+                            </p>
+                            <div id="responseMessage" class="mt-4" role="status" aria-live="polite"></div>
                         </form>
-                        <div id="responseMessage" class="mt-4"></div>
-                        
-                        <script>
-                        document.getElementById('contactForm').addEventListener('submit', function(event) {
-                            event.preventDefault(); // Prevent default form submission
-                        
-                            const formData = new FormData(this);
-                        
-                            fetch('send_email.php', {
-                                method: 'POST',
-                                body: formData
-                            })
-                            .then(response => response.text())
-                            .then(data => {
-                                document.getElementById('responseMessage').innerHTML = data;
-                            })
-                            .catch(error => {
-                                document.getElementById('responseMessage').innerHTML = '<p style="color: red;">Failed to send the message. Please try again.</p>';
-                            });
-                        });
-                        </script>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Footer -->
-        <footer class="py-8 border-t border-black">
+        <footer class="site-footer py-8 border-t border-ink relative">
             <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="text-xl font-bold mb-4 md:mb-0">©SZA</div>
-                    <div class="text-sm">
-                        <p class="mb-6">
-                            No templates were harmed in the making, handcrafted from scratch by Me :) 
-                        </p>
-                        <p class="text-center w-full">&copy;2025 Designed & Built by <a href="https://www.linkedin.com/in/zain-abbas-/" target="_blank" class="underline">Zain Abbas</a></p>
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="text-sm order-2 md:order-1">
+                        <p class="mb-2">No templates were harmed in the making, handcrafted from scratch by Me :)</p>
+                        <p>&copy;<span id="currentYear">2024</span> Designed & Built by <a href="https://www.linkedin.com/in/zain-abbas-/" target="_blank" rel="noopener noreferrer" class="underline">Zain Abbas</a></p>
                     </div>
-                    <div class="mt-4 md:mt-0">
-                        <a href="#home" class="text-sm hover:underline">Back to top ↑</a>
-                    </div>
+                    <a href="#home" class="text-sm hover:underline order-1 md:order-2">Back to top &uarr;</a>
                 </div>
             </div>
         </footer>
     </div>
 
-    <script src="particles-config.js"></script>
-    <script src="script.js"></script>
+    <button id="backToTop" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="script.js?v=20261105"></script>
 </body>
 </html>

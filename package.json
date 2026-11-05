@@ -1,0 +1,13 @@
+{
+  "name": "zain-abbas-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Personal portfolio of Zain Abbas",
+  "scripts": {
+    "build": "tailwindcss -i ./src/tailwind.css -o ./tailwind.css --minify",
+    "dev": "tailwindcss -i ./src/tailwind.css -o ./tailwind.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

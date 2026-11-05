@@ -1,0 +1,38 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "4174"
+      ],
+      "port": 4174
+    },
+    {
+      "name": "stockify",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "stockify",
+        "run",
+        "dev"
+      ],
+      "port": 3000
+    },
+    {
+      "name": "stockify-pages-sim",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "3300",
+        "--directory",
+        "/private/tmp/claude-501/-Users-zainabbas-Desktop-Projects-My-Portfolio/8d617bf3-95a6-4d90-aaf2-235bf49f1424/scratchpad/pages-sim"
+      ],
+      "port": 3300
+    }
+  ]
+}
