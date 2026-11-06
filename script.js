@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initStatCounters();
     initLifePreview();
     initStockPreview();
+    initDashboardPreview();
     initMobileMenu();
     initSmoothAnchorScroll();
     initContactForm();
@@ -912,6 +913,60 @@ function initStockPreview() {
 }
 
 // ---------- Mobile menu ----------
+// ---------- Daily Dashboard preview ----------
+// A tiny working slice of the app: tick tasks and the progress ring follows.
+function initDashboardPreview() {
+    const list = document.getElementById('dashTasks');
+    if (!list) return;
+    const tasks = [...list.querySelectorAll('.dash-task')];
+    const ring = document.getElementById('dashRing');
+    const percent = document.getElementById('dashPercent');
+    const meta = document.getElementById('dashMeta');
+    const circumference = 2 * Math.PI * 32;
+    const initial = tasks.map((t) => t.classList.contains('is-done'));
+
+    function update() {
+        const done = tasks.filter((t) => t.classList.contains('is-done')).length;
+        const ratio = done / tasks.length;
+        ring.style.strokeDasharray = circumference;
+        ring.style.strokeDashoffset = circumference * (1 - ratio);
+        percent.textContent = `${Math.round(ratio * 100)}%`;
+        meta.textContent = done === tasks.length
+            ? 'All done. Nice work'
+            : `${done} of ${tasks.length} done · tap a task to tick it`;
+    }
+
+    tasks.forEach((task) => {
+        task.addEventListener('click', () => {
+            const done = task.classList.toggle('is-done');
+            task.setAttribute('aria-pressed', String(done));
+            update();
+        });
+    });
+
+    document.getElementById('dashReset').addEventListener('click', () => {
+        tasks.forEach((task, i) => {
+            task.classList.toggle('is-done', initial[i]);
+            task.setAttribute('aria-pressed', String(initial[i]));
+        });
+        update();
+    });
+
+    const greeting = document.getElementById('dashGreeting');
+    const date = document.getElementById('dashDate');
+    const clock = document.getElementById('dashClock');
+    function tick() {
+        const now = new Date();
+        const h = now.getHours();
+        greeting.textContent = h < 12 ? 'Good morning.' : h < 17 ? 'Good afternoon.' : 'Good evening.';
+        date.textContent = now.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' });
+        clock.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+    tick();
+    setInterval(tick, 30000);
+    update();
+}
+
 function initMobileMenu() {
     const toggle = document.getElementById('menuToggle');
     const menu = document.getElementById('mobileMenu');

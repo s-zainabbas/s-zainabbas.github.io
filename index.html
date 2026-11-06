@@ -693,6 +693,157 @@
                         </div>
                     </article>
 
+                    <!-- Case study: Daily Dashboard -->
+                    <article class="case-study reveal-up">
+                        <div class="case-visual">
+                            <div class="dash-frame">
+                                <div class="dash-top">
+                                    <div>
+                                        <p class="dash-greeting" id="dashGreeting">Good morning.</p>
+                                        <p class="dash-date" id="dashDate"></p>
+                                    </div>
+                                    <span class="dash-clock" id="dashClock"></span>
+                                </div>
+                                <div class="dash-grid">
+                                    <div class="dash-panel">
+                                        <p class="dash-label">Today’s #1 priority</p>
+                                        <p class="dash-priority">Ship the onboarding redesign</p>
+                                        <ul class="dash-tasks" id="dashTasks">
+                                            <li><button type="button" class="dash-task is-done" aria-pressed="true"><span class="dash-check"><i class="fas fa-check" aria-hidden="true"></i></span>Morning inbox zero</button></li>
+                                            <li><button type="button" class="dash-task" aria-pressed="false"><span class="dash-check"><i class="fas fa-check" aria-hidden="true"></i></span>Write release notes</button></li>
+                                            <li><button type="button" class="dash-task" aria-pressed="false"><span class="dash-check"><i class="fas fa-check" aria-hidden="true"></i></span>Review auth pull request</button></li>
+                                            <li><button type="button" class="dash-task" aria-pressed="false"><span class="dash-check"><i class="fas fa-check" aria-hidden="true"></i></span>Book offsite flights</button></li>
+                                        </ul>
+                                    </div>
+                                    <div class="dash-side">
+                                        <div class="dash-panel dash-ring-panel">
+                                            <svg class="dash-ring" viewBox="0 0 80 80" aria-hidden="true">
+                                                <circle class="dash-ring-track" cx="40" cy="40" r="32"></circle>
+                                                <circle class="dash-ring-bar" id="dashRing" cx="40" cy="40" r="32"></circle>
+                                            </svg>
+                                            <span class="dash-ring-value" id="dashPercent">25%</span>
+                                            <span class="dash-label">Tasks done</span>
+                                        </div>
+                                        <div class="dash-panel">
+                                            <p class="dash-label">Next up</p>
+                                            <p class="dash-event"><span>14:00</span> 1:1 with Jordan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="case-visual-bar">
+                                <button type="button" class="mini-btn" id="dashReset" aria-label="Reset the example tasks"><i class="fas fa-rotate" aria-hidden="true"></i></button>
+                                <span class="case-visual-meta" id="dashMeta">1 of 4 done · tap a task to tick it</span>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <p class="case-eyebrow">Personal project · Productivity app</p>
+                            <h3 class="case-title">Daily Dashboard</h3>
+                            <p class="case-summary">
+                                The command centre I open every morning: one priority, tasks, today's schedule, a focus timer, habits, notes and an end-of-day journal on a single screen.
+                            </p>
+                            <dl class="case-points">
+                                <div>
+                                    <dt>What I built</dt>
+                                    <dd>I rebuilt my first version, a single HTML file, as a React and TypeScript app. It works offline, installs like a native app and keeps all data in the browser, with backup export and import. I also fixed ten bugs from v1, including dates going wrong in some timezones.</dd>
+                                </div>
+                                <div>
+                                    <dt>How it works</dt>
+                                    <dd>A quick-add bar reads plain English: “Dentist fri 3-4pm” becomes an event. At midnight the day is saved to a journal and unfinished items carry over. The focus timer uses timestamps, so it stays accurate in background tabs. The date logic and parser are unit-tested.</dd>
+                                </div>
+                            </dl>
+                            <div class="case-tags">
+                                <span>React</span><span>TypeScript</span><span>Vite</span><span>PWA</span><span>Vitest</span><span>GitHub Actions</span>
+                            </div>
+                            <div class="case-links">
+                                <a href="https://s-zainabbas.github.io/daily-dashboard/?demo" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    Live demo <i class="fas fa-arrow-up-right-from-square ml-2 text-sm" aria-hidden="true"></i>
+                                </a>
+                                <a href="https://github.com/s-zainabbas/daily-dashboard" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    <i class="fab fa-github mr-2" aria-hidden="true"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Case study: BBold -->
+                    <article class="case-study case-study-flip reveal-up">
+                        <div class="case-visual">
+                            <a class="client-preview bbold-preview" href="https://www.bbold.ch" target="_blank" rel="noopener noreferrer" aria-label="Visit the BBold website">
+                                <span class="client-preview-kicker">BBOLD</span>
+                                <strong>Where audacity<br>leads the way.</strong>
+                                <span class="client-preview-line"></span>
+                                <span class="client-preview-note">Career coaching · Leadership · Inclusion</span>
+                            </a>
+                            <div class="case-visual-bar">
+                                <span class="case-visual-meta">Client website · Built from scratch</span>
+                                <a href="https://www.bbold.ch" target="_blank" rel="noopener noreferrer" class="mini-btn" aria-label="Visit BBold"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <p class="case-eyebrow">Client project · Website development</p>
+                            <h3 class="case-title">BBold</h3>
+                            <p class="case-summary">A polished digital home for BBold, a Geneva-based career coaching and diversity &amp; inclusion consultancy.</p>
+                            <dl class="case-points">
+                                <div>
+                                    <dt>What I built</dt>
+                                    <dd>I developed and programmed the complete website from scratch, creating a clear, professional experience for BBold’s individual and corporate audiences.</dd>
+                                </div>
+                                <div>
+                                    <dt>What it supports</dt>
+                                    <dd>The site presents career coaching, leadership development, inclusive recruitment and executive search services, while making it easy for visitors to explore and get in touch.</dd>
+                                </div>
+                            </dl>
+                            <div class="case-tags">
+                                <span>Web Development</span><span>Responsive Design</span><span>Client Website</span><span>UX</span>
+                            </div>
+                            <div class="case-links">
+                                <a href="https://www.bbold.ch" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    Visit website <i class="fas fa-arrow-up-right-from-square ml-2 text-sm" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Case study: FUNdamental Networking -->
+                    <article class="case-study reveal-up">
+                        <div class="case-visual">
+                            <a class="client-preview fundamental-preview" href="https://www.fundamentalnet.ch" target="_blank" rel="noopener noreferrer" aria-label="Visit the FUNdamental Networking website">
+                                <span class="client-preview-kicker">FUNdamental</span>
+                                <strong>Connections that<br>move ideas forward.</strong>
+                                <span class="client-preview-line"></span>
+                                <span class="client-preview-note">Networking · Community · Opportunity</span>
+                            </a>
+                            <div class="case-visual-bar">
+                                <span class="case-visual-meta">Client website · Built from scratch</span>
+                                <a href="https://www.fundamentalnet.ch" target="_blank" rel="noopener noreferrer" class="mini-btn" aria-label="Visit FUNdamental Networking"><i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+                        <div class="case-body">
+                            <p class="case-eyebrow">Client project · Website development</p>
+                            <h3 class="case-title">FUNdamental Networking</h3>
+                            <p class="case-summary">A dedicated website for FUNdamental Networking, designed to give the organisation a clear and professional online presence.</p>
+                            <dl class="case-points">
+                                <div>
+                                    <dt>What I built</dt>
+                                    <dd>I created and programmed the website from scratch, turning the client’s identity and content into an easy-to-navigate digital experience.</dd>
+                                </div>
+                                <div>
+                                    <dt>Focus</dt>
+                                    <dd>The build prioritises a confident visual identity, straightforward navigation and a responsive experience that works across desktop and mobile.</dd>
+                                </div>
+                            </dl>
+                            <div class="case-tags">
+                                <span>Web Development</span><span>Responsive Design</span><span>Client Website</span><span>UX</span>
+                            </div>
+                            <div class="case-links">
+                                <a href="https://www.fundamentalnet.ch" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                                    Visit website <i class="fas fa-arrow-up-right-from-square ml-2 text-sm" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
                     <!-- More on GitHub -->
                     <a href="https://github.com/s-zainabbas" target="_blank" rel="noopener noreferrer" class="github-strip reveal-up">
                         <i class="fab fa-github" aria-hidden="true"></i>
