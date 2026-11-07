@@ -5,7 +5,7 @@
  * strength follows the scroll speed reported by Lenis. Here the same shader math
  * is applied to the live page with an SVG filter, so canvases, forms and links
  * keep working:
- *   - barrel lens: the page bulges and the edges pull in, showing the accent colour
+ *   - barrel lens: the page bulges and the edges pull in over the page colour
  *   - wave shear: the page skews in the scroll direction
  * Both are baked into ONE displacement map per scroll direction, so the filter is
  * a single displacement pass. Each extra displacement pass costs a full-screen
@@ -120,7 +120,7 @@
             const disp = el('feDisplacementMap', {
                 in: 'SourceGraphic', in2: 'map', scale: 0, xChannelSelector: 'R', yChannelSelector: 'G', result: 'lens',
             }, filter);
-            // Accent colour behind the page shows where the lens pulls the edges in (costs ~nothing).
+            // Page-coloured fill shows where the lens pulls the edges in (costs ~nothing).
             const flood = el('feFlood', { result: 'edge' }, filter);
             const merge = el('feMerge', {}, filter);
             el('feMergeNode', { in: 'edge' }, merge);
@@ -139,10 +139,10 @@
         });
     }
 
-    // Follows the light/dark theme, since --accent changes with it.
+    // Page background colour; follows the light/dark theme, since --page changes with it.
     function edgeColor() {
-        const v = getComputedStyle(html).getPropertyValue('--accent').trim();
-        return v ? 'rgb(' + v.split(/\s+/).join(',') + ')' : '#e63946';
+        const v = getComputedStyle(html).getPropertyValue('--page').trim();
+        return v ? 'rgb(' + v.split(/\s+/).join(',') + ')' : '#ffffff';
     }
 
     function setActive(name) {
