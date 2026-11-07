@@ -996,6 +996,16 @@ function initMobileMenu() {
     });
 }
 
+// Route programmatic scrolls through Lenis (scroll-fx.js) when it is running,
+// so they get the same smooth easing and scroll-lens effect as wheel scrolling.
+function smoothScrollTo(top) {
+    if (window.lenis) {
+        window.lenis.scrollTo(top, { duration: 1.2 });
+    } else {
+        window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    }
+}
+
 // ---------- Smooth anchor scroll with sticky-nav offset ----------
 function initSmoothAnchorScroll() {
     const nav = document.getElementById('mainNav');
@@ -1011,7 +1021,7 @@ function initSmoothAnchorScroll() {
             e.preventDefault();
             const navHeight = nav ? nav.getBoundingClientRect().height : 0;
             const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
-            window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            smoothScrollTo(top);
             history.pushState(null, '', targetId);
         });
     });
@@ -1091,7 +1101,7 @@ function initBackToTop() {
     window.addEventListener('scroll', update, { passive: true });
 
     btn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        smoothScrollTo(0);
     });
 }
 

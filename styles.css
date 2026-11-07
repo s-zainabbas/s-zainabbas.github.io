@@ -46,6 +46,33 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Solid root background so the scroll lens filter (scroll-fx.js) has an opaque page to warp */
+html {
+    background-color: rgb(var(--page));
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+    overflow: clip;
+}
+
+/* backdrop-filter can't sample through the scroll lens filter; use a solid nav while warping */
+html.scroll-warping .site-nav.nav-scrolled {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: rgb(var(--page) / 0.96);
+}
+
 body {
     font-family: 'Space Grotesk', sans-serif;
     background-color: rgb(var(--page));
