@@ -1102,7 +1102,9 @@ function initContactForm() {
             form.querySelectorAll('.touched-invalid').forEach(f => f.classList.remove('touched-invalid'));
         } catch (err) {
             console.error('Contact form failed:', err);
-            showStatus('error', 'Sorry, your message could not be sent right now. Please try again, or email me directly at zzain.abbas@hotmail.com.');
+            // Pass on FormSubmit's own explanation (e.g. "This form needs Activation") when it gives one
+            const detail = err && err.message && !/^HTTP \d+$|fetch/i.test(err.message) ? ` (${err.message})` : '';
+            showStatus('error', `Sorry, your message could not be sent right now${detail}. Please try again, or email me directly at zzain.abbas@hotmail.com.`);
         } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = submitBtnHTML;
