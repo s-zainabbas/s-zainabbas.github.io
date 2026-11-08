@@ -1162,6 +1162,39 @@ button, a {
     border-color: #dc2626;
 }
 
+.form-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.contact-form button[type="submit"]:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.form-status {
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.form-status-success {
+    background: rgb(22 163 74 / 0.12);
+    color: #15803d;
+}
+
+.form-status-error {
+    background: rgb(220 38 38 / 0.12);
+    color: #b91c1c;
+}
+
+[data-theme="dark"] .form-status-success { color: #4ade80; }
+[data-theme="dark"] .form-status-error { color: #f87171; }
+
 .copy-feedback {
     font-size: 0.75rem;
     color: #16a34a;

@@ -38,7 +38,7 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="tailwind.css?v=20261105">
-    <link rel="stylesheet" href="styles.css?v=20261107b">
+    <link rel="stylesheet" href="styles.css?v=20261108">
 </head>
 <body class="min-h-screen bg-page text-ink">
     <!-- Scroll progress bar -->
@@ -925,9 +925,8 @@
                             <button type="submit" class="action-button action-button-primary px-6 py-3 rounded-lg font-medium inline-flex items-center">
                                 Send Message <i class="fas fa-paper-plane ml-2"></i>
                             </button>
-                            <p class="text-xs text-muted mt-3">
-                                This opens your email client with the message pre-filled, addressed to zzain.abbas@hotmail.com.
-                            </p>
+                            <!-- Spam trap: hidden from people, bots tend to fill it -->
+                            <input type="text" name="_honey" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
                             <div id="responseMessage" class="mt-4" role="status" aria-live="polite"></div>
                         </form>
                     </div>
@@ -954,7 +953,7 @@
     </button>
 
     <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="script.js?v=20261107b"></script>
+    <script src="script.js?v=20261108"></script>
     <script src="scroll-fx.js?v=20261107c"></script>
 </body>
 </html>

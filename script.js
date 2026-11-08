@@ -1027,15 +1027,21 @@ function initSmoothAnchorScroll() {
     });
 }
 
-// ---------- Contact form (static-hosting friendly: mailto) ----------
+// ---------- Contact form (sends straight to my inbox via FormSubmit) ----------
+// FormSubmit relays the message by email, so visitors never leave the page.
+// The first message ever sent triggers a one-time activation email to this address.
+const CONTACT_ENDPOINT = 'https://formsubmit.co/ajax/zzain.abbas@hotmail.com';
+
 function initContactForm() {
     const form = document.getElementById('contactForm');
     if (!form) return;
 
     const responseMessage = document.getElementById('responseMessage');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const submitBtnHTML = submitBtn.innerHTML;
 
     // Only flag a field as invalid after the user has actually left it
-    form.querySelectorAll('input, textarea').forEach(field => {
+    form.querySelectorAll('.form-field input, .form-field textarea').forEach(field => {
         field.addEventListener('blur', () => {
             field.classList.toggle('touched-invalid', !field.checkValidity());
         });
@@ -1046,7 +1052,15 @@ function initContactForm() {
         });
     });
 
-    form.addEventListener('submit', function (e) {
+    function showStatus(type, text) {
+        responseMessage.innerHTML = '';
+        const box = document.createElement('div');
+        box.className = `form-status form-status-${type}`;
+        box.textContent = text;
+        responseMessage.appendChild(box);
+    }
+
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
 
         if (!form.checkValidity()) {
@@ -1059,16 +1073,40 @@ function initContactForm() {
         const subject = form.subject.value.trim();
         const message = form.message.value.trim();
 
-        const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-        const mailto = `mailto:zzain.abbas@hotmail.com?subject=${encodeURIComponent('Portfolio Contact: ' + subject)}&body=${encodeURIComponent(body)}`;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Sending… <i class="fas fa-spinner fa-spin ml-2"></i>';
+        responseMessage.innerHTML = '';
 
-        window.location.href = mailto;
+        try {
+            const res = await fetch(CONTACT_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message,
+                    _subject: `Portfolio Contact: ${subject}`,
+                    _replyto: email,
+                    _template: 'table',
+                    _captcha: 'false',
+                    _honey: form._honey.value
+                })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || String(data.success) !== 'true') {
+                throw new Error(data.message || `HTTP ${res.status}`);
+            }
 
-        responseMessage.innerHTML = `
-            <div class="p-4 bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300 rounded-lg">
-                Your email client should now be open with your message ready to send. If nothing happened, email me directly at zzain.abbas@hotmail.com.
-            </div>`;
-        form.reset();
+            showStatus('success', `Thanks, ${name}! Your message has been sent. I'll get back to you soon.`);
+            form.reset();
+            form.querySelectorAll('.touched-invalid').forEach(f => f.classList.remove('touched-invalid'));
+        } catch (err) {
+            console.error('Contact form failed:', err);
+            showStatus('error', 'Sorry, your message could not be sent right now. Please try again, or email me directly at zzain.abbas@hotmail.com.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = submitBtnHTML;
+        }
     });
 }
 
