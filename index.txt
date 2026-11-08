@@ -508,15 +508,6 @@
                             </div>
                             <div class="flex items-center">
                                 <div class="w-12 h-12 rounded-full border border-black flex items-center justify-center mr-4">
-                                    <i class="fas fa-phone-alt"></i>
-                                </div>
-                                <div>
-                                    <p>Phone</p>
-                                    <p class="font-medium">+33 78 29 42 444</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-12 h-12 rounded-full border border-black flex items-center justify-center mr-4">
                                     <i class="fas fa-map-marker-alt"></i>
                                 </div>
                                 <div>
