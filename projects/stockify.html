@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stockify case study — Zain Abbas</title>
+    <meta name="description" content="How I built Stockify, a fast stock tracker with 20, 50 and 200-day EMAs that runs entirely on GitHub Pages with no server and no API key.">
+    <meta name="theme-color" content="#EEE5D4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0D2118" media="(prefers-color-scheme: dark)">
+    <link rel="canonical" href="https://s-zainabbas.github.io/projects/stockify.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Stockify — a case study by Zain Abbas">
+    <meta property="og:description" content="A fast stock tracker that runs entirely on GitHub Pages: no server, no API key, no hosting cost.">
+    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem('theme'); } catch (e) {}
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../tailwind.css?v=20261110">
+    <link rel="stylesheet" href="../styles.css?v=20261110">
+</head>
+<body class="bg-page text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+
+    <header class="sub-nav">
+        <div class="sub-nav-inner">
+            <a href="../index.html#projects" class="sub-back"><i class="fas fa-arrow-left" aria-hidden="true"></i> All projects</a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+                <i class="fas fa-sun" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+        <div class="cs">
+            <section class="cs-hero">
+                <p class="eyebrow mb-4">Case study · Personal project</p>
+                <h1 class="cs-title">Stockify<span class="hl-accent">.</span></h1>
+                <p class="cs-lede">
+                    A fast stock tracker I use every day. One page with my own setup ready on load: 20, 50 and
+                    200-day EMAs, the key numbers, a technical rating and the latest news. It costs nothing to run.
+                </p>
+                <dl class="cs-facts">
+                    <div><dt>Role</dt><dd>Design, development, deployment</dd></div>
+                    <div><dt>Stack</dt><dd>JavaScript modules, TradingView widgets</dd></div>
+                    <div><dt>Hosting</dt><dd>GitHub Pages, deployed by GitHub Actions</dd></div>
+                    <div><dt>Running cost</dt><dd>$0: no server, no API key</dd></div>
+                </dl>
+                <div class="flex flex-wrap gap-3">
+                    <a href="https://s-zainabbas.github.io/stockify/" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                        Open Stockify <i class="fas fa-arrow-up-right-from-square ml-2 text-sm" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://github.com/s-zainabbas/stockify" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                        <i class="fab fa-github mr-2" aria-hidden="true"></i> Source code
+                    </a>
+                </div>
+            </section>
+
+            <section class="cs-section">
+                <h2>The problem</h2>
+                <p>
+                    I check the same few stocks every day. What I wanted on screen was always the same: a daily chart with the
+                    20, 50 and 200-day exponential moving averages, the price and valuation numbers, a quick technical read and
+                    the news. Getting there meant setting it up again on every visit.
+                </p>
+                <p>
+                    So I built one page that opens with all of it already in place, loads fast, and works on my phone as well as my laptop.
+                </p>
+            </section>
+
+            <section class="cs-section">
+                <h2>From an API to no backend at all</h2>
+                <p>
+                    The <strong>first version</strong> pulled prices from the Twelve Data API. That meant an API key to keep secret,
+                    request limits to stay under, and my own code to turn raw prices into indicators.
+                </p>
+                <p>
+                    The <strong>current version</strong> embeds TradingView's free widgets instead. Each widget loads its own market data
+                    in the visitor's browser, so Stockify has <strong>no server, no API key and no scheduled data job</strong>. My code
+                    focuses on what I care about: the setup, the search, the watchlist and how it all fits together.
+                </p>
+            </section>
+
+            <section class="cs-section">
+                <h2>How it fits together</h2>
+                <p>
+                    The app is a handful of plain JavaScript modules with no dependencies. One search box drives five widgets,
+                    so choosing a ticker updates the whole page at once.
+                </p>
+                <figure class="cs-figure">
+                    <svg viewBox="0 0 760 310" role="img" aria-labelledby="stockDiagramTitle">
+                        <title id="stockDiagramTitle">app.js handles search and the watchlist and passes the ticker to widgets.js, which builds five TradingView widgets that load market data. store.js saves the watchlist in the browser. Pushing to GitHub runs GitHub Actions, which deploys to GitHub Pages.</title>
+                        <defs>
+                            <marker id="sArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow"/></marker>
+                            <marker id="sArrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow-accent"/></marker>
+                        </defs>
+
+                        <rect x="20" y="58" width="170" height="68" rx="12" class="dg-box-strong"/>
+                        <text x="38" y="88" class="dg-text-inv">app.js</text>
+                        <text x="38" y="108" class="dg-sub-inv">search · watchlist · theme</text>
+
+                        <rect x="240" y="58" width="160" height="68" rx="12" class="dg-box"/>
+                        <text x="258" y="88" class="dg-text">widgets.js</text>
+                        <text x="258" y="108" class="dg-sub">builds every widget</text>
+
+                        <rect x="20" y="168" width="170" height="56" rx="12" class="dg-box"/>
+                        <text x="38" y="192" class="dg-text">store.js</text>
+                        <text x="38" y="210" class="dg-sub">watchlist in localStorage</text>
+
+                        <g>
+                            <rect x="450" y="10" width="170" height="34" rx="9" class="dg-box"/><text x="464" y="32" class="dg-sub">Chart with EMA ribbon</text>
+                            <rect x="450" y="52" width="170" height="34" rx="9" class="dg-box"/><text x="464" y="74" class="dg-sub">Quote header</text>
+                            <rect x="450" y="94" width="170" height="34" rx="9" class="dg-box"/><text x="464" y="116" class="dg-sub">Ticker tape</text>
+                            <rect x="450" y="136" width="170" height="34" rx="9" class="dg-box"/><text x="464" y="158" class="dg-sub">Technical rating</text>
+                            <rect x="450" y="178" width="170" height="34" rx="9" class="dg-box"/><text x="464" y="200" class="dg-sub">News timeline</text>
+                        </g>
+
+                        <rect x="660" y="66" width="90" height="98" rx="12" class="dg-box-accent"/>
+                        <text x="672" y="110" class="dg-text">Trading</text>
+                        <text x="672" y="128" class="dg-text">View</text>
+
+                        <path d="M190 92 H236" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M105 126 V164" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M400 92 C425 92 425 27 446 27" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M400 92 C425 92 425 69 446 69" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M400 92 C425 92 425 111 446 111" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M400 92 C425 92 425 153 446 153" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M400 92 C425 92 425 195 446 195" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M620 27 C640 27 640 100 656 104" class="dg-line-accent" marker-start="url(#sArrowA)"/>
+                        <path d="M620 195 C640 195 640 130 656 126" class="dg-line-accent" marker-start="url(#sArrowA)"/>
+
+                        <text x="20" y="262" class="dg-sub">DEPLOY</text>
+                        <rect x="20" y="272" width="150" height="32" rx="9" class="dg-box"/><text x="36" y="293" class="dg-sub">git push to main</text>
+                        <rect x="240" y="272" width="160" height="32" rx="9" class="dg-box"/><text x="256" y="293" class="dg-sub">GitHub Actions</text>
+                        <rect x="450" y="272" width="170" height="32" rx="9" class="dg-box-strong"/><text x="466" y="293" class="dg-sub-inv">GitHub Pages (live)</text>
+                        <path d="M170 288 H236" class="dg-line" marker-end="url(#sArrow)"/>
+                        <path d="M400 288 H446" class="dg-line" marker-end="url(#sArrow)"/>
+                    </svg>
+                    <figcaption>Market data goes straight from TradingView to the visitor's browser. My code never handles a key or a price feed.</figcaption>
+                </figure>
+            </section>
+
+            <section class="cs-section">
+                <h2>Decisions worth explaining</h2>
+                <div class="cs-cards">
+                    <div class="cs-card">
+                        <h3>Three EMAs in one study</h3>
+                        <p>The free chart widget can't colour separate EMA studies differently. I used TradingView's Moving Average Ribbon and set its lines to EMA 20, 50 and 200, so each line still gets its own colour.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Search that never says no</h3>
+                        <p>Popular tickers are suggested as you type, and anything else opens on Enter, including exchange prefixes like <code>NYSE:KO</code>. Press <code>/</code> from anywhere to jump to search.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Links you can share</h3>
+                        <p><code>?symbol=MSFT</code> opens a stock directly, so a chart can be sent to someone or bookmarked.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Private by default</h3>
+                        <p>The watchlist and theme live in the browser through a small storage module. There's no account and nothing to sign up for.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cs-section">
+                <h2>Trade-offs</h2>
+                <ul class="cs-list">
+                    <li>Prices come from TradingView and may be delayed, depending on the exchange.</li>
+                    <li>Clicking inside a widget, such as a ticker in the top strip, opens TradingView in a new tab. That's how the free widgets behave.</li>
+                    <li>Removing the backend meant giving up my own indicator code. In return there's no key to leak, no rate limit and nothing to maintain on a server.</li>
+                    <li>Stockify is for information only and is not financial advice.</li>
+                </ul>
+            </section>
+
+            <nav class="cs-next" aria-label="More projects">
+                <a href="daily-dashboard.html"><small>Next case study</small><strong>Daily Dashboard</strong></a>
+                <a href="../index.html#projects"><small>Back to</small><strong>All projects</strong></a>
+            </nav>
+        </div>
+    </main>
+
+    <footer class="sub-footer band-forest">
+        &copy;<span id="currentYear">2026</span> Designed &amp; built by Zain Abbas
+    </footer>
+
+    <script src="../subpage.js?v=20261110"></script>
+</body>
+</html>

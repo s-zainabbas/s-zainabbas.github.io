@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page not found — Zain Abbas</title>
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#EEE5D4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0D2118" media="(prefers-color-scheme: dark)">
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem('theme'); } catch (e) {}
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <!-- Absolute paths: GitHub Pages serves this page at whatever URL was missing -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/tailwind.css?v=20261110">
+    <link rel="stylesheet" href="/styles.css?v=20261110">
+</head>
+<body class="bg-page text-ink notfound">
+    <canvas id="lifeBg" class="notfound-life" aria-hidden="true"></canvas>
+
+    <main class="notfound-main">
+        <p class="eyebrow mb-4">Error 404</p>
+        <h1 class="notfound-title">Lost<span class="hl-accent">.</span></h1>
+        <p class="notfound-text">
+            This page doesn't exist, or it moved. The cells behind this text are a Game of Life:
+            four simple rules, and they never end up where they started either.
+        </p>
+        <div class="flex flex-wrap gap-4 justify-center">
+            <a href="/" class="action-button action-button-primary px-6 py-3 rounded-lg font-medium">Back to the homepage</a>
+            <a href="/#projects" class="action-button action-button-outline px-6 py-3 rounded-lg font-medium">See my projects</a>
+        </div>
+    </main>
+
+    <button type="button" id="themeToggle" class="theme-toggle notfound-theme" aria-label="Switch to dark mode">
+        <i class="fas fa-moon" aria-hidden="true"></i>
+        <i class="fas fa-sun" aria-hidden="true"></i>
+    </button>
+
+    <script src="/subpage.js?v=20261110"></script>
+    <script>
+        // A quiet Game of Life in the background, in the page's own colours
+        (function () {
+            const canvas = document.getElementById('lifeBg');
+            const ctx = canvas.getContext('2d');
+            const CELL = 14;
+            let cols, rows, grid;
+
+            function ink() {
+                const v = getComputedStyle(document.documentElement).getPropertyValue('--ink').trim();
+                return 'rgb(' + v + ' / 0.13)'; // space-separated channels, so the alpha syntax is valid
+            }
+
+            function seed() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width = innerWidth * dpr;
+                canvas.height = innerHeight * dpr;
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                cols = Math.ceil(innerWidth / CELL);
+                rows = Math.ceil(innerHeight / CELL);
+                grid = Array.from({ length: rows }, () => Array.from({ length: cols }, () => Math.random() < 0.18 ? 1 : 0));
+            }
+
+            function step() {
+                grid = grid.map((row, y) => row.map((alive, x) => {
+                    let n = 0;
+                    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+                        if (dx || dy) n += grid[(y + dy + rows) % rows][(x + dx + cols) % cols];
+                    }
+                    return n === 3 || (alive && n === 2) ? 1 : 0;
+                }));
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, innerWidth, innerHeight);
+                ctx.fillStyle = ink();
+                grid.forEach((row, y) => row.forEach((alive, x) => {
+                    if (alive) ctx.fillRect(x * CELL + 1, y * CELL + 1, CELL - 2, CELL - 2);
+                }));
+            }
+
+            seed();
+            draw();
+            if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                setInterval(() => { step(); draw(); }, 140);
+            }
+            addEventListener('resize', () => { seed(); draw(); });
+            document.addEventListener('themechange', draw);
+        })();
+    </script>
+</body>
+</html>

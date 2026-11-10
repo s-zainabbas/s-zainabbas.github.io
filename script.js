@@ -74,12 +74,21 @@ function initParticles() {
     if (typeof particlesJS === 'undefined') return;
 
     const particleCount = window.innerWidth < 768 ? 85 : 190;
-    const themeColor = () => (isDarkTheme() ? '#ffffff' : '#000000');
+    // Forest particles on oat (oat on forest in dark mode), with a few tomato sparks
+    const OAT = { r: 238, g: 229, b: 212 };
+    const FOREST = { r: 29, g: 74, b: 53 };
+    const TOMATO = { r: 242, g: 70, b: 46 };
+    const TOMATO_HEX = '#F2462E';
+    const themeColor = () => (isDarkTheme() ? '#EEE5D4' : '#1D4A35');
+    const baseRgb = () => (isDarkTheme() ? OAT : FOREST);
+    const isTomato = (c) => c.r === TOMATO.r && c.g === TOMATO.g && c.b === TOMATO.b;
+    // particles.js picks randomly from this list, so roughly 1 in 8 is tomato
+    const particlePalette = () => [...Array(7).fill(themeColor()), TOMATO_HEX];
 
     particlesJS('particles-js', {
         particles: {
             number: { value: particleCount, density: { enable: true, value_area: 850 } },
-            color: { value: themeColor() },
+            color: { value: particlePalette() },
             shape: { type: 'circle' },
             opacity: {
                 value: 0.45,
@@ -121,11 +130,11 @@ function initParticles() {
     document.addEventListener('themechange', () => {
         const pJS = window.pJSDom && window.pJSDom[0] && window.pJSDom[0].pJS;
         if (!pJS) return;
-        const hex = themeColor();
-        const rgb = isDarkTheme() ? { r: 255, g: 255, b: 255 } : { r: 0, g: 0, b: 0 };
-        pJS.particles.color.value = hex; // used for particles added later by clicks
+        const rgb = baseRgb();
+        pJS.particles.color.value = particlePalette(); // used for particles added later by clicks
         pJS.particles.line_linked.color_rgb_line = rgb;
-        pJS.particles.array.forEach(p => { p.color.rgb = { ...rgb }; });
+        // Keep the tomato sparks; recolour the rest
+        pJS.particles.array.forEach(p => { if (!isTomato(p.color.rgb)) p.color.rgb = { ...rgb }; });
     });
 }
 
@@ -165,7 +174,7 @@ function init3DScene() {
     // Wireframe shell — just the sphere, no solid core
     const outerGeometry = new THREE.IcosahedronGeometry(2.5, 3);
     const outerMaterial = new THREE.MeshPhongMaterial({
-        color: isDarkTheme() ? 0xffffff : 0x000000,
+        color: isDarkTheme() ? 0xEEE5D4 : 0x1D4A35,
         wireframe: true,
         transparent: true,
         opacity: isDarkTheme() ? 0.22 : 0.32
@@ -175,7 +184,7 @@ function init3DScene() {
 
     // Glowing digit texture: soft, restrained halo behind a crisp digit — enough to
     // read as "glowing" without looking neon
-    const GLOW_COLOR = '#e63946';
+    const GLOW_COLOR = '#F2462E';
     function createDigitTexture(digit, dark) {
         const size = 128;
         const canvas = document.createElement('canvas');
@@ -195,7 +204,7 @@ function init3DScene() {
         ctx.textBaseline = 'middle';
         ctx.shadowColor = GLOW_COLOR;
         ctx.shadowBlur = 9;
-        ctx.fillStyle = dark ? '#e5e7eb' : '#1f2937';
+        ctx.fillStyle = dark ? '#EEE5D4' : '#1D4A35';
         ctx.fillText(digit, size / 2, size / 2);
         ctx.shadowBlur = 0;
         ctx.fillText(digit, size / 2, size / 2);
@@ -265,7 +274,7 @@ function init3DScene() {
     scene.add(binaryGroup);
 
     document.addEventListener('themechange', () => {
-        outerMaterial.color.set(isDarkTheme() ? 0xffffff : 0x000000);
+        outerMaterial.color.set(isDarkTheme() ? 0xEEE5D4 : 0x1D4A35);
         outerMaterial.opacity = isDarkTheme() ? 0.22 : 0.32;
         sprites.forEach(s => {
             s.material.map = getDigitTexture(s.userData.digit);
@@ -996,16 +1005,6 @@ function initMobileMenu() {
     });
 }
 
-// Route programmatic scrolls through Lenis (scroll-fx.js) when it is running,
-// so they get the same smooth easing and scroll-lens effect as wheel scrolling.
-function smoothScrollTo(top) {
-    if (window.lenis) {
-        window.lenis.scrollTo(top, { duration: 1.2 });
-    } else {
-        window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-    }
-}
-
 // ---------- Smooth anchor scroll with sticky-nav offset ----------
 function initSmoothAnchorScroll() {
     const nav = document.getElementById('mainNav');
@@ -1021,7 +1020,7 @@ function initSmoothAnchorScroll() {
             e.preventDefault();
             const navHeight = nav ? nav.getBoundingClientRect().height : 0;
             const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
-            smoothScrollTo(top);
+            window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
             history.pushState(null, '', targetId);
         });
     });
@@ -1141,7 +1140,7 @@ function initBackToTop() {
     window.addEventListener('scroll', update, { passive: true });
 
     btn.addEventListener('click', () => {
-        smoothScrollTo(0);
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
 }
 

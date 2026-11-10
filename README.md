@@ -6,7 +6,7 @@ Personal portfolio website for **Zain Abbas**, a computer science professional f
 
 ## Overview
 
-The site brings together professional experience, education, certifications, technical skills, and selected work in a responsive, accessible single-page format. It also links to featured projects, including **Game of Life** and **Stockify**.
+The site brings together professional experience, education, certifications, technical skills and selected work in a responsive, accessible format, in English and French. Projects include live previews of **Game of Life**, **Stockify** and **Daily Dashboard** and case-study pages.
 
 ## Highlights
 
@@ -44,14 +44,26 @@ npm run build
 
 ```text
 .
-├── Images/             # Portfolio and organization imagery
-├── cv/                 # Curriculum vitae
-├── src/tailwind.css    # Tailwind source stylesheet
-├── index.html          # Website markup
-├── script.js           # Site interactions
-├── styles.css          # Custom styles
-└── tailwind.css        # Generated Tailwind stylesheet
+├── Images/                 # Photos, logos, client screenshots, social share card
+├── cv/                     # Curriculum vitae
+├── projects/               # Case-study pages (Stockify, Daily Dashboard)
+├── src/tailwind.css        # Tailwind source stylesheet
+├── index.html              # Main page
+├── 404.html                # Not-found page (GitHub Pages serves it automatically)
+├── script.js               # Core interactions: theme, 3D hero, previews, contact form
+├── features.js             # Timeline, GitHub activity, ⌘K menu, magnetic buttons, testimonials, analytics
+├── i18n.js                 # English / French switch and the French text
+├── subpage.js              # Theme toggle and progress bar for the standalone pages
+├── styles.css              # Custom styles and colour tokens (oat, forest, tomato)
+├── tailwind.css            # Generated Tailwind stylesheet
+├── robots.txt, sitemap.xml # Search engine files
 ```
+
+## Things to fill in
+
+- **Testimonials:** add quotes to `TESTIMONIALS` in `features.js` and the "Kind Words" section appears.
+- **Visitor stats:** create a free [GoatCounter](https://www.goatcounter.com) site and put its code in `GOATCOUNTER_CODE` in `features.js`.
+- **French text:** edit the `FR` list in `i18n.js`; each key is the exact English text on the page.
 
 ## Deployment
 

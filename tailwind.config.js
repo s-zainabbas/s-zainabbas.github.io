@@ -5,7 +5,7 @@
 const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 
 module.exports = {
-  content: ['./index.html', './script.js'],
+  content: ['./index.html', './404.html', './projects/*.html', './*.js'],
   darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {

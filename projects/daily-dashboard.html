@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Dashboard case study — Zain Abbas</title>
+    <meta name="description" content="How I rebuilt my Daily Dashboard from a single HTML file into an offline-first React and TypeScript app with Google Drive sync.">
+    <meta name="theme-color" content="#EEE5D4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0D2118" media="(prefers-color-scheme: dark)">
+    <link rel="canonical" href="https://s-zainabbas.github.io/projects/daily-dashboard.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Daily Dashboard — a case study by Zain Abbas">
+    <meta property="og:description" content="From a 32 KB single HTML file to an offline-first React and TypeScript app with Google Drive sync.">
+    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem('theme'); } catch (e) {}
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../tailwind.css?v=20261110">
+    <link rel="stylesheet" href="../styles.css?v=20261110">
+</head>
+<body class="bg-page text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+
+    <header class="sub-nav">
+        <div class="sub-nav-inner">
+            <a href="../index.html#projects" class="sub-back"><i class="fas fa-arrow-left" aria-hidden="true"></i> All projects</a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+                <i class="fas fa-sun" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+        <div class="cs">
+            <section class="cs-hero">
+                <p class="eyebrow mb-4">Case study · Personal project</p>
+                <h1 class="cs-title">Daily Dashboard<span class="hl-accent">.</span></h1>
+                <p class="cs-lede">
+                    The command centre I open every morning: one priority, tasks, today's schedule, a focus timer, habits,
+                    notes and an end-of-day journal on a single screen. It works offline, keeps data private, and can sync
+                    through my own Google Drive.
+                </p>
+                <dl class="cs-facts">
+                    <div><dt>Role</dt><dd>Design, development, testing</dd></div>
+                    <div><dt>Stack</dt><dd>React 18, strict TypeScript, Vite</dd></div>
+                    <div><dt>Quality</dt><dd>Vitest unit tests run on every deploy</dd></div>
+                    <div><dt>Runs on</dt><dd>Any browser, offline as an installable app</dd></div>
+                </dl>
+                <div class="flex flex-wrap gap-3">
+                    <a href="https://s-zainabbas.github.io/daily-dashboard/?demo" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                        Try the demo day <i class="fas fa-arrow-up-right-from-square ml-2 text-sm" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://github.com/s-zainabbas/daily-dashboard" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                        <i class="fab fa-github mr-2" aria-hidden="true"></i> Source code
+                    </a>
+                </div>
+            </section>
+
+            <section class="cs-section">
+                <h2>Why I rewrote it</h2>
+                <p>
+                    Version one was a single 32 KB HTML file. I used it daily, and that's how I found its bugs, some quiet,
+                    some that lost data. Patching them one at a time wasn't working, so I rebuilt it in React and TypeScript
+                    with tests around the parts that had failed. These are the bugs version two fixed:
+                </p>
+                <table class="cs-table">
+                    <thead><tr><th>Bug in v1</th><th>Cause and fix</th></tr></thead>
+                    <tbody>
+                        <tr><td>Wrong "today" in many time zones</td><td>Dates were worked out in UTC, so evening users in the Americas saw tomorrow's tasks. v2 uses local dates throughout, with tests.</td></tr>
+                        <tr><td>Habit streaks never went above 1</td><td>The streak loop stepped back 86,400,000 <em>days</em> at a time instead of one.</td></tr>
+                        <tr><td>Quick-add tasks disappeared</td><td>A second script wrote straight to storage and the main app overwrote it on its next save. v2 has one store that owns all data.</td></tr>
+                        <tr><td>"New Day" deleted unfinished tasks</td><td>Rollover now carries unfinished items over and saves the day to a journal.</td></tr>
+                        <tr><td>The focus timer drifted</td><td>It counted ticks, which slow down in background tabs. v2 stores timestamps, so it stays accurate across tabs and reloads.</td></tr>
+                        <tr><td>Quick links accepted <code>javascript:</code> URLs</td><td>Links are now validated before they're saved.</td></tr>
+                    </tbody>
+                </table>
+                <p class="mt-4">Data saved by v1 is migrated automatically the first time v2 opens.</p>
+            </section>
+
+            <section class="cs-section">
+                <h2>Architecture</h2>
+                <p>
+                    There's no state library. A small external store built on React's <code>useSyncExternalStore</code> is the
+                    single source of truth. It saves with a short debounce, stays in sync across open tabs, and runs versioned
+                    migrations when the data format changes.
+                </p>
+                <figure class="cs-figure">
+                    <svg viewBox="0 0 760 330" role="img" aria-labelledby="dashDiagramTitle">
+                        <title id="dashDiagramTitle">React panels read and write one store. The store saves to localStorage, syncs other open tabs, and hands changes to a sync engine that merges with a file in Google Drive. A service worker makes the app work offline. Tests and the build run in GitHub Actions before deploying to GitHub Pages.</title>
+                        <defs>
+                            <marker id="dArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow"/></marker>
+                            <marker id="dArrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow-accent"/></marker>
+                        </defs>
+
+                        <rect x="20" y="40" width="180" height="70" rx="12" class="dg-box-strong"/>
+                        <text x="38" y="70" class="dg-text-inv">React panels</text>
+                        <text x="38" y="90" class="dg-sub-inv">tasks · schedule · focus · journal</text>
+
+                        <rect x="270" y="40" width="190" height="70" rx="12" class="dg-box"/>
+                        <text x="288" y="70" class="dg-text">Store</text>
+                        <text x="288" y="90" class="dg-sub">useSyncExternalStore</text>
+
+                        <rect x="540" y="14" width="200" height="48" rx="10" class="dg-box"/>
+                        <text x="556" y="35" class="dg-text">localStorage</text>
+                        <text x="556" y="52" class="dg-sub">debounced save · migrations</text>
+
+                        <rect x="540" y="88" width="200" height="48" rx="10" class="dg-box"/>
+                        <text x="556" y="109" class="dg-text">Other open tabs</text>
+                        <text x="556" y="126" class="dg-sub">kept in sync</text>
+
+                        <rect x="270" y="170" width="190" height="70" rx="12" class="dg-box"/>
+                        <text x="288" y="200" class="dg-text">Sync engine</text>
+                        <text x="288" y="220" class="dg-sub">three-way merge</text>
+
+                        <rect x="540" y="170" width="200" height="70" rx="12" class="dg-box-accent"/>
+                        <text x="556" y="200" class="dg-text">Google Drive</text>
+                        <text x="556" y="220" class="dg-sub">hidden app-data folder</text>
+
+                        <rect x="20" y="170" width="180" height="70" rx="12" class="dg-box"/>
+                        <text x="38" y="200" class="dg-text">Service worker</text>
+                        <text x="38" y="220" class="dg-sub">works offline</text>
+
+                        <path d="M200 75 H266" class="dg-line" marker-end="url(#dArrow)" marker-start="url(#dArrow)"/>
+                        <path d="M460 66 C500 66 500 38 536 38" class="dg-line" marker-end="url(#dArrow)"/>
+                        <path d="M460 84 C500 84 500 112 536 112" class="dg-line" marker-end="url(#dArrow)"/>
+                        <path d="M365 110 V166" class="dg-line" marker-end="url(#dArrow)"/>
+                        <path d="M460 205 H536" class="dg-line-accent" marker-end="url(#dArrowA)" marker-start="url(#dArrowA)"/>
+
+                        <text x="20" y="282" class="dg-sub">EVERY PUSH</text>
+                        <rect x="20" y="292" width="180" height="32" rx="9" class="dg-box"/><text x="36" y="313" class="dg-sub">Vitest unit tests</text>
+                        <rect x="270" y="292" width="190" height="32" rx="9" class="dg-box"/><text x="286" y="313" class="dg-sub">Vite build</text>
+                        <rect x="540" y="292" width="200" height="32" rx="9" class="dg-box-strong"/><text x="556" y="313" class="dg-sub-inv">GitHub Pages (live)</text>
+                        <path d="M200 308 H266" class="dg-line" marker-end="url(#dArrow)"/>
+                        <path d="M460 308 H536" class="dg-line" marker-end="url(#dArrow)"/>
+                    </svg>
+                    <figcaption>Every change saves on the device first. Drive sync is optional and never blocks editing.</figcaption>
+                </figure>
+            </section>
+
+            <section class="cs-section">
+                <h2>The hard part: syncing without losing anything</h2>
+                <p>
+                    With Drive sync on, the same data can change on a laptop and a phone at once. Overwriting with the newest
+                    file would quietly drop edits, so the sync engine runs a <strong>three-way merge</strong>. It compares the
+                    last synced copy with this device and with Drive:
+                </p>
+                <ul class="cs-list">
+                    <li>Every task, event and habit has a stable ID and a last-changed time, so changes are matched item by item.</li>
+                    <li>A change on one side beats unchanged data on the other, so older data never overwrites newer data.</li>
+                    <li>Edits to different items, or different fields of one item, are combined. Focus minutes from two devices add up.</li>
+                    <li>Deletions leave a tombstone for 90 days, so a deleted task doesn't come back from an older copy.</li>
+                    <li>If the same field changed on both sides, the app <strong>asks</strong> which to keep and uploads nothing until you choose.</li>
+                    <li>Before uploading, it checks the Drive file hasn't changed. If another device saved at that moment, it recovers that save from the file's history and merges it.</li>
+                </ul>
+                <p>
+                    Sign-in uses Google Identity Services with a short-lived token limited to the app's own hidden Drive folder.
+                    There's no client secret and no server. The tests run two simulated devices against an in-memory Drive.
+                </p>
+            </section>
+
+            <section class="cs-section">
+                <h2>Details I'm proud of</h2>
+                <div class="cs-cards">
+                    <div class="cs-card">
+                        <h3>Plain-English quick add</h3>
+                        <p>Type <code>Dentist fri 3-4pm</code> and it becomes an event; <code>Call Sam tomorrow !high</code> becomes a task. A live preview shows what was understood before you press Enter.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Job application tracker</h3>
+                        <p>Paste a job link and the company, role and location fill in from the Greenhouse, Lever and Ashby APIs. A copy of the description is kept in case the posting comes down.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Keyboard first</h3>
+                        <p><code>⌘K</code> runs any action. Single keys add a task, an event or start a focus session, and <code>?</code> lists them all.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Accessible by default</h3>
+                        <p>Native <code>&lt;dialog&gt;</code> modals with focus trapping and Esc, labelled controls, visible focus rings and reduced-motion support.</p>
+                    </div>
+                </div>
+            </section>
+
+            <nav class="cs-next" aria-label="More projects">
+                <a href="stockify.html"><small>Previous case study</small><strong>Stockify</strong></a>
+                <a href="../index.html#projects"><small>Back to</small><strong>All projects</strong></a>
+            </nav>
+        </div>
+    </main>
+
+    <footer class="sub-footer band-forest">
+        &copy;<span id="currentYear">2026</span> Designed &amp; built by Zain Abbas
+    </footer>
+
+    <script src="../subpage.js?v=20261110"></script>
+</body>
+</html>

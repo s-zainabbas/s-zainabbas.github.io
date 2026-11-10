@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zain Abbas — Computer Science Professional</title>
-    <meta name="description" content="Zain Abbas — Computer Science graduate specializing in data analysis, process automation and web development. Portfolio of experience, projects and skills.">
+    <title>Zain Abbas — Data Analyst &amp; Web Developer</title>
+    <meta name="description" content="Zain Abbas is a data analyst and web developer near Geneva. Data analysis for IATA and CERN, hand-coded websites for Geneva businesses, and open-source tools you can try live.">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#EEE5D4" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0D2118" media="(prefers-color-scheme: dark)">
 
     <!-- Apply the saved (or system) theme before first paint to avoid a flash -->
     <script>
@@ -18,14 +18,53 @@
                 theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             }
             document.documentElement.setAttribute('data-theme', theme);
+            // Scroll reveals only hide content when JavaScript is running to bring it back
+            document.documentElement.classList.add('js');
+            // The colour-card intro plays once per visit
+            try {
+                if (sessionStorage.getItem('introSeen')) document.documentElement.classList.add('intro-seen');
+                sessionStorage.setItem('introSeen', '1');
+            } catch (e) {}
         })();
     </script>
 
     <!-- Open Graph / Social preview -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Zain Abbas — Computer Science Professional">
+    <meta property="og:title" content="Zain Abbas — Data Analyst &amp; Web Developer">
     <meta property="og:description" content="Data analysis, process automation and web development. Explore my experience, projects and skills.">
-    <meta property="og:image" content="Images/me-web.jpg?v=20261105">
+    <meta property="og:url" content="https://s-zainabbas.github.io/">
+    <meta property="og:site_name" content="Zain Abbas">
+    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Zain Abbas, Data Analyst and Web Developer">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zain Abbas — Data Analyst &amp; Web Developer">
+    <meta name="twitter:description" content="Data analysis for IATA and CERN, hand-coded websites for Geneva businesses, and open-source tools you can try live.">
+    <meta name="twitter:image" content="https://s-zainabbas.github.io/Images/og-card.jpg">
+    <link rel="canonical" href="https://s-zainabbas.github.io/">
+    <link rel="alternate" hreflang="en" href="https://s-zainabbas.github.io/">
+    <link rel="alternate" hreflang="fr" href="https://s-zainabbas.github.io/?lang=fr">
+
+    <!-- Structured data: tells search engines who this site is about -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Zain Abbas",
+        "jobTitle": "Data Analyst & Web Developer",
+        "url": "https://s-zainabbas.github.io/",
+        "image": "https://s-zainabbas.github.io/Images/me-web.jpg",
+        "email": "mailto:zzain.abbas@hotmail.com",
+        "address": { "@type": "PostalAddress", "addressLocality": "Saint-Genis-Pouilly", "addressCountry": "FR" },
+        "alumniOf": [
+            { "@type": "CollegeOrUniversity", "name": "Webster University Geneva" },
+            { "@type": "CollegeOrUniversity", "name": "Université Savoie Mont Blanc" }
+        ],
+        "knowsAbout": ["Data analysis", "Web development", "JavaScript", "TypeScript", "React", "Power BI", "Salesforce", "SQL"],
+        "sameAs": ["https://www.linkedin.com/in/zain-abbas-/", "https://github.com/s-zainabbas"]
+    }
+    </script>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon_io/apple-touch-icon.png">
@@ -38,9 +77,19 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="tailwind.css?v=20261105">
-    <link rel="stylesheet" href="styles.css?v=20261108">
+    <link rel="stylesheet" href="styles.css?v=20261110">
 </head>
 <body class="min-h-screen bg-page text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <!-- Intro: the three palette cards stack up, then lift away (pure CSS, ends on its own) -->
+    <div class="intro" aria-hidden="true">
+        <div class="intro-stack">
+            <div class="intro-card intro-oat"><span>Data</span><small>60%</small></div>
+            <div class="intro-card intro-forest"><span>Code</span><small>30%</small></div>
+            <div class="intro-card intro-tomato"><span>Zain Abbas.</span><small>10%</small></div>
+        </div>
+    </div>
     <!-- Scroll progress bar -->
     <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
 
@@ -53,22 +102,25 @@
             <div class="container mx-auto px-6 py-4">
                 <div class="flex justify-between items-center">
                     <a href="#home" class="text-2xl font-bold tracking-tight">&copy;SZA</a>
-                    <div class="flex items-center gap-4 md:gap-8">
-                    <div class="hidden md:flex items-center space-x-8" id="navLinks">
+                    <div class="flex items-center gap-2 sm:gap-3 xl:gap-6">
+                    <div class="hidden lg:flex items-center lg:space-x-5 xl:space-x-8 whitespace-nowrap mr-2" id="navLinks">
                         <a href="#home" class="nav-link" data-section="home">Home</a>
                         <a href="#about" class="nav-link" data-section="about">About</a>
                         <a href="#experience" class="nav-link" data-section="experience">Experience</a>
-                        <a href="#education" class="nav-link" data-section="education">Education</a>
                         <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
                         <a href="#skills" class="nav-link" data-section="skills">Skills</a>
                         <a href="#projects" class="nav-link" data-section="projects">Projects</a>
                         <a href="#contact" class="nav-link" data-section="contact">Contact</a>
                     </div>
+                    <button type="button" class="cmdk-trigger" data-cmdk-open aria-label="Open the command menu" title="Command menu">
+                        <i class="fas fa-magnifying-glass" aria-hidden="true"></i><kbd><span class="cmdk-key-mod">⌘</span>K</kbd>
+                    </button>
+                    <button type="button" class="lang-toggle" data-lang-toggle lang="fr" aria-label="Lire en français">FR</button>
                     <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" title="Toggle dark mode">
                         <i class="fas fa-moon" aria-hidden="true"></i>
                         <i class="fas fa-sun" aria-hidden="true"></i>
                     </button>
-                    <button id="menuToggle" class="md:hidden focus:outline-none relative w-8 h-8" aria-label="Toggle navigation menu" aria-expanded="false">
+                    <button id="menuToggle" class="lg:hidden relative w-8 h-8" aria-label="Toggle navigation menu" aria-expanded="false">
                         <span class="hamburger-line line-1"></span>
                         <span class="hamburger-line line-2"></span>
                         <span class="hamburger-line line-3"></span>
@@ -80,7 +132,6 @@
                         <a href="#home" class="nav-link">Home</a>
                         <a href="#about" class="nav-link">About</a>
                         <a href="#experience" class="nav-link">Experience</a>
-                        <a href="#education" class="nav-link">Education</a>
                         <a href="#certifications" class="nav-link">Certifications</a>
                         <a href="#skills" class="nav-link">Skills</a>
                         <a href="#projects" class="nav-link">Projects</a>
@@ -90,14 +141,16 @@
             </div>
         </nav>
 
+        <main id="main" tabindex="-1">
         <!-- Intro Section -->
         <section id="home" class="container mx-auto px-6 py-20 md:py-32 flex flex-col md:flex-row items-center">
             <div class="md:w-1/2 mb-12 md:mb-0 reveal-up">
+                <a href="#contact" class="status-badge mb-6"><span class="status-dot" aria-hidden="true"></span>Available for freelance projects</a>
                 <p class="eyebrow mb-4">Hello, welcome to my corner of the internet</p>
-                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">I'm <span class="font-black">Zain</span><span class="wave" aria-hidden="true">🖐🏽</span></h1>
-                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Computer Science <span class="font-black">Professional</span></h2>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">I'm <span class="font-black hl-accent">Zain</span><span class="wave" aria-hidden="true">🖐🏽</span></h1>
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6">Data Analyst &amp; <span class="font-black">Web Developer</span></h2>
                 <p class="text-lg mb-8 max-w-lg text-muted">
-                    My focus is on practical solutions: cleaner data, smoother processes, and strategies that drive real growth.
+                    I turn messy data into clear decisions, and I hand-code the websites and tools that put them to work, for organisations like IATA and CERN and for businesses around Geneva.
                 </p>
                 <div class="flex flex-wrap gap-4 mb-10">
                     <a href="#contact" class="action-button action-button-primary px-6 py-3 rounded-lg font-medium">Hire Me</a>
@@ -106,11 +159,15 @@
                 <div class="flex flex-wrap gap-8 stat-row">
                     <div class="stat-item">
                         <span class="stat-number" data-count="6" data-suffix="+">0</span>
-                        <span class="stat-label">Years Experience</span>
+                        <span class="stat-label">Years in industry</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="5">0</span>
+                        <span class="stat-label">Projects live</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-number" data-count="8">0</span>
-                        <span class="stat-label">Organizations</span>
+                        <span class="stat-label">Organisations</span>
                     </div>
                 </div>
             </div>
@@ -138,22 +195,27 @@
                     </div>
                     <div class="md:w-2/3 md:pl-12 reveal-up">
                         <p class="mb-6 leading-relaxed">
-                            I'm a passionate Computer Science graduate with expertise in software development, data structures, and system design.
-                            With 6+ years of experience in the tech industry, I've worked on diverse projects ranging from website development
-                            to automated workflow models.
+                            I work where data meets code. At IATA I analysed the special cargo portfolio and streamlined Salesforce workflows.
+                            For businesses in Geneva I build websites from scratch, audit their tools, and automate the busywork behind
+                            their CRM and email campaigns.
                         </p>
                         <p class="mb-6 leading-relaxed">
-                            My approach combines technical excellence with creative problem-solving. I thrive in challenging environments
-                            where I can apply my knowledge to build efficient, scalable data solutions.
+                            I like problems where the answer is in the data and the fix is in the code. Everything on this site, from the
+                            live project previews to the case-study pages, is hand-written HTML, CSS and JavaScript, with no templates.
+                        </p>
+                        <p class="about-next mb-6">
+                            <span class="about-next-label">Coming soon</span>
+                            I've been offered the role of Head of AI Development &amp; Technologies at Corvit Networks, starting once the
+                            company completes its registration in Geneva.
                         </p>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
                                 <p><span class="font-medium">Name:</span> Zain Abbas</p>
-                                <p><span class="font-medium">Degree:</span> Computer Science</p>
+                                <p><span class="font-medium">Degree:</span> BSc Computer Science</p>
                             </div>
                             <div>
                                 <p><span class="font-medium">Email:</span> zzain.abbas@hotmail.com</p>
-                                <p><span class="font-medium">Location:</span> Saint Genis, France</p>
+                                <p><span class="font-medium">Location:</span> Saint-Genis, France (Geneva area)</p>
                             </div>
                         </div>
                         <div class="mt-8">
@@ -163,11 +225,32 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="now reveal-up">
+                    <div class="now-head">
+                        <h3 class="now-title">Now</h3>
+                        <span class="now-updated">Updated November 2026</span>
+                    </div>
+                    <div class="now-grid">
+                        <div class="now-item">
+                            <span class="now-label"><i class="fas fa-briefcase" aria-hidden="true"></i>Working on</span>
+                            <p>Technical support for FUNdamental Networking and BBold: data migration, websites, and CRM and email automation.</p>
+                        </div>
+                        <div class="now-item">
+                            <span class="now-label"><i class="fas fa-rocket" aria-hidden="true"></i>Up next</span>
+                            <p>Head of AI Development &amp; Technologies at Corvit Networks, once the company's registration in Geneva is complete.</p>
+                        </div>
+                        <div class="now-item">
+                            <span class="now-label"><i class="fas fa-code" aria-hidden="true"></i>Building</span>
+                            <p>This portfolio, Stockify and Daily Dashboard, all open source on GitHub.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Organizations Section -->
-        <section class="py-20 bg-page overflow-hidden">
+        <section class="py-20 band-forest overflow-hidden">
             <div class="container mx-auto px-2">
                 <h2 class="section-title reveal-up">Organizations I've Contributed or Collaborated With</h2>
             </div>
@@ -259,215 +342,134 @@
             </div>
         </section>
 
-        <!-- Professional Experience Section -->
+        <!-- Experience & Education: one timeline -->
         <section id="experience" class="py-20 bg-page-alt">
             <div class="container mx-auto px-6">
-                <h2 class="section-title reveal-up">Professional Experience</h2>
-
-                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- IATA Experience -->
-                    <div class="experience-card reveal-up">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Business Data Analyst</h3>
-                                <div class="experience-company">
-                                    <img src="Images/iata_logo.png" alt="IATA" class="w-6 h-6 object-contain" loading="lazy">
-                                    International Air Transport Association - IATA
-                                </div>
-                            </div>
-                            <span class="experience-date">Jan 2024 - July 2024</span>
-                        </div>
-                        <div class="experience-description">
-                            Leading data analysis and strategic initiatives in the special cargo portfolio while managing critical contracts and optimizing CRM workflows.
-                        </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Led comprehensive data analysis on special cargo portfolio, driving strategic decisions and revenue growth through actionable insights.</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Managed complex contract creation and oversight for governments, airlines, and IT providers, ensuring compliance and optimization.</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Optimized CRM workflows in Salesforce, resulting in significant improvement in deal closure rates and process efficiency.</span>
-                            </li>
-                        </ul>
-                        <div class="experience-skills">
-                            <div class="experience-skill">SAP ERP</div>
-                            <div class="experience-skill">Salesforce</div>
-                            <div class="experience-skill">Figma</div>
-                            <div class="experience-skill">Excel</div>
-                            <div class="experience-skill">Power BI</div>
-                            <div class="experience-skill">MySQL</div>
-                        </div>
-                    </div>
-
-                    <!-- BBold Experience -->
-                    <div class="experience-card reveal-up">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Technical Consultant</h3>
-                                <div class="experience-company">
-                                    <img src="Images/bbold_logo.jpg" alt="BBold" class="w-6 h-6 object-contain" loading="lazy">
-                                    BBold SARL - Career & Corporate Consultancy
-                                </div>
-                            </div>
-                            <span class="experience-date">Dec 2021 - Aug 2023</span>
-                        </div>
-                        <div class="experience-description">
-                            Spearheaded technical initiatives and digital transformation projects while creating comprehensive documentation and implementing data-driven strategies.
-                        </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Led website development and maintenance initiatives, optimizing product sales through improved user experience and functionality.</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Created comprehensive training documentation for essential tools including Hubspot, Zoho, and Canva.</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Implemented data-driven strategies to maximize outreach and attract new clients, resulting in significant business growth.</span>
-                            </li>
-                        </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">Hubspot</span>
-                            <span class="experience-skill">Zoho</span>
-                            <span class="experience-skill">Canva</span>
-                            <span class="experience-skill">Google Analytics</span>
-                            <span class="experience-skill">Power BI</span>
-                            <span class="experience-skill">Web Development</span>
-                        </div>
-                    </div>
-
-                    <!-- Student Ambassador Experience -->
-                    <div class="experience-card reveal-up">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Student Ambassador</h3>
-                                <div class="experience-company">
-                                    <img src="Images/webster_logo.png" alt="Webster University" class="w-6 h-6 object-contain" loading="lazy">
-                                    Webster University Geneva, Switzerland
-                                </div>
-                            </div>
-                            <span class="experience-date">Spring 2018 - Fall 2021</span>
-                        </div>
-                        <div class="experience-description">
-                            Led digital initiatives and student engagement strategies while managing online platforms and data analytics for the university.
-                        </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Developed and maintained student platforms including website and student portals for new admissions</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Implemented data analytics solutions using Power BI, creating interactive dashboards for student insights</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Managed university's online presence through web and mobile platforms, engaging with prospective students via multimedia content</span>
-                            </li>
-                        </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">Web Development</span>
-                            <span class="experience-skill">Data Analysis</span>
-                            <span class="experience-skill">Data Visualization</span>
-                            <span class="experience-skill">Reporting</span>
-                        </div>
-                    </div>
-
-                    <!-- CERN Experience -->
-                    <div class="experience-card reveal-up">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">Distributed Data Manager</h3>
-                                <div class="experience-company">
-                                    <img src="Images/cern_logo.png" alt="CERN" class="w-6 h-6 object-contain" loading="lazy">
-                                    CERN
-                                </div>
-                            </div>
-                            <span class="experience-date">Summer 2018 & Summer 2019</span>
-                        </div>
-                        <div class="experience-description">
-                            Developed and implemented advanced data management solutions while enhancing cybersecurity measures through AI-powered systems.
-                        </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Developed sophisticated AI word filter and response bots to enhance cybersecurity measures.</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Implemented Docker containerization solutions for efficient and secure data distribution.</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Leveraged Power BI for comprehensive data analysis and visualization of complex datasets.</span>
-                            </li>
-                        </ul>
-                        <div class="experience-skills">
-                            <span class="experience-skill">Python</span>
-                            <span class="experience-skill">C++</span>
-                            <span class="experience-skill">MySQL</span>
-                            <span class="experience-skill">Docker</span>
-                            <span class="experience-skill">Power BI</span>
-                        </div>
-                    </div>
+                <h2 class="section-title reveal-up">Experience &amp; Education</h2>
+                <p class="section-subtitle reveal-up">From CERN and IATA to independent consulting, newest first.</p>
+                <div class="timeline-filters reveal-up" role="group" aria-label="Filter the timeline">
+                    <button type="button" class="timeline-filter is-active" data-filter="all" aria-pressed="true">All</button>
+                    <button type="button" class="timeline-filter" data-filter="work" aria-pressed="false">Work</button>
+                    <button type="button" class="timeline-filter" data-filter="education" aria-pressed="false">Education</button>
                 </div>
-            </div>
-        </section>
-
-        <!-- Education Section -->
-        <section id="education" class="py-20 bg-page">
-            <div class="container mx-auto px-6">
-                <h2 class="section-title reveal-up">Education</h2>
-                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Education Item 1 -->
-                    <div class="experience-card reveal-up">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">BSc Computer Science</h3>
-                                <div class="experience-company">
-                                    <img src="Images/webster_logo.png" alt="Webster University" class="w-6 h-6 object-contain" loading="lazy">
-                                    Webster University Geneva, Switzerland
-                                </div>
-                            </div>
-                            <span class="experience-date">2017 - 2020</span>
-                        </div>
-                        <div class="experience-description">
-                            Specialized in software engineering and data analysis with media communication electives.
-                        </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Core focus on software development and data structures</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Advanced coursework in database management</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Studies in media communications and digital marketing</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Education Item 2 -->
-                    <div class="experience-card reveal-up">
-                        <div class="experience-header">
-                            <div>
-                                <h3 class="experience-title">BSc Information Technology</h3>
-                                <div class="experience-company">
-                                    <img src="Images/savoie_logo1.png" alt="Université de Savoie" class="w-6 h-6 object-contain" loading="lazy">
-                                    Université de Savoie, France
-                                </div>
-                            </div>
-                            <span class="experience-date">2014 - 2016</span>
-                        </div>
-                        <div class="experience-description">
-                            Focused on foundational IT principles, networking, and system administration.
-                        </div>
-                        <ul class="experience-highlights">
-                            <li class="experience-highlight">
-                                <span>Strong foundation in IT infrastructure and networking protocols</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Hands-on experience with system administration and security</span>
-                            </li>
-                            <li class="experience-highlight">
-                                <span>Practical training in network configuration and maintenance</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="timeline-wrap" id="timeline">
+                <span class="timeline-line" aria-hidden="true"><span class="timeline-line-fill" id="timelineFill"></span></span>
+                <ol class="timeline">
+                    <li class="timeline-item reveal-up is-upcoming" data-kind="work">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">Next role</span><span class="timeline-badge timeline-badge-soon">Coming soon</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">Head of AI Development &amp; Technologies</h3>
+                            <div class="experience-company"><i class="fas fa-rocket" aria-hidden="true"></i><span>Corvit Networks · Geneva, Switzerland</span></div>
+                            <p class="experience-description">I've been offered the role of leading AI development and technology at Corvit Networks. It starts once the company completes its registration in Geneva.</p>
+                            <div class="experience-skills"><span class="experience-skill">AI strategy</span><span class="experience-skill">Technology leadership</span></div>
+                        </article>
+                    </li>
+                    <li class="timeline-item reveal-up is-current" data-kind="work">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">Aug 2024 – Present</span><span class="timeline-badge">Current</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">Freelance Technical Consultant</h3>
+                            <div class="experience-company"><i class="fas fa-laptop-code" aria-hidden="true"></i><span>Independent · Geneva area</span></div>
+                            <p class="experience-description">Independent technical consulting for Geneva businesses: audits, websites, data migration and automation.</p>
+                            <ul class="experience-highlights">
+                                <li class="experience-highlight"><span><strong>FUNdamental Networking:</strong> ran technical and operational audits, then led the follow-up work: data migration, a website built from scratch and improvements across the client’s whole tool ecosystem (ongoing).</span></li>
+                                <li class="experience-highlight"><span><strong>BBold:</strong> website troubleshooting and bug fixing, plus automation for client relationship management and email campaigns (ongoing).</span></li>
+                                <li class="experience-highlight"><span><strong>IATA:</strong> worked on a project with the Airport Charges team, keeping my technical and financial data knowledge current.</span></li>
+                                <li class="experience-highlight"><span>Built and maintain this portfolio and its open-source projects, with a focus on maintainable code, careful data handling and clear documentation.</span></li>
+                            </ul>
+                            <div class="experience-skills"><span class="experience-skill">Technical audits</span><span class="experience-skill">Data migration</span><span class="experience-skill">Web development</span><span class="experience-skill">CRM automation</span><span class="experience-skill">Email automation</span><span class="experience-skill">Documentation</span></div>
+                        </article>
+                    </li>
+                    <li class="timeline-item reveal-up" data-kind="work">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">Jan 2024 – Jul 2024</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">Business Data Analyst</h3>
+                            <div class="experience-company"><img src="Images/iata_logo.png" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>International Air Transport Association (IATA)</span></div>
+                            <p class="experience-description">Data analysis and strategic work on the special cargo portfolio, alongside contract management and CRM workflow optimisation.</p>
+                            <ul class="experience-highlights">
+                                <li class="experience-highlight"><span>Led data analysis on the special cargo portfolio, turning it into insights that shaped strategic and revenue decisions.</span></li>
+                                <li class="experience-highlight"><span>Managed contract creation and oversight for governments, airlines and IT providers, keeping every agreement compliant.</span></li>
+                                <li class="experience-highlight"><span>Optimised CRM workflows in Salesforce to speed up deal closure and simplify the sales process.</span></li>
+                            </ul>
+                            <div class="experience-skills"><span class="experience-skill">SAP ERP</span><span class="experience-skill">Salesforce</span><span class="experience-skill">Power BI</span><span class="experience-skill">Excel</span><span class="experience-skill">MySQL</span><span class="experience-skill">Figma</span></div>
+                        </article>
+                    </li>
+                    <li class="timeline-item reveal-up" data-kind="work">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">Dec 2021 – Aug 2023</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">Technical Consultant</h3>
+                            <div class="experience-company"><img src="Images/bbold_logo.jpg" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>BBold SARL · Career &amp; Corporate Consultancy</span></div>
+                            <p class="experience-description">Technical lead for the company’s digital side: website, tools, documentation and data-driven outreach.</p>
+                            <ul class="experience-highlights">
+                                <li class="experience-highlight"><span>Developed and maintained the company website, improving the user experience behind product sales.</span></li>
+                                <li class="experience-highlight"><span>Wrote training documentation for the team’s core tools, including HubSpot, Zoho and Canva.</span></li>
+                                <li class="experience-highlight"><span>Used data-driven outreach strategies to attract new clients and grow the business.</span></li>
+                            </ul>
+                            <div class="experience-skills"><span class="experience-skill">HubSpot</span><span class="experience-skill">Zoho</span><span class="experience-skill">Canva</span><span class="experience-skill">Google Analytics</span><span class="experience-skill">Power BI</span><span class="experience-skill">Web development</span></div>
+                        </article>
+                    </li>
+                    <li class="timeline-item reveal-up" data-kind="work">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">2018 – 2021</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">Student Ambassador</h3>
+                            <div class="experience-company"><img src="Images/webster_logo.png" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>Webster University Geneva</span></div>
+                            <p class="experience-description">Digital initiatives, student platforms and analytics for the university.</p>
+                            <ul class="experience-highlights">
+                                <li class="experience-highlight"><span>Developed and maintained student platforms, including the website and portals for new admissions.</span></li>
+                                <li class="experience-highlight"><span>Built interactive Power BI dashboards that gave staff insight into student data.</span></li>
+                                <li class="experience-highlight"><span>Managed the university’s web and mobile presence, reaching prospective students with multimedia content.</span></li>
+                            </ul>
+                            <div class="experience-skills"><span class="experience-skill">Web development</span><span class="experience-skill">Power BI</span><span class="experience-skill">Data visualisation</span><span class="experience-skill">Reporting</span></div>
+                        </article>
+                    </li>
+                    <li class="timeline-item reveal-up" data-kind="work">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">Summers 2018 &amp; 2019</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">Distributed Data Manager</h3>
+                            <div class="experience-company"><img src="Images/cern_logo.png" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>CERN</span></div>
+                            <p class="experience-description">Data management and security tooling during two summer placements.</p>
+                            <ul class="experience-highlights">
+                                <li class="experience-highlight"><span>Developed an AI word filter and response bots to strengthen cybersecurity.</span></li>
+                                <li class="experience-highlight"><span>Used Docker containers to distribute data efficiently and securely.</span></li>
+                                <li class="experience-highlight"><span>Analysed and visualised complex datasets in Power BI.</span></li>
+                            </ul>
+                            <div class="experience-skills"><span class="experience-skill">Python</span><span class="experience-skill">C++</span><span class="experience-skill">MySQL</span><span class="experience-skill">Docker</span><span class="experience-skill">Power BI</span></div>
+                        </article>
+                    </li>
+                    <li class="timeline-item reveal-up" data-kind="education" id="education">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">2017 – 2020</span><span class="timeline-kind">Education</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">BSc Computer Science</h3>
+                            <div class="experience-company"><img src="Images/webster_logo.png" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>Webster University Geneva</span></div>
+                            <p class="experience-description">Specialised in software engineering and data analysis, with media communication electives.</p>
+                            <ul class="experience-highlights">
+                                <li class="experience-highlight"><span>Core focus on software development and data structures.</span></li>
+                                <li class="experience-highlight"><span>Advanced coursework in database management.</span></li>
+                                <li class="experience-highlight"><span>Studies in media communications and digital marketing.</span></li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="timeline-item reveal-up" data-kind="education">
+                        <span class="timeline-dot" aria-hidden="true"></span>
+                        <div class="timeline-meta"><span class="timeline-date">2014 – 2016</span><span class="timeline-kind">Education</span></div>
+                        <article class="experience-card timeline-card">
+                            <h3 class="experience-title">BSc Information Technology</h3>
+                            <div class="experience-company"><img src="Images/savoie_logo1.png" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>Université Savoie Mont Blanc, France</span></div>
+                            <p class="experience-description">Foundations of IT, networking and system administration.</p>
+                            <ul class="experience-highlights">
+                                <li class="experience-highlight"><span>IT infrastructure and networking protocols.</span></li>
+                                <li class="experience-highlight"><span>Hands-on system administration and security.</span></li>
+                                <li class="experience-highlight"><span>Practical training in network configuration and maintenance.</span></li>
+                            </ul>
+                        </article>
+                    </li>
+                </ol>
                 </div>
             </div>
         </section>
@@ -538,57 +540,71 @@
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-20 bg-page">
+        <section id="skills" class="py-20 band-forest">
             <div class="container mx-auto px-6">
-                <h2 class="section-title reveal-up">Skills & Tools</h2>
-                <p class="section-subtitle reveal-up">Platforms and technologies I work with day to day</p>
+                <h2 class="section-title reveal-up">Skills &amp; Tools</h2>
+                <p class="section-subtitle reveal-up">The languages, platforms and tools I build and analyse with</p>
 
                 <div class="max-w-7xl mx-auto skills-row mt-12">
                     <div class="skill-category reveal-up">
                         <div class="skill-category-header">
-                            <i class="fas fa-database"></i>
-                            <h3>Data & Analytics</h3>
+                            <i class="fas fa-code" aria-hidden="true"></i>
+                            <h3>Languages &amp; Frameworks</h3>
+                        </div>
+                        <div class="skill-chip-group">
+                            <span class="tool-item">JavaScript</span>
+                            <span class="tool-item">TypeScript</span>
+                            <span class="tool-item">React</span>
+                            <span class="tool-item">Node.js</span>
+                            <span class="tool-item">Python</span>
+                            <span class="tool-item">C++</span>
+                            <span class="tool-item">SQL</span>
+                            <span class="tool-item">HTML &amp; CSS</span>
+                        </div>
+                    </div>
+                    <div class="skill-category reveal-up">
+                        <div class="skill-category-header">
+                            <i class="fas fa-chart-column" aria-hidden="true"></i>
+                            <h3>Data &amp; Analytics</h3>
                         </div>
                         <div class="skill-chip-group">
                             <span class="tool-item">Power BI</span>
                             <span class="tool-item">Excel</span>
                             <span class="tool-item">MySQL</span>
                             <span class="tool-item">Google Analytics</span>
+                            <span class="tool-item">Chart.js</span>
+                            <span class="tool-item">Data visualisation</span>
                         </div>
                     </div>
                     <div class="skill-category reveal-up">
                         <div class="skill-category-header">
-                            <i class="fas fa-briefcase"></i>
-                            <h3>Business & CRM</h3>
+                            <i class="fas fa-screwdriver-wrench" aria-hidden="true"></i>
+                            <h3>Tools &amp; Delivery</h3>
+                        </div>
+                        <div class="skill-chip-group">
+                            <span class="tool-item">Git</span>
+                            <span class="tool-item">GitHub Actions</span>
+                            <span class="tool-item">Docker</span>
+                            <span class="tool-item">Vite</span>
+                            <span class="tool-item">Tailwind CSS</span>
+                            <span class="tool-item">Three.js</span>
+                            <span class="tool-item">Figma</span>
+                            <span class="tool-item">Vitest</span>
+                            <span class="tool-item">LabVIEW</span>
+                            <span class="tool-item">Arduino</span>
+                        </div>
+                    </div>
+                    <div class="skill-category reveal-up">
+                        <div class="skill-category-header">
+                            <i class="fas fa-briefcase" aria-hidden="true"></i>
+                            <h3>Business &amp; CRM</h3>
                         </div>
                         <div class="skill-chip-group">
                             <span class="tool-item">SAP / ERP</span>
                             <span class="tool-item">Salesforce</span>
-                            <span class="tool-item">Hubspot</span>
+                            <span class="tool-item">HubSpot</span>
                             <span class="tool-item">Zoho</span>
-                        </div>
-                    </div>
-                    <div class="skill-category reveal-up">
-                        <div class="skill-category-header">
-                            <i class="fas fa-code"></i>
-                            <h3>Design & Development</h3>
-                        </div>
-                        <div class="skill-chip-group">
-                            <span class="tool-item">Figma</span>
                             <span class="tool-item">Canva</span>
-                            <span class="tool-item">Python</span>
-                            <span class="tool-item">C++</span>
-                            <span class="tool-item">Docker</span>
-                        </div>
-                    </div>
-                    <div class="skill-category reveal-up">
-                        <div class="skill-category-header">
-                            <i class="fas fa-microchip"></i>
-                            <h3>Engineering & Hardware</h3>
-                        </div>
-                        <div class="skill-chip-group">
-                            <span class="tool-item">LabVIEW</span>
-                            <span class="tool-item">Arduino</span>
                         </div>
                     </div>
                 </div>
@@ -667,20 +683,20 @@
                             <p class="case-eyebrow">Personal project · Full-stack</p>
                             <h3 class="case-title">Stockify</h3>
                             <p class="case-summary">
-                                A stock tracker I use every day: live quotes, interactive charts, a plain-English trend read, a watchlist and price alerts.
+                                A fast stock tracker I use every day: interactive charts with 20, 50 and 200-day EMAs, a live quote header, a technical rating, news and a watchlist.
                             </p>
                             <dl class="case-points">
                                 <div>
                                     <dt>What I built</dt>
-                                    <dd>A static web app on GitHub Pages. A scheduled GitHub Action fetches prices with a secret key and publishes them as data files, so the key stays private and the site costs nothing to run. The front end adds search, a watchlist and price alerts.</dd>
+                                    <dd>A static web app in plain JavaScript modules with no dependencies. It runs entirely on GitHub Pages, so there is no server, no API key and no hosting cost. A GitHub Actions workflow deploys every push.</dd>
                                 </div>
                                 <div>
                                     <dt>How it works</dt>
-                                    <dd>It calculates 20-, 50- and 200-day moving averages and RSI from raw prices, spots golden and death crosses, and scores six rules into a Bullish, Neutral or Bearish read. The maths is unit-tested.</dd>
+                                    <dd>I wired five TradingView widgets (chart, quote, ticker tape, rating and news) to one search box, so picking a ticker updates the whole page. The watchlist lives in the browser, and <code>?symbol=MSFT</code> links open a stock directly.</dd>
                                 </div>
                             </dl>
                             <div class="case-tags">
-                                <span>JavaScript</span><span>Chart.js</span><span>Node.js</span><span>GitHub Actions</span><span>GitHub Pages</span><span>Unit tests</span>
+                                <span>JavaScript</span><span>TradingView widgets</span><span>Node.js</span><span>GitHub Actions</span><span>GitHub Pages</span><span>PWA</span>
                             </div>
                             <div class="case-links">
                                 <a href="https://s-zainabbas.github.io/stockify/" target="_blank" rel="noopener noreferrer" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
@@ -688,6 +704,9 @@
                                 </a>
                                 <a href="https://github.com/s-zainabbas/stockify" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
                                     <i class="fab fa-github mr-2" aria-hidden="true"></i> Code
+                                </a>
+                                <a href="projects/stockify.html" class="case-readmore">
+                                    Read the case study <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>
@@ -761,6 +780,9 @@
                                 </a>
                                 <a href="https://github.com/s-zainabbas/daily-dashboard" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
                                     <i class="fab fa-github mr-2" aria-hidden="true"></i> Code
+                                </a>
+                                <a href="projects/daily-dashboard.html" class="case-readmore">
+                                    Read the case study <i class="fas fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>
                         </div>
@@ -839,7 +861,8 @@
                     </article>
 
                     <!-- More on GitHub -->
-                    <a href="https://github.com/s-zainabbas" target="_blank" rel="noopener noreferrer" class="github-strip reveal-up">
+                    <div id="githubActivity" class="gh-panel reveal-up" data-i18n-skip>
+                    <a href="https://github.com/s-zainabbas" target="_blank" rel="noopener noreferrer" class="github-strip">
                         <i class="fab fa-github" aria-hidden="true"></i>
                         <div class="flex-1">
                             <h3 class="font-semibold text-lg">More on GitHub</h3>
@@ -847,7 +870,17 @@
                         </div>
                         <span class="github-strip-cta">Visit GitHub <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i></span>
                     </a>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Testimonials: hidden until quotes are added to TESTIMONIALS in features.js -->
+        <section id="testimonials" class="py-20 bg-page" hidden>
+            <div class="container mx-auto px-6">
+                <h2 class="section-title reveal-up">Kind Words</h2>
+                <p class="section-subtitle reveal-up">From clients and colleagues I've worked with</p>
+                <div class="testimonials-grid" id="testimonialsGrid" data-i18n-skip></div>
             </div>
         </section>
 
@@ -869,7 +902,7 @@
                                 </div>
                                 <div>
                                     <p class="text-sm text-muted">Location</p>
-                                    <p class="font-medium">Saint Genis, France</p>
+                                    <p class="font-medium">Saint-Genis, France (Geneva area)</p>
                                 </div>
                             </div>
                             <div class="flex items-center">
@@ -925,13 +958,15 @@
             </div>
         </section>
 
+        </main>
+
         <!-- Footer -->
-        <footer class="site-footer py-8 border-t border-ink relative">
+        <footer class="site-footer band-forest py-8 relative">
             <div class="container mx-auto px-6">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     <div class="text-sm order-2 md:order-1">
                         <p class="mb-2">No templates were harmed in the making, handcrafted from scratch by Me :)</p>
-                        <p>&copy;<span id="currentYear">2024</span> Designed & Built by <a href="https://www.linkedin.com/in/zain-abbas-/" target="_blank" rel="noopener noreferrer" class="underline">Zain Abbas</a></p>
+                        <p>&copy;<span id="currentYear">2026</span> Designed & Built by <a href="https://www.linkedin.com/in/zain-abbas-/" target="_blank" rel="noopener noreferrer" class="underline">Zain Abbas</a></p>
                     </div>
                     <a href="#home" class="text-sm hover:underline order-1 md:order-2">Back to top &uarr;</a>
                 </div>
@@ -939,12 +974,25 @@
         </footer>
     </div>
 
+    <!-- Command palette (features.js) -->
+    <dialog id="cmdk" class="cmdk" aria-label="Command menu">
+        <div class="cmdk-box">
+            <div class="cmdk-search">
+                <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+                <input type="text" placeholder="Search sections, projects and actions…" aria-label="Search commands" role="combobox" aria-expanded="true" aria-controls="cmdkList" autocomplete="off" spellcheck="false">
+                <kbd>Esc</kbd>
+            </div>
+            <ul class="cmdk-list" id="cmdkList" role="listbox" data-i18n-skip></ul>
+            <div class="cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> to move</span><span><kbd>↵</kbd> to open</span><span><kbd>T</kbd> theme · <kbd>L</kbd> language</span></div>
+        </div>
+    </dialog>
+
     <button id="backToTop" class="back-to-top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="script.js?v=20261108b"></script>
-    <script src="scroll-fx.js?v=20261107c"></script>
+    <script src="script.js?v=20261110"></script>
+    <script src="features.js?v=20261110"></script>
+    <script src="i18n.js?v=20261110"></script>
 </body>
 </html>
