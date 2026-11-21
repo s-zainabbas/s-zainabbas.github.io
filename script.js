@@ -73,7 +73,7 @@ function initThemeToggle() {
 function initParticles() {
     if (typeof particlesJS === 'undefined') return;
 
-    const particleCount = window.innerWidth < 768 ? 85 : 190;
+    const particleCount = window.innerWidth < 768 ? 70 : 140;
     // Matte-black particles on light grey (light grey on matte black in dark mode), with a few orange sparks
     const LIGHT = { r: 236, g: 238, b: 240 };
     const MATTE = { r: 28, g: 29, b: 32 };
@@ -123,7 +123,9 @@ function initParticles() {
                 push: { particles_nb: 4 }
             }
         },
-        retina_detect: true
+        // Off: on 2x screens it quadruples the full-viewport canvas that is redrawn
+        // every frame, which made scrolling stutter on retina Macs
+        retina_detect: false
     });
 
     // Recolour the running particles in place on theme change (no restart or flicker)
@@ -317,8 +319,13 @@ function init3DScene() {
     const clock = new THREE.Clock();
     const GLOW_RADIUS = 70; // px — cursor influence radius for the digit-glow interaction
 
+    // Only render while the hero is on screen: a WebGL frame every 16ms behind the
+    // rest of the page competed with scrolling for the GPU and main thread.
+    let heroVisible = true;
+    let rafId = null;
+
     function animate() {
-        requestAnimationFrame(animate);
+        rafId = heroVisible ? requestAnimationFrame(animate) : null;
         const t = clock.getElapsedTime();
 
         binaryGroup.rotation.x += rotSpeed;
@@ -359,6 +366,13 @@ function init3DScene() {
         renderer.render(scene, camera);
     }
     animate();
+
+    if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries) => {
+            heroVisible = entries[0].isIntersecting;
+            if (heroVisible && rafId === null) rafId = requestAnimationFrame(animate);
+        }).observe(container);
+    }
 
     const handleResize = () => {
         const size = getSize();
@@ -425,14 +439,26 @@ function initNavScrollEffects() {
 function initScrollProgress() {
     const bar = document.getElementById('scrollProgressBar');
     if (!bar) return;
-    const update = () => {
-        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
-        bar.style.width = progress + '%';
+    let scrollable = 1;
+    let ticking = false;
+    const measure = () => {
+        scrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
     };
+    const update = () => {
+        ticking = false;
+        const progress = Math.min(1, Math.max(0, window.scrollY / scrollable));
+        bar.style.transform = `scaleX(${progress.toFixed(4)})`;
+    };
+    const requestUpdate = () => {
+        if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    const remeasure = () => { measure(); requestUpdate(); };
+    measure();
     update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('load', remeasure);
+    if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
 }
 
 // ---------- Scrollspy: highlight active nav link ----------
@@ -480,48 +506,70 @@ function initRevealAnimations() {
 
     const offsets = items.map(el => Number(el.dataset.revealOffset) || 0);
     const last = new Array(items.length).fill(-1);
-    const tops = new Array(items.length);
+    const docTops = new Array(items.length).fill(0);
+    let vh = window.innerHeight;
+
+    // Layout top of an element relative to the document, ignoring CSS transforms
+    // (offsetTop chain). Measured once and on layout changes only, so the scroll
+    // handler never reads layout: reading getBoundingClientRect() every frame right
+    // after writing transforms forced a synchronous style/layout pass per frame,
+    // which is what made scrolling stutter and "freeze then jump".
+    const docTop = (el) => {
+        let y = 0;
+        for (let n = el; n; n = n.offsetParent) y += n.offsetTop;
+        return y;
+    };
+    const measure = () => {
+        vh = window.innerHeight;
+        for (let i = 0; i < items.length; i++) docTops[i] = docTop(items[i]);
+    };
 
     const update = () => {
-        const vh = window.innerHeight;
-        // Read every position first, then write: mixing getBoundingClientRect() with
-        // style writes in one loop forces a fresh layout for each element (scroll jank).
-        // The transform is visual only, so it doesn't move the rect we measure.
-        for (let i = 0; i < items.length; i++) tops[i] = items[i].getBoundingClientRect().top;
-
+        ticking = false;
+        const scrollY = window.scrollY;
         for (let i = 0; i < items.length; i++) {
             const offset = offsets[i];
+            const top = docTops[i] - scrollY;
             // progress 0 = element's top just below the fold, 1 = settled in place
             const start = vh * 0.92 + offset;
             const end = vh * 0.52 + offset * 0.3;
-            let p = (start - tops[i]) / (start - end);
+            let p = (start - top) / (start - end);
             p = p < 0 ? 0 : p > 1 ? 1 : p;
             const eased = Math.round((1 - Math.pow(1 - p, 3)) * 1000) / 1000;
             if (eased === last[i]) continue; // nothing changed (far off-screen or fully settled)
+            const el = items[i];
             last[i] = eased;
 
-            const el = items[i];
-            const translateY = (1 - eased) * 80;
-            const translateZ = (1 - eased) * -90;
-            const rotateX = (1 - eased) * 11;
-            const scale = 0.94 + eased * 0.06;
-
+            if (eased === 1) {
+                // Fully settled: drop the 3D transform and layer hint so dozens of
+                // finished cards don't stay as separate GPU layers
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+                el.style.willChange = 'auto';
+                continue;
+            }
+            const inv = 1 - eased;
+            el.style.willChange = 'transform, opacity';
             el.style.opacity = String(eased);
-            el.style.transform = `perspective(1200px) translateY(${translateY.toFixed(1)}px) translateZ(${translateZ.toFixed(1)}px) rotateX(${rotateX.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+            el.style.transform = `perspective(1200px) translate3d(0, ${(inv * 80).toFixed(1)}px, ${(inv * -90).toFixed(1)}px) rotateX(${(inv * 11).toFixed(2)}deg) scale(${(0.94 + eased * 0.06).toFixed(3)})`;
         }
-        ticking = false;
     };
 
-    const onScroll = () => {
+    const requestUpdate = () => {
         if (!ticking) {
-            requestAnimationFrame(update);
             ticking = true;
+            requestAnimationFrame(update);
         }
     };
+    const remeasure = () => { measure(); requestUpdate(); };
 
+    measure();
     update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', remeasure);
+    window.addEventListener('load', remeasure);
+    // Images, fonts and language switches change the page height and shift positions
+    if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
 }
 
 // ---------- Card tilt-on-hover (subtle 3D parallax for cards) ----------
@@ -540,9 +588,7 @@ function initCardTilt() {
             // Clearing to '' would fall back to the CSS .reveal-up base rule (its
             // hidden pre-scroll state) and make the card snap away — restore the
             // settled transform instead, matching what initRevealAnimations converges to.
-            card.style.transform = card.classList.contains('reveal-up')
-                ? 'perspective(1200px) translateY(0) translateZ(0) rotateX(0deg) scale(1)'
-                : '';
+            card.style.transform = card.classList.contains('reveal-up') ? 'none' : '';
         });
     });
 }

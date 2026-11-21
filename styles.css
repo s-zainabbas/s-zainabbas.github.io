@@ -102,9 +102,12 @@ body {
 
 .scroll-progress-bar {
     height: 100%;
-    width: 0%;
+    width: 100%;
     background: rgb(var(--accent));
-    transition: width 0.1s ease-out;
+    /* Driven by transform (compositor only) instead of width, which forced a
+       layout on every scroll event */
+    transform: scaleX(0);
+    transform-origin: left center;
 }
 
 /* ---------- Particles / 3D backdrop ---------- */
@@ -386,7 +389,6 @@ button, a {
 .js .reveal-up {
     opacity: 0;
     transform: perspective(1200px) translateY(80px) translateZ(-90px) rotateX(11deg) scale(0.94);
-    will-change: transform, opacity;
 }
 
 /* ---------- About avatar ---------- */

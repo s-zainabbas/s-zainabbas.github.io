@@ -25,20 +25,33 @@
         if (!wrap) return;
         const fill = document.getElementById('timelineFill');
 
-        // The orange line grows down the timeline as the middle of the screen passes it
+        // The orange line grows down the timeline as the middle of the screen passes it.
+        // Its position is measured only on layout changes (not every scroll frame), so
+        // the scroll handler never forces a synchronous layout.
         let ticking = false;
+        let wrapTop = 0, wrapHeight = 1, vh = window.innerHeight;
+        function measure() {
+            let y = 0;
+            for (let n = wrap; n; n = n.offsetParent) y += n.offsetTop;
+            wrapTop = y;
+            wrapHeight = Math.max(1, wrap.offsetHeight);
+            vh = window.innerHeight;
+        }
         function updateFill() {
             ticking = false;
             if (!fill) return;
-            const r = wrap.getBoundingClientRect();
-            const progress = (window.innerHeight * 0.55 - r.top) / Math.max(1, r.height);
+            const progress = (vh * 0.55 - (wrapTop - window.scrollY)) / wrapHeight;
             fill.style.setProperty('--fill', Math.min(1, Math.max(0, progress)).toFixed(4));
         }
         const onScroll = () => {
             if (!ticking) { ticking = true; requestAnimationFrame(updateFill); }
         };
+        const remeasure = () => { measure(); onScroll(); };
         window.addEventListener('scroll', onScroll, { passive: true });
-        window.addEventListener('resize', onScroll);
+        window.addEventListener('resize', remeasure);
+        window.addEventListener('load', remeasure);
+        if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(document.body);
+        measure();
         updateFill();
     }
 
