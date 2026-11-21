@@ -51,7 +51,7 @@ npm run build
 ├── index.html              # Main page
 ├── 404.html                # Not-found page (GitHub Pages serves it automatically)
 ├── script.js               # Core interactions: theme, 3D hero, previews, contact form
-├── features.js             # Timeline, GitHub activity, ⌘K menu, magnetic buttons, testimonials, analytics
+├── features.js             # Timeline, ⌘K menu, magnetic buttons, testimonials, analytics
 ├── i18n.js                 # English / French switch and the French text
 ├── subpage.js              # Theme toggle and progress bar for the standalone pages
 ├── styles.css              # Custom styles and colour tokens (oat, forest, tomato)

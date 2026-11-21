@@ -5,7 +5,7 @@
  * swaps each English string for its French version from FR below, keeping the
  * original so switching back is instant. Text that scripts add later (form
  * messages, live previews) is caught by a MutationObserver and translated too.
- * Elements marked data-i18n-skip render their own language (GitHub panel, command menu).
+ * Elements marked data-i18n-skip render their own language (command menu, testimonials).
  *
  * To change a translation, edit FR: the key is the exact English text on the page.
  */
@@ -48,7 +48,7 @@
         'Hire Me': 'Travaillons ensemble',
         'View Work': 'Voir mes projets',
         'Years in industry': 'Ans d’expérience',
-        'Projects live': 'Projets en ligne',
+        'Projects delivered': 'Projets livrés',
         'Organisations': 'Organisations',
 
         // About
@@ -84,7 +84,11 @@
         "Organizations I've Contributed or Collaborated With": 'Organisations avec lesquelles j’ai travaillé ou collaboré',
 
         // Timeline
-        'Experience & Education': 'Expérience & formation',
+        'Professional Experience': 'Expérience professionnelle',
+        'Two degrees across Geneva and France: computer science, then IT and networking.': 'Deux diplômes entre Genève et la France : l’informatique, puis les systèmes et réseaux.',
+        'Leadership Certificate': 'Certificat en leadership',
+        'Leadership programme covering team leadership, communication and decision-making in organisations.':
+            'Programme de leadership couvrant la direction d’équipe, la communication et la prise de décision en organisation.',
         'From CERN and IATA to independent consulting, newest first.': 'Du CERN et de l’IATA au conseil indépendant, du plus récent au plus ancien.',
         'Filter the timeline': 'Filtrer la chronologie',
         'All': 'Tout',
@@ -99,7 +103,6 @@
         'Technology leadership': 'Direction technique',
         'Aug 2024 – Present': 'Août 2024 – aujourd’hui',
         'Current': 'Actuel',
-        'Freelance Technical Consultant': 'Consultant technique indépendant',
         'Independent · Geneva area': 'Indépendant · Région de Genève',
         'Independent technical consulting for Geneva businesses: audits, websites, data migration and automation.':
             'Conseil technique indépendant pour des entreprises genevoises : audits, sites web, migration de données et automatisation.',
@@ -174,6 +177,12 @@
         // Certifications
         'Data Fundamentals': 'Fondamentaux des données',
         'View certificate': 'Voir le certificat',
+        'View credential': 'Voir le certificat',
+        'Credentials and programmes that back up the day-to-day work.': 'Les certifications et programmes qui appuient mon travail au quotidien.',
+        'Certificate completed': 'Certificat obtenu',
+        'Verified badge': 'Badge vérifié',
+        'Job simulation': 'Simulation professionnelle',
+        'University certificate': 'Certificat universitaire',
         'Verified credential covering core data concepts, terminology, and foundational data literacy skills.':
             'Certification vérifiée couvrant les concepts clés, le vocabulaire et les bases de la culture des données.',
         'Data Analytics': 'Analyse de données',
@@ -276,10 +285,7 @@
         'Focus': 'Priorités',
         'The build prioritises a confident visual identity, straightforward navigation and a responsive experience that works across desktop and mobile.':
             'Le site mise sur une identité visuelle affirmée, une navigation simple et une expérience responsive sur ordinateur comme sur mobile.',
-        'More on GitHub': 'Plus sur GitHub',
-        'Experiments, data tools and work in progress.': 'Expériences, outils de données et projets en cours.',
         'Visit GitHub': 'Voir GitHub',
-        'Latest on GitHub': 'Dernières activités sur GitHub',
 
         // Testimonials
         'Kind Words': 'Ils en parlent',

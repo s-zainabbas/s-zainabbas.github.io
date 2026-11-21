@@ -1,6 +1,6 @@
 /*
  * Newer portfolio features, kept apart from script.js so each one is easy to find:
- * timeline, GitHub activity, command palette, intro loader, magnetic buttons,
+ * timeline, command palette, intro loader, magnetic buttons,
  * testimonials and analytics. The French translation lives in i18n.js.
  */
 (function () {
@@ -13,40 +13,19 @@
 
     document.addEventListener('DOMContentLoaded', () => {
         initTimeline();
-        initGitHubActivity();
         initCommandPalette();
         initMagneticButtons();
         initTestimonials();
         initAnalytics();
     });
 
-    // ---------- Timeline: filters + scroll-linked line ----------
+    // ---------- Timeline: scroll-linked line ----------
     function initTimeline() {
         const wrap = document.getElementById('timeline');
         if (!wrap) return;
-        const items = Array.from(wrap.querySelectorAll('.timeline-item'));
         const fill = document.getElementById('timelineFill');
-        const buttons = document.querySelectorAll('.timeline-filter');
 
-        buttons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const filter = btn.dataset.filter;
-                buttons.forEach(b => {
-                    const on = b === btn;
-                    b.classList.toggle('is-active', on);
-                    b.setAttribute('aria-pressed', String(on));
-                });
-                items.forEach(item => {
-                    const show = filter === 'all' || item.dataset.kind === filter;
-                    item.classList.toggle('is-hidden', !show);
-                });
-                // Items moved, so let the scroll reveal (script.js) and the line recalculate
-                window.dispatchEvent(new Event('scroll'));
-                updateFill();
-            });
-        });
-
-        // The tomato line grows down the timeline as the middle of the screen passes it
+        // The orange line grows down the timeline as the middle of the screen passes it
         let ticking = false;
         function updateFill() {
             ticking = false;
@@ -80,98 +59,8 @@
     }
     window.showToast = toast;
 
-    // ---------- Live GitHub activity ----------
-    // Public API, no key. Results are cached for an hour so repeat visits don't use up
-    // the 60-requests-per-hour limit. If anything fails, the plain "More on GitHub" link stays.
-    const GH_USER = 's-zainabbas';
-    const GH_CACHE = 'gh-activity-v1';
-    const LANG_COLOURS = { JavaScript: '#e8c547', TypeScript: '#3178c6', HTML: '#e34c26', CSS: '#663399', Python: '#3572A5' };
-
-    async function initGitHubActivity() {
-        const box = document.getElementById('githubActivity');
-        if (!box) return;
-
-        let payload = null;
-        try {
-            const raw = sessionStorage.getItem(GH_CACHE);
-            if (raw) {
-                const parsed = JSON.parse(raw);
-                if (Date.now() - parsed.savedAt < 60 * 60 * 1000) payload = parsed.data;
-            }
-        } catch (e) { /* storage blocked */ }
-
-        if (!payload) {
-            try {
-                const [reposRes, eventsRes] = await Promise.all([
-                    fetch(`https://api.github.com/users/${GH_USER}/repos?sort=pushed&per_page=12`),
-                    fetch(`https://api.github.com/users/${GH_USER}/events/public?per_page=100`)
-                ]);
-                if (!reposRes.ok) return;
-                const repos = (await reposRes.json())
-                    .filter(r => !r.fork && r.name !== `${GH_USER}.github.io`)
-                    .slice(0, 4)
-                    .map(r => ({ name: r.name, url: r.html_url, description: r.description, language: r.language, stars: r.stargazers_count, pushed: r.pushed_at }));
-                const events = eventsRes.ok ? await eventsRes.json() : [];
-                const monthAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
-                const recentPushes = events.filter(e => e.type === 'PushEvent' && Date.parse(e.created_at) > monthAgo);
-                payload = {
-                    repos,
-                    pushes: recentPushes.length,
-                    activeRepos: new Set(recentPushes.map(e => e.repo.name)).size
-                };
-                try { sessionStorage.setItem(GH_CACHE, JSON.stringify({ savedAt: Date.now(), data: payload })); } catch (e) { /* fine */ }
-            } catch (e) {
-                return; // offline or rate-limited: keep the fallback link
-            }
-        }
-        renderGitHub(box, payload);
-        document.addEventListener('langchange', () => renderGitHub(box, payload));
-    }
-
-    function timeAgo(iso) {
-        const days = Math.floor((Date.now() - Date.parse(iso)) / 86400000);
-        const fr = window.i18n && window.i18n.lang === 'fr';
-        if (days < 1) return fr ? "aujourd'hui" : 'today';
-        if (days === 1) return fr ? 'hier' : 'yesterday';
-        if (days < 30) return fr ? `il y a ${days} jours` : `${days} days ago`;
-        const months = Math.floor(days / 30);
-        if (months < 12) return fr ? `il y a ${months} mois` : `${months} month${months > 1 ? 's' : ''} ago`;
-        const years = Math.floor(months / 12);
-        return fr ? `il y a ${years} an${years > 1 ? 's' : ''}` : `${years} year${years > 1 ? 's' : ''} ago`;
-    }
-
     function escapeHtml(str) {
         return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    }
-
-    function renderGitHub(box, data) {
-        if (!data || !data.repos.length) return;
-        const fr = window.i18n && window.i18n.lang === 'fr';
-        const activity = data.pushes
-            ? (fr ? `${data.pushes} push${data.pushes > 1 ? 's' : ''} sur ${data.activeRepos} dépôt${data.activeRepos > 1 ? 's' : ''} ces 30 derniers jours`
-                  : `${data.pushes} push${data.pushes > 1 ? 'es' : ''} to ${data.activeRepos} repo${data.activeRepos > 1 ? 's' : ''} in the last 30 days`)
-            : t('Experiments, data tools and work in progress.');
-        const cards = data.repos.map(r => `
-            <a class="gh-repo" href="${escapeHtml(r.url)}" target="_blank" rel="noopener noreferrer">
-                <span class="gh-repo-name"><i class="far fa-folder" aria-hidden="true"></i>${escapeHtml(r.name)}</span>
-                ${r.description ? `<span class="gh-repo-desc">${escapeHtml(r.description)}</span>` : ''}
-                <span class="gh-repo-meta">
-                    ${r.language ? `<span><i class="gh-lang" style="background:${LANG_COLOURS[r.language] || 'currentColor'}"></i>${escapeHtml(r.language)}</span>` : ''}
-                    ${r.stars ? `<span><i class="far fa-star" aria-hidden="true"></i>${r.stars}</span>` : ''}
-                    <span>${fr ? 'Mis à jour' : 'Updated'} ${timeAgo(r.pushed)}</span>
-                </span>
-            </a>`).join('');
-        box.innerHTML = `
-            <div class="gh-head">
-                <i class="fab fa-github" aria-hidden="true"></i>
-                <div class="flex-1">
-                    <h3 class="font-semibold text-lg">${t('Latest on GitHub')}</h3>
-                    <p class="gh-activity"><span class="gh-live" aria-hidden="true"></span>${activity}</p>
-                </div>
-                <a class="gh-profile" href="https://github.com/${GH_USER}" target="_blank" rel="noopener noreferrer">${t('Visit GitHub')} <i class="fas fa-arrow-right ml-1" aria-hidden="true"></i></a>
-            </div>
-            <div class="gh-grid">${cards}</div>`;
-        box.classList.add('is-live');
     }
 
     // ---------- Command palette (⌘K / Ctrl+K) ----------
@@ -190,7 +79,9 @@
         const commands = [
             { group: 'Go to', label: 'Home', icon: 'fa-house', run: go('#home') },
             { group: 'Go to', label: 'About', icon: 'fa-user', run: go('#about') },
-            { group: 'Go to', label: 'Experience & Education', icon: 'fa-timeline', run: go('#experience') },
+            { group: 'Go to', label: 'Professional Experience', icon: 'fa-briefcase', run: go('#experience') },
+            { group: 'Go to', label: 'Education', icon: 'fa-graduation-cap', run: go('#education') },
+            { group: 'Go to', label: 'Certifications', icon: 'fa-certificate', run: go('#certifications') },
             { group: 'Go to', label: 'Skills & Tools', icon: 'fa-screwdriver-wrench', run: go('#skills') },
             { group: 'Go to', label: 'Projects', icon: 'fa-folder-open', run: go('#projects') },
             { group: 'Go to', label: 'Contact', icon: 'fa-envelope', run: go('#contact') },

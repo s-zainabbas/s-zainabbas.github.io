@@ -74,16 +74,16 @@ function initParticles() {
     if (typeof particlesJS === 'undefined') return;
 
     const particleCount = window.innerWidth < 768 ? 85 : 190;
-    // Forest particles on oat (oat on forest in dark mode), with a few tomato sparks
-    const OAT = { r: 238, g: 229, b: 212 };
-    const FOREST = { r: 29, g: 74, b: 53 };
-    const TOMATO = { r: 242, g: 70, b: 46 };
-    const TOMATO_HEX = '#F2462E';
-    const themeColor = () => (isDarkTheme() ? '#EEE5D4' : '#1D4A35');
-    const baseRgb = () => (isDarkTheme() ? OAT : FOREST);
-    const isTomato = (c) => c.r === TOMATO.r && c.g === TOMATO.g && c.b === TOMATO.b;
-    // particles.js picks randomly from this list, so roughly 1 in 8 is tomato
-    const particlePalette = () => [...Array(7).fill(themeColor()), TOMATO_HEX];
+    // Matte-black particles on light grey (light grey on matte black in dark mode), with a few orange sparks
+    const LIGHT = { r: 236, g: 238, b: 240 };
+    const MATTE = { r: 28, g: 29, b: 32 };
+    const ORANGE = { r: 255, g: 95, b: 0 };
+    const ORANGE_HEX = '#FF5F00';
+    const themeColor = () => (isDarkTheme() ? '#ECEEF0' : '#1C1D20');
+    const baseRgb = () => (isDarkTheme() ? LIGHT : MATTE);
+    const isOrange = (c) => c.r === ORANGE.r && c.g === ORANGE.g && c.b === ORANGE.b;
+    // particles.js picks randomly from this list, so roughly 1 in 8 is orange
+    const particlePalette = () => [...Array(7).fill(themeColor()), ORANGE_HEX];
 
     particlesJS('particles-js', {
         particles: {
@@ -133,8 +133,8 @@ function initParticles() {
         const rgb = baseRgb();
         pJS.particles.color.value = particlePalette(); // used for particles added later by clicks
         pJS.particles.line_linked.color_rgb_line = rgb;
-        // Keep the tomato sparks; recolour the rest
-        pJS.particles.array.forEach(p => { if (!isTomato(p.color.rgb)) p.color.rgb = { ...rgb }; });
+        // Keep the orange sparks; recolour the rest
+        pJS.particles.array.forEach(p => { if (!isOrange(p.color.rgb)) p.color.rgb = { ...rgb }; });
     });
 }
 
@@ -174,7 +174,7 @@ function init3DScene() {
     // Wireframe shell — just the sphere, no solid core
     const outerGeometry = new THREE.IcosahedronGeometry(2.5, 3);
     const outerMaterial = new THREE.MeshPhongMaterial({
-        color: isDarkTheme() ? 0xEEE5D4 : 0x1D4A35,
+        color: isDarkTheme() ? 0xECEEF0 : 0x1C1D20,
         wireframe: true,
         transparent: true,
         opacity: isDarkTheme() ? 0.22 : 0.32
@@ -184,7 +184,7 @@ function init3DScene() {
 
     // Glowing digit texture: soft, restrained halo behind a crisp digit — enough to
     // read as "glowing" without looking neon
-    const GLOW_COLOR = '#F2462E';
+    const GLOW_COLOR = '#FF5F00';
     function createDigitTexture(digit, dark) {
         const size = 128;
         const canvas = document.createElement('canvas');
@@ -204,7 +204,7 @@ function init3DScene() {
         ctx.textBaseline = 'middle';
         ctx.shadowColor = GLOW_COLOR;
         ctx.shadowBlur = 9;
-        ctx.fillStyle = dark ? '#EEE5D4' : '#1D4A35';
+        ctx.fillStyle = dark ? '#ECEEF0' : '#1C1D20';
         ctx.fillText(digit, size / 2, size / 2);
         ctx.shadowBlur = 0;
         ctx.fillText(digit, size / 2, size / 2);
@@ -274,7 +274,7 @@ function init3DScene() {
     scene.add(binaryGroup);
 
     document.addEventListener('themechange', () => {
-        outerMaterial.color.set(isDarkTheme() ? 0xEEE5D4 : 0x1D4A35);
+        outerMaterial.color.set(isDarkTheme() ? 0xECEEF0 : 0x1C1D20);
         outerMaterial.opacity = isDarkTheme() ? 0.22 : 0.32;
         sprites.forEach(s => {
             s.material.map = getDigitTexture(s.userData.digit);
@@ -478,20 +478,29 @@ function initRevealAnimations() {
 
     let ticking = false;
 
+    const offsets = items.map(el => Number(el.dataset.revealOffset) || 0);
+    const last = new Array(items.length).fill(-1);
+    const tops = new Array(items.length);
+
     const update = () => {
         const vh = window.innerHeight;
-        for (let i = 0; i < items.length; i++) {
-            const el = items[i];
-            const offset = Number(el.dataset.revealOffset) || 0;
-            const rect = el.getBoundingClientRect();
+        // Read every position first, then write: mixing getBoundingClientRect() with
+        // style writes in one loop forces a fresh layout for each element (scroll jank).
+        // The transform is visual only, so it doesn't move the rect we measure.
+        for (let i = 0; i < items.length; i++) tops[i] = items[i].getBoundingClientRect().top;
 
+        for (let i = 0; i < items.length; i++) {
+            const offset = offsets[i];
             // progress 0 = element's top just below the fold, 1 = settled in place
             const start = vh * 0.92 + offset;
             const end = vh * 0.52 + offset * 0.3;
-            let p = (start - rect.top) / (start - end);
+            let p = (start - tops[i]) / (start - end);
             p = p < 0 ? 0 : p > 1 ? 1 : p;
-            const eased = 1 - Math.pow(1 - p, 3);
+            const eased = Math.round((1 - Math.pow(1 - p, 3)) * 1000) / 1000;
+            if (eased === last[i]) continue; // nothing changed (far off-screen or fully settled)
+            last[i] = eased;
 
+            const el = items[i];
             const translateY = (1 - eased) * 80;
             const translateZ = (1 - eased) * -90;
             const rotateX = (1 - eased) * 11;
@@ -519,7 +528,7 @@ function initRevealAnimations() {
 function initCardTilt() {
     if (isTouchDevice) return;
 
-    const cards = document.querySelectorAll('.experience-card, .skill-category');
+    const cards = document.querySelectorAll('.experience-card, .cert-card, .skill-category');
     cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
@@ -1002,6 +1011,11 @@ function initMobileMenu() {
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeMenu();
+    });
+
+    // Tapping anywhere outside the open menu closes it
+    document.addEventListener('click', (e) => {
+        if (menu.classList.contains('open') && !menu.contains(e.target) && !toggle.contains(e.target)) closeMenu();
     });
 }
 

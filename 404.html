@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page not found — Zain Abbas</title>
     <meta name="robots" content="noindex">
-    <meta name="theme-color" content="#EEE5D4" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0D2118" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#E2E4E7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1C1D20" media="(prefers-color-scheme: dark)">
     <script>
         (function () {
             var theme;
@@ -21,9 +21,15 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/tailwind.css?v=20261110">
-    <link rel="stylesheet" href="/styles.css?v=20261110">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <!-- Font loads in parallel with the page CSS (it used to wait behind an @import in styles.css) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <!-- Icons are not needed for first paint, so they no longer block rendering -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" crossorigin>
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="/tailwind.css?v=20261121">
+    <link rel="stylesheet" href="/styles.css?v=20261121">
 </head>
 <body class="bg-page text-ink notfound">
     <canvas id="lifeBg" class="notfound-life" aria-hidden="true"></canvas>
@@ -46,7 +52,7 @@
         <i class="fas fa-sun" aria-hidden="true"></i>
     </button>
 
-    <script src="/subpage.js?v=20261110"></script>
+    <script src="/subpage.js?v=20261121"></script>
     <script>
         // A quiet Game of Life in the background, in the page's own colours
         (function () {

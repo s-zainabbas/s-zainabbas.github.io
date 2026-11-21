@@ -1,62 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
-
 :root {
     --ease-out-smooth: cubic-bezier(0.16, 1, 0.3, 1);
 
     /* Colour tokens as RGB channels, so they work with alpha:
        rgb(var(--ink) / 0.08). Tailwind's page/ink/muted classes use these too. */
     /* Palette (60 / 30 / 10):
-       Oat Milk     #EEE5D4  main — the page
-       Forest Green #1D4A35  second — text, buttons and the green bands
-       Tomato Red   #F2462E  accent — small highlights only */
-    --oat: 238 229 212;
-    --forest: 29 74 53;
-    --tomato: 242 70 46;
+       Storm Grey    #5A6068  main - the grey bands, muted text, surfaces
+       Matte Black   #1C1D20  second - text, buttons, the dark-mode page
+       Safety Orange #FF5F00  accent - small highlights only
+       Light mode sits on a pale storm-grey tint so matte-black text stays readable
+       (matte black directly on #5A6068 is only ~2.6:1). */
+    --storm: 90 96 104;
+    --matte: 28 29 32;
+    --orange: 255 95 0;
+    --snow: 244 245 247;
 
-    --page: var(--oat);
-    --page-alt: 231 220 199;
-    --surface: 246 241 231;
-    --ink: var(--forest);
-    --muted: 88 108 96;
-    --muted-strong: 55 80 66;
-    --subtle: 140 150 135;
-    --line: 214 202 178;
-    --accent: var(--tomato);
+    --page: 226 228 231;
+    --page-alt: 214 217 221;
+    --surface: 238 240 242;
+    --ink: var(--matte);
+    --muted: var(--storm);
+    --muted-strong: 58 62 68;
+    --subtle: 130 136 144;
+    --line: 196 200 205;
+    --accent: var(--orange);
     color-scheme: light;
 }
 
-/* Dark mode: the same palette flipped — deep forest page, oat text, tomato accent */
+/* Dark mode: matte black page, light text, orange accent */
 [data-theme="dark"] {
-    --page: 13 33 24;
-    --page-alt: 18 43 31;
-    --surface: 24 54 40;
-    --ink: var(--oat);
-    --muted: 176 184 166;
-    --muted-strong: 210 205 188;
-    --subtle: 120 138 124;
-    --line: 40 70 55;
-    --accent: var(--tomato);
+    --page: var(--matte);
+    --page-alt: 34 36 40;
+    --surface: 44 47 52;
+    --ink: 236 238 240;
+    --muted: 170 176 183;
+    --muted-strong: 210 214 218;
+    --subtle: 120 126 134;
+    --line: 58 62 68;
+    --accent: var(--orange);
     color-scheme: dark;
 }
 
-/* Forest band: a full-width green section. It redefines the tokens locally,
-   so everything inside (cards, chips, text) flips to oat-on-forest by itself. */
-.band-forest {
-    --page: var(--forest);
-    --page-alt: var(--forest);
-    --surface: 36 86 63;
-    --ink: var(--oat);
-    --muted: 190 200 180;
-    --muted-strong: 222 216 198;
-    --subtle: 150 170 155;
-    --line: 60 105 84;
-    background-color: rgb(var(--forest));
-    color: rgb(var(--oat));
+/* Storm band: a full-width storm-grey section. It redefines the tokens locally,
+   so everything inside (cards, chips, text) flips to light-on-grey by itself. */
+.band-storm {
+    --page: var(--storm);
+    --page-alt: var(--storm);
+    --surface: 104 111 120;
+    --ink: var(--snow);
+    --muted: 218 221 225;
+    --muted-strong: 232 234 237;
+    --subtle: 175 181 188;
+    --line: 120 127 136;
+    background-color: rgb(var(--storm));
+    color: rgb(var(--snow));
 }
 
 ::selection {
-    background: rgb(var(--tomato));
-    color: rgb(var(--oat));
+    background: rgb(var(--orange));
+    color: rgb(var(--matte));
 }
 
 /* Fade colours when the theme switches (added briefly by script.js) */
@@ -73,6 +74,12 @@
 
 html {
     scroll-behavior: smooth;
+}
+
+/* Hash links, the command menu and links from the case-study pages land
+   with the heading clear of the sticky nav */
+section[id] {
+    scroll-margin-top: 84px;
 }
 
 body {
@@ -252,7 +259,7 @@ body {
     background: rgb(var(--accent));
 }
 
-/* Tomato highlight for a single word (e.g. the name in the hero) */
+/* Orange highlight for a single word (e.g. the name in the hero) */
 .hl-accent {
     color: rgb(var(--accent));
 }
@@ -317,7 +324,7 @@ body {
 .action-button-primary:hover {
     background-color: rgb(var(--accent));
     border-color: rgb(var(--accent));
-    color: rgb(var(--oat));
+    color: rgb(var(--matte));
     box-shadow: 0 10px 24px rgb(var(--accent) / 0.28);
 }
 
@@ -339,7 +346,7 @@ button, a {
 .contact-link:hover {
     background-color: rgb(var(--accent));
     border-color: rgb(var(--accent));
-    color: rgb(var(--oat));
+    color: rgb(var(--matte));
 }
 
 /* ---------- Section headings ---------- */
@@ -1121,40 +1128,165 @@ button, a {
 .stock-chart .fade-in { opacity: 0; transition: opacity 0.6s ease 1.1s; }
 .stock-chart.is-drawn .fade-in { opacity: 1; }
 
-/* "More on GitHub" strip */
-.github-strip {
+/* ---------- Certifications ---------- */
+.cert-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    max-width: 60rem;
+    margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+    .cert-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+}
+
+.cert-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.5rem 1.6rem;
+    border-radius: 20px;
+    background: rgb(var(--surface));
+    border: 1px solid rgb(var(--ink) / 0.08);
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s var(--ease-out-smooth), box-shadow 0.4s var(--ease-out-smooth), border-color 0.3s ease;
+}
+
+/* Orange edge slides in on hover, like the experience cards */
+.cert-card::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: rgb(var(--accent));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s ease;
+}
+
+.cert-card:hover {
+    border-color: rgb(var(--ink) / 0.16);
+    box-shadow: 0 16px 36px rgb(var(--ink) / 0.08);
+}
+
+.cert-card:hover::before { transform: scaleY(1); }
+
+a.cert-card:focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+}
+
+.cert-head {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    padding: 1.25rem 1.5rem;
-    border: 2px dashed rgb(var(--ink) / 0.15);
-    border-radius: 20px;
+    gap: 0.85rem;
+    margin-bottom: 0.35rem;
 }
 
-.github-strip > i {
-    font-size: 2rem;
+.cert-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgb(var(--accent) / 0.12);
+    color: rgb(var(--accent));
+    font-size: 1.1rem;
 }
 
-.github-strip:hover {
-    border-color: rgb(var(--accent));
-    border-style: solid;
+.cert-issuer {
+    font-weight: 600;
+    line-height: 1.25;
+    color: rgb(var(--ink));
 }
 
-.github-strip-cta {
-    display: none;
+.cert-kind {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--muted));
+}
+
+.cert-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    line-height: 1.25;
+    color: rgb(var(--ink));
+}
+
+.cert-desc {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgb(var(--muted-strong));
+}
+
+.cert-link {
+    margin-top: auto;
+    padding-top: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: rgb(var(--ink));
+    transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.cert-link i { font-size: 0.75rem; }
+
+a.cert-card:hover .cert-link {
+    color: rgb(var(--accent));
+    gap: 0.6rem;
+}
+
+.cert-link-static {
     font-weight: 500;
-    white-space: nowrap;
+    color: rgb(var(--muted));
 }
 
-@media (min-width: 640px) {
-    .github-strip-cta { display: inline-flex; align-items: center; }
+/* ---------- Education ---------- */
+.edu-card {
+    display: flex;
+    flex-direction: column;
 }
 
-/* ---------- Certifications ---------- */
-.cert-card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
+.edu-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.edu-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    padding: 0.5rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid rgb(var(--ink) / 0.08);
+}
+
+.edu-date {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--ink) / 0.15);
+    color: rgb(var(--muted-strong));
+}
+
+.edu-card .experience-company i {
+    color: rgb(var(--accent));
 }
 
 /* ---------- Contact form ---------- */
@@ -1256,7 +1388,7 @@ button, a {
     height: 46px;
     border-radius: 50%;
     background: rgb(var(--accent));
-    color: rgb(var(--oat));
+    color: rgb(var(--matte));
     border: none;
     box-shadow: 0 8px 20px rgb(var(--accent) / 0.3);
     display: flex;
@@ -1277,7 +1409,8 @@ button, a {
 }
 
 .back-to-top:hover {
-    background: rgb(var(--forest));
+    background: rgb(var(--matte));
+    color: rgb(var(--snow));
 }
 
 @media screen and (min-width: 768px) {
@@ -1406,8 +1539,8 @@ button, a {
     z-index: 200;
     padding: 0.6rem 1rem;
     border-radius: 10px;
-    background: rgb(var(--forest));
-    color: rgb(var(--oat));
+    background: rgb(var(--matte));
+    color: rgb(var(--snow));
     font-weight: 600;
     transform: translateY(-160%);
 }
@@ -1507,34 +1640,7 @@ button, a {
     background: rgb(var(--ink) / 0.07);
 }
 
-/* ---------- Timeline (experience + education) ---------- */
-.timeline-filters {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 3rem;
-}
-
-.timeline-filter {
-    padding: 0.45rem 1.1rem;
-    border-radius: 999px;
-    border: 1px solid rgb(var(--ink) / 0.18);
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: rgb(var(--muted-strong));
-}
-
-.timeline-filter:hover {
-    border-color: rgb(var(--ink));
-    color: rgb(var(--ink));
-}
-
-.timeline-filter.is-active {
-    background: rgb(var(--ink));
-    border-color: rgb(var(--ink));
-    color: rgb(var(--page));
-}
-
+/* ---------- Timeline (professional experience) ---------- */
 .timeline-wrap {
     --rail: 7px;              /* x position of the line */
     position: relative;
@@ -1573,10 +1679,6 @@ button, a {
 .timeline-item {
     position: relative;
     padding-left: 2.25rem;
-}
-
-.timeline-item.is-hidden {
-    display: none;
 }
 
 .timeline-dot {
@@ -1632,7 +1734,7 @@ button, a {
     padding: 0.2rem 0.55rem;
     border-radius: 999px;
     background: rgb(var(--accent));
-    color: rgb(var(--oat));
+    color: rgb(var(--matte));
 }
 
 .timeline-badge-soon {
@@ -1709,105 +1811,6 @@ button, a {
     .timeline-dot { top: 1.65rem; }
 }
 
-/* ---------- Live GitHub panel ---------- */
-.gh-panel.is-live {
-    padding: 1.4rem 1.5rem 1.5rem;
-    border-radius: 24px;
-    border: 1px solid rgb(var(--ink) / 0.08);
-    background: rgb(var(--surface));
-}
-
-.gh-head {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.1rem;
-}
-
-.gh-head > i { font-size: 2rem; }
-
-.gh-activity {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    color: rgb(var(--muted));
-}
-
-.gh-live {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgb(var(--accent));
-    box-shadow: 0 0 0 4px rgb(var(--accent) / 0.18);
-    flex: none;
-}
-
-.gh-profile {
-    display: none;
-    font-weight: 500;
-    white-space: nowrap;
-}
-
-.gh-profile:hover { color: rgb(var(--accent)); }
-
-@media (min-width: 640px) {
-    .gh-profile { display: inline-flex; align-items: center; }
-}
-
-.gh-grid {
-    display: grid;
-    gap: 0.75rem;
-}
-
-@media (min-width: 640px) { .gh-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 1024px) { .gh-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-
-.gh-repo {
-    display: flex;
-    flex-direction: column;
-    gap: 0.45rem;
-    padding: 0.95rem 1rem;
-    border-radius: 14px;
-    border: 1px solid rgb(var(--ink) / 0.08);
-    background: rgb(var(--page));
-}
-
-.gh-repo:hover {
-    border-color: rgb(var(--accent));
-    transform: translateY(-3px);
-}
-
-.gh-repo-name {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    word-break: break-word;
-}
-
-.gh-repo-name i { color: rgb(var(--accent)); font-size: 0.9rem; }
-
-.gh-repo-desc { font-size: 0.82rem; color: rgb(var(--muted-strong)); }
-
-.gh-repo-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0.85rem;
-    margin-top: auto;
-    font-size: 0.75rem;
-    color: rgb(var(--muted));
-}
-
-.gh-repo-meta span { display: inline-flex; align-items: center; gap: 0.3rem; }
-
-.gh-lang {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
 /* ---------- Command palette ---------- */
 .cmdk-trigger {
     display: inline-flex;
@@ -1866,7 +1869,7 @@ kbd {
 }
 
 .cmdk::backdrop {
-    background: rgb(13 33 24 / 0.45);
+    background: rgb(28 29 32 / 0.55);
     backdrop-filter: blur(4px);
 }
 
@@ -1981,8 +1984,8 @@ kbd {
     z-index: 300;
     padding: 0.7rem 1.1rem;
     border-radius: 12px;
-    background: rgb(var(--forest));
-    color: rgb(var(--oat));
+    background: rgb(var(--matte));
+    color: rgb(var(--snow));
     font-size: 0.9rem;
     font-weight: 500;
     box-shadow: 0 12px 30px rgb(0 0 0 / 0.2);
@@ -2047,9 +2050,9 @@ kbd {
     padding-top: 0.5rem;
 }
 
-.intro-oat { top: 0; background: rgb(var(--oat)); color: rgb(var(--forest)); border: 1px solid rgb(var(--forest) / 0.12); margin: 0 1.2rem; }
-.intro-forest { top: 2.75rem; background: rgb(var(--forest)); color: rgb(var(--oat)); margin: 0 0.6rem; animation-delay: 0.14s; }
-.intro-tomato { top: 5.5rem; background: rgb(var(--tomato)); color: rgb(var(--oat)); animation-delay: 0.28s; }
+.intro-storm { top: 0; background: rgb(var(--storm)); color: rgb(var(--matte)); border: 1px solid rgb(var(--matte) / 0.12); margin: 0 1.2rem; }
+.intro-matte { top: 2.75rem; background: rgb(var(--matte)); color: rgb(var(--snow)); margin: 0 0.6rem; animation-delay: 0.14s; }
+.intro-orange { top: 5.5rem; background: rgb(var(--orange)); color: rgb(var(--matte)); animation-delay: 0.28s; }
 
 @keyframes intro-card-in {
     to { opacity: 1; transform: none; }
@@ -2362,12 +2365,12 @@ kbd {
 
 /* Diagram parts (inline SVG) */
 .dg-box { fill: rgb(var(--page)); stroke: rgb(var(--ink) / 0.35); stroke-width: 1.5; }
-.dg-box-strong { fill: rgb(var(--forest)); stroke: none; }
+.dg-box-strong { fill: rgb(var(--matte)); stroke: none; }
 .dg-box-accent { fill: rgb(var(--accent) / 0.1); stroke: rgb(var(--accent)); stroke-width: 1.5; }
 .dg-text { fill: rgb(var(--ink)); font: 600 14px 'Space Grotesk', sans-serif; }
 .dg-sub { fill: rgb(var(--muted)); font: 400 12px 'Space Grotesk', sans-serif; }
-.dg-text-inv { fill: rgb(var(--oat)); font: 600 14px 'Space Grotesk', sans-serif; }
-.dg-sub-inv { fill: rgb(var(--oat) / 0.75); font: 400 12px 'Space Grotesk', sans-serif; }
+.dg-text-inv { fill: rgb(var(--snow)); font: 600 14px 'Space Grotesk', sans-serif; }
+.dg-sub-inv { fill: rgb(var(--snow) / 0.75); font: 400 12px 'Space Grotesk', sans-serif; }
 .dg-line { stroke: rgb(var(--ink) / 0.45); stroke-width: 1.5; fill: none; }
 .dg-line-accent { stroke: rgb(var(--accent)); stroke-width: 1.75; fill: none; }
 .dg-arrow { fill: rgb(var(--ink) / 0.45); }
@@ -2459,7 +2462,7 @@ kbd {
     padding: 2rem 1.5rem;
     text-align: center;
     font-size: 0.875rem;
-    border-top: 4px solid rgb(var(--tomato));
+    border-top: 4px solid rgb(var(--orange));
 }
 
 /* 404 */
@@ -2511,27 +2514,27 @@ kbd {
     background: rgb(var(--page));
 }
 
-/* ---------- Forest bands ---------- */
-/* Logos become soft oat silhouettes on the green */
-.band-forest .company-logo,
-[data-theme="dark"] .band-forest .company-logo {
+/* ---------- Storm bands ---------- */
+/* Logos become soft light silhouettes on the grey */
+.band-storm .company-logo,
+[data-theme="dark"] .band-storm .company-logo {
     filter: grayscale(100%) brightness(0) invert(1);
     opacity: 0.55;
 }
 
-.band-forest .company-logo-container:hover .company-logo,
-[data-theme="dark"] .band-forest .company-logo-container:hover .company-logo {
+.band-storm .company-logo-container:hover .company-logo,
+[data-theme="dark"] .band-storm .company-logo-container:hover .company-logo {
     filter: grayscale(100%) brightness(0) invert(1);
     opacity: 1;
 }
 
-/* Footer: green band topped with a tomato stripe, like the stacked colour cards */
-.site-footer.band-forest {
-    border-top: 4px solid rgb(var(--tomato));
+/* Footer: grey band topped with an orange stripe, like the stacked colour cards */
+.site-footer.band-storm {
+    border-top: 4px solid rgb(var(--orange));
 }
 
-.site-footer.band-forest a:hover {
-    color: rgb(var(--tomato));
+.site-footer.band-storm a:hover {
+    color: rgb(var(--orange));
 }
 
 @media (prefers-reduced-motion: reduce) {

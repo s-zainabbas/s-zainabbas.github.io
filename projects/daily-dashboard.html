@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Dashboard case study — Zain Abbas</title>
     <meta name="description" content="How I rebuilt my Daily Dashboard from a single HTML file into an offline-first React and TypeScript app with Google Drive sync.">
-    <meta name="theme-color" content="#EEE5D4" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0D2118" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#E2E4E7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1C1D20" media="(prefers-color-scheme: dark)">
     <link rel="canonical" href="https://s-zainabbas.github.io/projects/daily-dashboard.html">
     <meta property="og:type" content="article">
     <meta property="og:title" content="Daily Dashboard — a case study by Zain Abbas">
     <meta property="og:description" content="From a 32 KB single HTML file to an offline-first React and TypeScript app with Google Drive sync.">
-    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg">
+    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg?v=20261121">
     <meta name="twitter:card" content="summary_large_image">
     <script>
         (function () {
@@ -26,9 +26,15 @@
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../tailwind.css?v=20261110">
-    <link rel="stylesheet" href="../styles.css?v=20261110">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <!-- Font loads in parallel with the page CSS (it used to wait behind an @import in styles.css) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <!-- Icons are not needed for first paint, so they no longer block rendering -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" crossorigin>
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="../tailwind.css?v=20261121">
+    <link rel="stylesheet" href="../styles.css?v=20261121">
 </head>
 <body class="bg-page text-ink">
     <a href="#main" class="skip-link">Skip to content</a>
@@ -201,10 +207,10 @@
         </div>
     </main>
 
-    <footer class="sub-footer band-forest">
+    <footer class="sub-footer band-storm">
         &copy;<span id="currentYear">2026</span> Designed &amp; built by Zain Abbas
     </footer>
 
-    <script src="../subpage.js?v=20261110"></script>
+    <script src="../subpage.js?v=20261121"></script>
 </body>
 </html>

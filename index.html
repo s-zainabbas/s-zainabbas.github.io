@@ -6,8 +6,8 @@
     <title>Zain Abbas — Data Analyst &amp; Web Developer</title>
     <meta name="description" content="Zain Abbas is a data analyst and web developer near Geneva. Data analysis for IATA and CERN, hand-coded websites for Geneva businesses, and open-source tools you can try live.">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#EEE5D4" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#0D2118" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#E2E4E7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1C1D20" media="(prefers-color-scheme: dark)">
 
     <!-- Apply the saved (or system) theme before first paint to avoid a flash -->
     <script>
@@ -34,14 +34,14 @@
     <meta property="og:description" content="Data analysis, process automation and web development. Explore my experience, projects and skills.">
     <meta property="og:url" content="https://s-zainabbas.github.io/">
     <meta property="og:site_name" content="Zain Abbas">
-    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg">
+    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg?v=20261121">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Zain Abbas, Data Analyst and Web Developer">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Zain Abbas — Data Analyst &amp; Web Developer">
     <meta name="twitter:description" content="Data analysis for IATA and CERN, hand-coded websites for Geneva businesses, and open-source tools you can try live.">
-    <meta name="twitter:image" content="https://s-zainabbas.github.io/Images/og-card.jpg">
+    <meta name="twitter:image" content="https://s-zainabbas.github.io/Images/og-card.jpg?v=20261121">
     <link rel="canonical" href="https://s-zainabbas.github.io/">
     <link rel="alternate" hreflang="en" href="https://s-zainabbas.github.io/">
     <link rel="alternate" hreflang="fr" href="https://s-zainabbas.github.io/?lang=fr">
@@ -75,9 +75,15 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js" defer></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="tailwind.css?v=20261105">
-    <link rel="stylesheet" href="styles.css?v=20261110">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <!-- Font loads in parallel with the page CSS (it used to wait behind an @import in styles.css) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <!-- Icons are not needed for first paint, so they no longer block rendering -->
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" crossorigin>
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="tailwind.css?v=20261121">
+    <link rel="stylesheet" href="styles.css?v=20261121">
 </head>
 <body class="min-h-screen bg-page text-ink">
     <a href="#main" class="skip-link">Skip to content</a>
@@ -85,9 +91,9 @@
     <!-- Intro: the three palette cards stack up, then lift away (pure CSS, ends on its own) -->
     <div class="intro" aria-hidden="true">
         <div class="intro-stack">
-            <div class="intro-card intro-oat"><span>Data</span><small>60%</small></div>
-            <div class="intro-card intro-forest"><span>Code</span><small>30%</small></div>
-            <div class="intro-card intro-tomato"><span>Zain Abbas.</span><small>10%</small></div>
+            <div class="intro-card intro-storm"><span>Data</span><small>60%</small></div>
+            <div class="intro-card intro-matte"><span>Code</span><small>30%</small></div>
+            <div class="intro-card intro-orange"><span>Zain Abbas.</span><small>10%</small></div>
         </div>
     </div>
     <!-- Scroll progress bar -->
@@ -107,6 +113,7 @@
                         <a href="#home" class="nav-link" data-section="home">Home</a>
                         <a href="#about" class="nav-link" data-section="about">About</a>
                         <a href="#experience" class="nav-link" data-section="experience">Experience</a>
+                        <a href="#education" class="nav-link" data-section="education">Education</a>
                         <a href="#certifications" class="nav-link" data-section="certifications">Certifications</a>
                         <a href="#skills" class="nav-link" data-section="skills">Skills</a>
                         <a href="#projects" class="nav-link" data-section="projects">Projects</a>
@@ -132,6 +139,7 @@
                         <a href="#home" class="nav-link">Home</a>
                         <a href="#about" class="nav-link">About</a>
                         <a href="#experience" class="nav-link">Experience</a>
+                        <a href="#education" class="nav-link">Education</a>
                         <a href="#certifications" class="nav-link">Certifications</a>
                         <a href="#skills" class="nav-link">Skills</a>
                         <a href="#projects" class="nav-link">Projects</a>
@@ -162,11 +170,11 @@
                         <span class="stat-label">Years in industry</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-count="5">0</span>
-                        <span class="stat-label">Projects live</span>
+                        <span class="stat-number" data-count="30" data-suffix="+">0</span>
+                        <span class="stat-label">Projects delivered</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-number" data-count="8">0</span>
+                        <span class="stat-number" data-count="10">0</span>
                         <span class="stat-label">Organisations</span>
                     </div>
                 </div>
@@ -185,7 +193,7 @@
                     <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center reveal-up">
                         <div class="w-64 h-64 rounded-full border-2 border-ink p-1 avatar-ring">
                             <div class="w-full h-full rounded-full overflow-hidden relative avatar-frame">
-                                <img src="Images/me-web.jpg?v=20261105" alt="Zain Abbas" width="600" height="900" decoding="async" class="w-full h-full object-cover relative z-10"
+                                <img src="Images/me-web.jpg?v=20261121" alt="Zain Abbas" width="600" height="900" decoding="async" class="w-full h-full object-cover relative z-10"
                                      onerror="this.style.display='none'">
                                 <div class="avatar-fallback">
                                     <i class="fas fa-user text-6xl"></i>
@@ -250,7 +258,7 @@
         </section>
 
         <!-- Organizations Section -->
-        <section class="py-20 band-forest overflow-hidden">
+        <section class="py-20 band-storm overflow-hidden">
             <div class="container mx-auto px-2">
                 <h2 class="section-title reveal-up">Organizations I've Contributed or Collaborated With</h2>
             </div>
@@ -289,6 +297,11 @@
                     <div class="company-logo-container flex-shrink-0">
                         <a href="https://www.bbold.ch" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="BBold website">
                             <img src="Images/bbold_logo.jpg" alt="BBold" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0">
+                        <a href="https://www.fundamentalnet.ch" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-28" aria-label="FUNdamental Networking website">
+                            <img src="Images/fundamental_logo.svg" alt="FUNdamental Networking" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
                     </div>
                     <div class="company-logo-container flex-shrink-0">
@@ -334,6 +347,11 @@
                         </a>
                     </div>
                     <div class="company-logo-container flex-shrink-0" aria-hidden="true">
+                        <a href="https://www.fundamentalnet.ch" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
+                            <img src="Images/fundamental_logo.svg" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
+                        </a>
+                    </div>
+                    <div class="company-logo-container flex-shrink-0" aria-hidden="true">
                         <a href="https://www.univ-smb.fr/" target="_blank" rel="noopener noreferrer" tabindex="-1" class="inline-flex items-center justify-center w-28">
                             <img src="Images/savoie_logo1.png" alt="" class="company-logo w-20 h-12 object-contain" loading="lazy">
                         </a>
@@ -342,16 +360,11 @@
             </div>
         </section>
 
-        <!-- Experience & Education: one timeline -->
+        <!-- Professional Experience -->
         <section id="experience" class="py-20 bg-page-alt">
             <div class="container mx-auto px-6">
-                <h2 class="section-title reveal-up">Experience &amp; Education</h2>
+                <h2 class="section-title reveal-up">Professional Experience</h2>
                 <p class="section-subtitle reveal-up">From CERN and IATA to independent consulting, newest first.</p>
-                <div class="timeline-filters reveal-up" role="group" aria-label="Filter the timeline">
-                    <button type="button" class="timeline-filter is-active" data-filter="all" aria-pressed="true">All</button>
-                    <button type="button" class="timeline-filter" data-filter="work" aria-pressed="false">Work</button>
-                    <button type="button" class="timeline-filter" data-filter="education" aria-pressed="false">Education</button>
-                </div>
                 <div class="timeline-wrap" id="timeline">
                 <span class="timeline-line" aria-hidden="true"><span class="timeline-line-fill" id="timelineFill"></span></span>
                 <ol class="timeline">
@@ -369,7 +382,7 @@
                         <span class="timeline-dot" aria-hidden="true"></span>
                         <div class="timeline-meta"><span class="timeline-date">Aug 2024 – Present</span><span class="timeline-badge">Current</span></div>
                         <article class="experience-card timeline-card">
-                            <h3 class="experience-title">Freelance Technical Consultant</h3>
+                            <h3 class="experience-title">Technical Consultant</h3>
                             <div class="experience-company"><i class="fas fa-laptop-code" aria-hidden="true"></i><span>Independent · Geneva area</span></div>
                             <p class="experience-description">Independent technical consulting for Geneva businesses: audits, websites, data migration and automation.</p>
                             <ul class="experience-highlights">
@@ -441,35 +454,45 @@
                             <div class="experience-skills"><span class="experience-skill">Python</span><span class="experience-skill">C++</span><span class="experience-skill">MySQL</span><span class="experience-skill">Docker</span><span class="experience-skill">Power BI</span></div>
                         </article>
                     </li>
-                    <li class="timeline-item reveal-up" data-kind="education" id="education">
-                        <span class="timeline-dot" aria-hidden="true"></span>
-                        <div class="timeline-meta"><span class="timeline-date">2017 – 2020</span><span class="timeline-kind">Education</span></div>
-                        <article class="experience-card timeline-card">
-                            <h3 class="experience-title">BSc Computer Science</h3>
-                            <div class="experience-company"><img src="Images/webster_logo.png" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>Webster University Geneva</span></div>
-                            <p class="experience-description">Specialised in software engineering and data analysis, with media communication electives.</p>
-                            <ul class="experience-highlights">
-                                <li class="experience-highlight"><span>Core focus on software development and data structures.</span></li>
-                                <li class="experience-highlight"><span>Advanced coursework in database management.</span></li>
-                                <li class="experience-highlight"><span>Studies in media communications and digital marketing.</span></li>
-                            </ul>
-                        </article>
-                    </li>
-                    <li class="timeline-item reveal-up" data-kind="education">
-                        <span class="timeline-dot" aria-hidden="true"></span>
-                        <div class="timeline-meta"><span class="timeline-date">2014 – 2016</span><span class="timeline-kind">Education</span></div>
-                        <article class="experience-card timeline-card">
-                            <h3 class="experience-title">BSc Information Technology</h3>
-                            <div class="experience-company"><img src="Images/savoie_logo1.png" alt="" class="w-6 h-6 object-contain" loading="lazy"><span>Université Savoie Mont Blanc, France</span></div>
-                            <p class="experience-description">Foundations of IT, networking and system administration.</p>
-                            <ul class="experience-highlights">
-                                <li class="experience-highlight"><span>IT infrastructure and networking protocols.</span></li>
-                                <li class="experience-highlight"><span>Hands-on system administration and security.</span></li>
-                                <li class="experience-highlight"><span>Practical training in network configuration and maintenance.</span></li>
-                            </ul>
-                        </article>
-                    </li>
                 </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education" class="py-20 bg-page">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title reveal-up">Education</h2>
+                <p class="section-subtitle reveal-up">Two degrees across Geneva and France: computer science, then IT and networking.</p>
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <article class="experience-card edu-card reveal-up">
+                        <div class="edu-top">
+                            <img src="Images/webster_logo.png" alt="" class="edu-logo" loading="lazy">
+                            <span class="edu-date">2017 – 2020</span>
+                        </div>
+                        <h3 class="experience-title">BSc Computer Science</h3>
+                        <div class="experience-company"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Webster University Geneva</span></div>
+                        <p class="experience-description">Specialised in software engineering and data analysis, with media communication electives.</p>
+                        <ul class="experience-highlights">
+                            <li class="experience-highlight"><span>Core focus on software development and data structures.</span></li>
+                            <li class="experience-highlight"><span>Advanced coursework in database management.</span></li>
+                            <li class="experience-highlight"><span>Studies in media communications and digital marketing.</span></li>
+                        </ul>
+                    </article>
+                    <article class="experience-card edu-card reveal-up">
+                        <div class="edu-top">
+                            <img src="Images/savoie_logo1.png" alt="" class="edu-logo" loading="lazy">
+                            <span class="edu-date">2014 – 2016</span>
+                        </div>
+                        <h3 class="experience-title">BSc Information Technology</h3>
+                        <div class="experience-company"><i class="fas fa-graduation-cap" aria-hidden="true"></i><span>Université Savoie Mont Blanc, France</span></div>
+                        <p class="experience-description">Foundations of IT, networking and system administration.</p>
+                        <ul class="experience-highlights">
+                            <li class="experience-highlight"><span>IT infrastructure and networking protocols.</span></li>
+                            <li class="experience-highlight"><span>Hands-on system administration and security.</span></li>
+                            <li class="experience-highlight"><span>Practical training in network configuration and maintenance.</span></li>
+                        </ul>
+                    </article>
                 </div>
             </div>
         </section>
@@ -478,69 +501,62 @@
         <section id="certifications" class="py-20 bg-page-alt">
             <div class="container mx-auto px-6">
                 <h2 class="section-title reveal-up">Certifications</h2>
-                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <!-- Certification 1 -->
-                    <a href="https://www.credly.com/badges/c0e40250-f173-4a53-9b0d-040472d6cf3a/public_url" target="_blank" rel="noopener noreferrer" class="experience-card cert-card reveal-up">
-                        <div class="experience-header">
+                <p class="section-subtitle reveal-up">Credentials and programmes that back up the day-to-day work.</p>
+                <div class="cert-grid">
+                    <a href="https://www.credly.com/badges/c0e40250-f173-4a53-9b0d-040472d6cf3a/public_url" target="_blank" rel="noopener noreferrer" class="cert-card reveal-up">
+                        <div class="cert-head">
+                            <span class="cert-icon" aria-hidden="true"><i class="fas fa-database"></i></span>
                             <div>
-                                <h3 class="experience-title">Data Fundamentals</h3>
-                                <div class="experience-company">
-                                    <i class="fas fa-certificate w-6 h-6 mr-2"></i>
-                                    IBM
-                                </div>
+                                <p class="cert-issuer">IBM</p>
+                                <p class="cert-kind">Verified badge</p>
                             </div>
-                            <span class="text-ink hover:text-muted transition" aria-label="View certificate">
-                                <i class="fas fa-external-link-alt"></i>
-                            </span>
                         </div>
-                        <div class="experience-description">
-                            Verified credential covering core data concepts, terminology, and foundational data literacy skills.
-                        </div>
+                        <h3 class="cert-title">Data Fundamentals</h3>
+                        <p class="cert-desc">Verified credential covering core data concepts, terminology, and foundational data literacy skills.</p>
+                        <span class="cert-link">View credential <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
                     </a>
-
-                    <!-- Certification 2 -->
-                    <a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_DJzxwFBhgskjzBaY4_1759234666422_completion_certificate.pdf" target="_blank" rel="noopener noreferrer" class="experience-card cert-card reveal-up">
-                        <div class="experience-header">
+                    <a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_DJzxwFBhgskjzBaY4_1759234666422_completion_certificate.pdf" target="_blank" rel="noopener noreferrer" class="cert-card reveal-up">
+                        <div class="cert-head">
+                            <span class="cert-icon" aria-hidden="true"><i class="fas fa-chart-pie"></i></span>
                             <div>
-                                <h3 class="experience-title">Data Analytics</h3>
-                                <div class="experience-company">
-                                    <i class="fas fa-certificate w-6 h-6 mr-2"></i>
-                                    Deloitte
-                                </div>
+                                <p class="cert-issuer">Deloitte</p>
+                                <p class="cert-kind">Job simulation</p>
                             </div>
-                            <span class="text-ink hover:text-muted transition" aria-label="View certificate">
-                                <i class="fas fa-external-link-alt"></i>
-                            </span>
                         </div>
-                        <div class="experience-description">
-                            Job simulation completion certificate focused on forensic data analytics and client reporting.
-                        </div>
+                        <h3 class="cert-title">Data Analytics</h3>
+                        <p class="cert-desc">Job simulation completion certificate focused on forensic data analytics and client reporting.</p>
+                        <span class="cert-link">View credential <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
                     </a>
-
-                    <!-- Certification 3 -->
-                    <a href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/SKZxezskWgmFjRvj9/cT6tMKSaMryk6PGaF_SKZxezskWgmFjRvj9_DJzxwFBhgskjzBaY4_1756136537344_completion_certificate.pdf" target="_blank" rel="noopener noreferrer" class="experience-card cert-card reveal-up">
-                        <div class="experience-header">
+                    <a href="https://forage-uploads-prod.s3.amazonaws.com/completion-certificates/SKZxezskWgmFjRvj9/cT6tMKSaMryk6PGaF_SKZxezskWgmFjRvj9_DJzxwFBhgskjzBaY4_1756136537344_completion_certificate.pdf" target="_blank" rel="noopener noreferrer" class="cert-card reveal-up">
+                        <div class="cert-head">
+                            <span class="cert-icon" aria-hidden="true"><i class="fas fa-arrows-rotate"></i></span>
                             <div>
-                                <h3 class="experience-title">Digital Transformation</h3>
-                                <div class="experience-company">
-                                    <i class="fas fa-certificate w-6 h-6 mr-2"></i>
-                                    BCG
-                                </div>
+                                <p class="cert-issuer">BCG</p>
+                                <p class="cert-kind">Job simulation</p>
                             </div>
-                            <span class="text-ink hover:text-muted transition" aria-label="View certificate">
-                                <i class="fas fa-external-link-alt"></i>
-                            </span>
                         </div>
-                        <div class="experience-description">
-                            Job simulation completion certificate on digital strategy and technology-driven transformation.
-                        </div>
+                        <h3 class="cert-title">Digital Transformation</h3>
+                        <p class="cert-desc">Job simulation completion certificate on digital strategy and technology-driven transformation.</p>
+                        <span class="cert-link">View credential <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></span>
                     </a>
+                    <div class="cert-card reveal-up">
+                        <div class="cert-head">
+                            <span class="cert-icon" aria-hidden="true"><i class="fas fa-people-group"></i></span>
+                            <div>
+                                <p class="cert-issuer">Webster University Geneva</p>
+                                <p class="cert-kind">University certificate</p>
+                            </div>
+                        </div>
+                        <h3 class="cert-title">Leadership Certificate</h3>
+                        <p class="cert-desc">Leadership programme covering team leadership, communication and decision-making in organisations.</p>
+                        <span class="cert-link cert-link-static"><i class="fas fa-circle-check" aria-hidden="true"></i> Certificate completed</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Skills Section -->
-        <section id="skills" class="py-20 band-forest">
+        <section id="skills" class="py-20 band-storm">
             <div class="container mx-auto px-6">
                 <h2 class="section-title reveal-up">Skills &amp; Tools</h2>
                 <p class="section-subtitle reveal-up">The languages, platforms and tools I build and analyse with</p>
@@ -828,7 +844,7 @@
                     <article class="case-study reveal-up">
                         <div class="case-visual">
                             <a class="site-shot" href="https://www.fundamentalnet.ch" target="_blank" rel="noopener noreferrer" aria-label="Visit the FUNdamental Networking website">
-                                <img src="Images/fundamental-home.jpg" alt="The FUNdamental Networking homepage: “FUNdamental Networking by Daniela Casetta” with her portrait on a blue background" width="800" height="500" loading="lazy">
+                                <img src="Images/fundamental-home.jpg?v=20261121" alt="The FUNdamental Networking homepage: “FUNdamental Networking by Daniela Casetta” on a bright blue background, with partner logos underneath" width="800" height="500" loading="lazy">
                             </a>
                             <div class="case-visual-bar">
                                 <span class="case-visual-meta">Client website · Built from scratch</span>
@@ -860,17 +876,6 @@
                         </div>
                     </article>
 
-                    <!-- More on GitHub -->
-                    <div id="githubActivity" class="gh-panel reveal-up" data-i18n-skip>
-                    <a href="https://github.com/s-zainabbas" target="_blank" rel="noopener noreferrer" class="github-strip">
-                        <i class="fab fa-github" aria-hidden="true"></i>
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-lg">More on GitHub</h3>
-                            <p class="text-muted text-sm">Experiments, data tools and work in progress.</p>
-                        </div>
-                        <span class="github-strip-cta">Visit GitHub <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i></span>
-                    </a>
-                    </div>
                 </div>
             </div>
         </section>
@@ -961,7 +966,7 @@
         </main>
 
         <!-- Footer -->
-        <footer class="site-footer band-forest py-8 relative">
+        <footer class="site-footer band-storm py-8 relative">
             <div class="container mx-auto px-6">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                     <div class="text-sm order-2 md:order-1">
@@ -991,8 +996,8 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="script.js?v=20261110"></script>
-    <script src="features.js?v=20261110"></script>
-    <script src="i18n.js?v=20261110"></script>
+    <script src="script.js?v=20261121"></script>
+    <script src="features.js?v=20261121"></script>
+    <script src="i18n.js?v=20261121"></script>
 </body>
 </html>
