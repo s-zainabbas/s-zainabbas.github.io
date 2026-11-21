@@ -100,6 +100,7 @@
             { group: 'Go to', label: 'Contact', icon: 'fa-envelope', run: go('#contact') },
             { group: 'Case studies', label: 'Stockify', icon: 'fa-chart-line', run: () => { location.href = 'projects/stockify.html'; } },
             { group: 'Case studies', label: 'Daily Dashboard', icon: 'fa-table-columns', run: () => { location.href = 'projects/daily-dashboard.html'; } },
+            { group: 'Case studies', label: 'This portfolio', icon: 'fa-layer-group', run: () => { location.href = 'projects/portfolio.html'; } },
             { group: 'Actions', label: 'Switch light / dark theme', icon: 'fa-circle-half-stroke', keys: 'T', run: () => document.getElementById('themeToggle').click() },
             { group: 'Actions', label: 'Lire en français / Read in English', icon: 'fa-language', keys: 'L', run: () => window.i18n && window.i18n.toggle() },
             { group: 'Actions', label: 'Copy my email address', icon: 'fa-copy', run: copyEmail },

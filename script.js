@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initParticles();
     init3DScene();
     initNavScrollEffects();
+    initNavDock();
     initScrollProgress();
     initScrollSpy();
     initRevealAnimations();
@@ -157,8 +158,11 @@ function init3DScene() {
 
     let { width, height } = getSize();
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    // Phones: 1.5x resolution and no antialiasing. On a small high-density screen it
+    // looks the same, but it roughly halves the GPU work per frame and saves battery.
+    const isSmallScreen = window.innerWidth < 768;
+    const renderer = new THREE.WebGLRenderer({ antialias: !isSmallScreen, alpha: true, powerPreference: isSmallScreen ? 'low-power' : 'default' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, isSmallScreen ? 1.5 : 2));
     renderer.setSize(width, height);
     container.appendChild(renderer.domElement);
 
@@ -424,6 +428,83 @@ function initHeroParallax() {
             ticking = true;
         }
     }, { passive: true });
+}
+
+// ---------- Nav links: dock-style magnification ----------
+// Like the macOS Dock: links rest slightly smaller, and the ones near the cursor
+// swell in a smooth wave (cosine falloff), pushing their neighbours aside so
+// nothing overlaps. Distances use the resting layout, measured on mouseenter, so
+// the growing links never shift the wave out from under the cursor. Each frame
+// eases towards the target, which gives the soft, springy Dock feel.
+function initNavDock() {
+    const bar = document.getElementById('navLinks');
+    if (!bar || isTouchDevice || prefersReducedMotion) return;
+    const links = Array.from(bar.querySelectorAll('.nav-link'));
+    if (!links.length) return;
+
+    const MAX_SCALE = 1.55;  // size of the link right under the cursor
+    const RANGE = 150;       // px either side of the cursor that the wave reaches
+    const EASE = 0.2;        // fraction of the remaining distance covered per frame
+
+    bar.classList.add('nav-dock');
+
+    let centers = [], widths = [], barLeft = 0, roomRight = Infinity;
+    let pointerX = null;
+    const current = links.map(() => 1);
+    let rafId = null;
+
+    const measure = () => {
+        barLeft = bar.getBoundingClientRect().left;
+        widths = links.map(l => l.offsetWidth);
+        centers = links.map((l, i) => l.offsetLeft + widths[i] / 2);
+        // Free space to the right before the next nav control; the row may only
+        // grow into part of it, and expands leftwards for the rest
+        const next = bar.nextElementSibling;
+        roomRight = next ? Math.max(0, next.getBoundingClientRect().left - bar.getBoundingClientRect().right - 12) : Infinity;
+    };
+
+    const targetFor = (i) => {
+        if (pointerX === null) return 1;
+        const d = Math.abs(pointerX - centers[i]);
+        if (d >= RANGE) return 1;
+        return 1 + (MAX_SCALE - 1) * (Math.cos(Math.PI * d / RANGE) + 1) / 2;
+    };
+
+    const frame = () => {
+        let moving = false;
+        for (let i = 0; i < links.length; i++) {
+            const target = targetFor(i);
+            const next = current[i] + (target - current[i]) * EASE;
+            current[i] = Math.abs(target - next) < 0.001 ? target : next;
+            if (current[i] !== target) moving = true;
+        }
+
+        // Spread the extra width so the row grows evenly to both sides
+        const extra = links.map((_, i) => widths[i] * (current[i] - 1));
+        const total = extra.reduce((a, b) => a + b, 0);
+        const pullLeft = Math.min(0, roomRight - total / 2);
+        let before = 0;
+        for (let i = 0; i < links.length; i++) {
+            const shift = before + extra[i] / 2 - total / 2 + pullLeft;
+            before += extra[i];
+            links[i].style.transform = current[i] === 1 && total === 0
+                ? ''
+                : `translate3d(${shift.toFixed(2)}px, 0, 0) scale(${current[i].toFixed(4)})`;
+        }
+
+        rafId = moving ? requestAnimationFrame(frame) : null;
+    };
+
+    const kick = () => { if (rafId === null) rafId = requestAnimationFrame(frame); };
+
+    bar.addEventListener('mouseenter', () => { measure(); });
+    bar.addEventListener('mousemove', (e) => {
+        if (!widths.length) measure();
+        pointerX = e.clientX - barLeft;
+        kick();
+    });
+    bar.addEventListener('mouseleave', () => { pointerX = null; kick(); });
+    window.addEventListener('resize', () => { widths = []; });
 }
 
 // ---------- Nav scroll effects (blur/shadow) ----------

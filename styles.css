@@ -126,6 +126,9 @@ body {
 .content-wrapper {
     position: relative;
     z-index: 1;
+    /* Cards waiting to reveal sit tilted in 3D and can overhang the edge by a few
+       px; clip (unlike hidden) stops sideways drift on phones without breaking the sticky nav */
+    overflow-x: clip;
 }
 
 .three-d-container {
@@ -182,6 +185,19 @@ body {
 
 .nav-link.active-nav {
     font-weight: 600;
+}
+
+/* Dock-style nav (see initNavDock): links rest a little smaller and grow from
+   their baseline towards the cursor */
+.nav-dock {
+    position: relative; /* offsetLeft of the links is measured from here */
+}
+
+.nav-dock .nav-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    transform-origin: 50% 100%;
+    will-change: transform;
 }
 
 /* Hamburger icon */
@@ -1415,9 +1431,119 @@ a.cert-card:hover .cert-link {
     color: rgb(var(--snow));
 }
 
+/* ---------- Footer layout: "made in 2020" stamp | centred credits | room for the back-to-top button ---------- */
+.footer-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    text-align: center;
+}
+
+.footer-made {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.footer-stamp {
+    width: 76px;
+    height: 76px;
+    flex-shrink: 0;
+    overflow: visible;
+}
+
+.footer-stamp-spin {
+    transform-origin: 50px 50px;
+    animation: footer-stamp-spin 24s linear infinite;
+}
+
+.footer-made:hover .footer-stamp-spin {
+    animation-duration: 6s;
+}
+
+@keyframes footer-stamp-spin {
+    to { transform: rotate(360deg); }
+}
+
+.footer-stamp-ring {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    fill: currentColor;
+    opacity: 0.85;
+}
+
+.footer-stamp-inner {
+    fill: rgb(var(--orange));
+}
+
+.footer-stamp-year {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    fill: rgb(var(--matte));
+}
+
+.footer-made-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    text-align: left;
+}
+
+.footer-made-kicker {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 0.3rem;
+}
+
+.footer-made-year {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+.footer-made-dot {
+    color: rgb(var(--orange));
+}
+
+/* Phones: leave room under the credits for the floating back-to-top button */
+@media screen and (max-width: 767px) {
+    .site-footer {
+        padding-bottom: 5.5rem;
+    }
+}
+
 @media screen and (min-width: 768px) {
+    /* Equal side gutters keep the credits truly centred and clear of the
+       fixed back-to-top button on the right */
     .site-footer .container {
+        padding-left: 6rem;
         padding-right: 6rem;
+    }
+}
+
+@media screen and (min-width: 1100px) {
+    .footer-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 2rem;
+    }
+
+    .footer-made {
+        justify-self: start;
+        /* Pull the stamp further left without shifting the centred credits */
+        margin-left: -4.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-stamp-spin {
+        animation: none;
     }
 }
 
@@ -1811,6 +1937,109 @@ a.cert-card:hover .cert-link {
     }
 
     .timeline-dot { top: 1.65rem; }
+}
+
+/* ---------- Nav: "How it's built" case-study button ---------- */
+.cs-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    height: 38px;
+    padding: 0 0.85rem 0 0.25rem;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--ink) / 0.15);
+    color: rgb(var(--ink));
+    white-space: nowrap;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.cs-trigger-icon {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 999px;
+    background: rgb(var(--orange));
+    color: rgb(var(--matte));
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+
+/* Soft ring that breathes out from the icon to invite a click */
+.cs-trigger-icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 2px solid rgb(var(--orange));
+    opacity: 0;
+    animation: cs-trigger-ping 2.8s ease-out infinite;
+}
+
+@keyframes cs-trigger-ping {
+    0% { transform: scale(1); opacity: 0.55; }
+    70%, 100% { transform: scale(1.7); opacity: 0; }
+}
+
+.cs-trigger-label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+}
+
+.cs-trigger-kicker {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgb(var(--ink) / 0.6);
+}
+
+.cs-trigger-main {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.cs-trigger-arrow {
+    font-size: 0.7rem;
+    color: rgb(var(--orange));
+    transition: transform 0.3s var(--ease-out-smooth);
+}
+
+.cs-trigger:hover {
+    border-color: rgb(var(--orange));
+    background: rgb(var(--orange) / 0.08);
+}
+
+.cs-trigger:hover .cs-trigger-arrow {
+    transform: translateX(3px);
+}
+
+.cs-trigger:focus-visible {
+    outline: 2px solid rgb(var(--orange));
+    outline-offset: 2px;
+}
+
+/* Icon-only where the bar is tight: phones, and laptops while the section links are shown */
+@media (max-width: 639px), (min-width: 1024px) and (max-width: 1279px) {
+    .cs-trigger {
+        padding: 0;
+        width: 38px;
+        justify-content: center;
+        gap: 0;
+    }
+    .cs-trigger-label,
+    .cs-trigger-arrow {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cs-trigger-icon::after { animation: none; }
 }
 
 /* ---------- Command palette ---------- */

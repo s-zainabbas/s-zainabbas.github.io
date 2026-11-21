@@ -31,7 +31,14 @@
         'Read in English': 'Read in English',
         'Lire en français': 'Lire en français',
         'Back to top': 'Retour en haut',
-        'Back to top ↑': 'Retour en haut ↑',
+        'Made in': 'Fait en',
+        "How it's built": 'Les coulisses',
+        'Case study': 'Étude de cas',
+        'How this site was built: read the case study': 'Comment ce site a été conçu : lire l’étude de cas',
+        'How this site was built': 'Comment ce site a été conçu',
+        'This portfolio': 'Ce portfolio',
+        'Made in 2020': 'Fait en 2020',
+        'MADE IN · HANDCRAFTED · SINCE ·': 'FAIT MAIN · DEPUIS · FAIT EN ·',
 
         // Intro
         'Data': 'Données',

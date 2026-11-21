@@ -82,8 +82,8 @@
     <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" crossorigin>
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="tailwind.css?v=20261121">
-    <link rel="stylesheet" href="styles.css?v=20261121b">
+    <link rel="stylesheet" href="tailwind.css?v=20261121d">
+    <link rel="stylesheet" href="styles.css?v=20261121f">
 </head>
 <body class="min-h-screen bg-page text-ink">
     <a href="#main" class="skip-link">Skip to content</a>
@@ -119,9 +119,11 @@
                         <a href="#projects" class="nav-link" data-section="projects">Projects</a>
                         <a href="#contact" class="nav-link" data-section="contact">Contact</a>
                     </div>
-                    <button type="button" class="cmdk-trigger" data-cmdk-open aria-label="Open the command menu" title="Command menu">
-                        <i class="fas fa-magnifying-glass" aria-hidden="true"></i><kbd><span class="cmdk-key-mod">⌘</span>K</kbd>
-                    </button>
+                    <a href="projects/portfolio.html" class="cs-trigger" aria-label="How this site was built: read the case study" title="How this site was built">
+                        <span class="cs-trigger-icon" aria-hidden="true"><i class="fas fa-layer-group"></i></span>
+                        <span class="cs-trigger-label"><span class="cs-trigger-kicker">How it's built</span><span class="cs-trigger-main">Case study</span></span>
+                        <i class="fas fa-arrow-right cs-trigger-arrow" aria-hidden="true"></i>
+                    </a>
                     <button type="button" class="lang-toggle" data-lang-toggle lang="fr" aria-label="Lire en français">FR</button>
                     <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode" title="Toggle dark mode">
                         <i class="fas fa-moon" aria-hidden="true"></i>
@@ -968,12 +970,28 @@
         <!-- Footer -->
         <footer class="site-footer band-storm py-8 relative">
             <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="text-sm order-2 md:order-1">
+                <div class="footer-grid">
+                    <div class="footer-made" role="img" aria-label="Made in 2020">
+                        <svg class="footer-stamp" viewBox="0 0 100 100" aria-hidden="true">
+                            <defs>
+                                <path id="footerStampRing" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"/>
+                            </defs>
+                            <g class="footer-stamp-spin">
+                                <text class="footer-stamp-ring"><textPath href="#footerStampRing" textLength="224" lengthAdjust="spacing">MADE IN · HANDCRAFTED · SINCE ·</textPath></text>
+                            </g>
+                            <circle class="footer-stamp-inner" cx="50" cy="50" r="25"/>
+                            <text class="footer-stamp-year" x="50" y="55.5" text-anchor="middle">2020</text>
+                        </svg>
+                        <div class="footer-made-text">
+                            <span class="footer-made-kicker">Made in</span>
+                            <span class="footer-made-year">2020<span class="footer-made-dot">.</span></span>
+                        </div>
+                    </div>
+                    <div class="footer-credits text-sm">
                         <p class="mb-2">No templates were harmed in the making, handcrafted from scratch by Me :)</p>
                         <p>&copy;<span id="currentYear">2026</span> Designed & Built by <a href="https://www.linkedin.com/in/zain-abbas-/" target="_blank" rel="noopener noreferrer" class="underline">Zain Abbas</a></p>
                     </div>
-                    <a href="#home" class="text-sm hover:underline order-1 md:order-2">Back to top &uarr;</a>
+                    <div class="footer-spacer" aria-hidden="true"></div>
                 </div>
             </div>
         </footer>
@@ -996,8 +1014,8 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <script src="script.js?v=20261121b"></script>
-    <script src="features.js?v=20261121b"></script>
-    <script src="i18n.js?v=20261121"></script>
+    <script src="script.js?v=20261121f"></script>
+    <script src="features.js?v=20261121f"></script>
+    <script src="i18n.js?v=20261121f"></script>
 </body>
 </html>

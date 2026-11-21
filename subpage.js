@@ -27,7 +27,7 @@
     if (bar) {
         const update = () => {
             const max = document.documentElement.scrollHeight - window.innerHeight;
-            bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+            bar.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max).toFixed(4) : 0})`;
         };
         window.addEventListener('scroll', update, { passive: true });
         update();

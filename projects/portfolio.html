@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This portfolio, a case study — Zain Abbas</title>
+    <meta name="description" content="How I built this portfolio: hand-written HTML, CSS and JavaScript, a WebGL hero, scroll-scrubbed animations, an English/French switch and live project previews, hosted free on GitHub Pages.">
+    <meta name="theme-color" content="#E2E4E7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1C1D20" media="(prefers-color-scheme: dark)">
+    <link rel="canonical" href="https://s-zainabbas.github.io/projects/portfolio.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="This portfolio — a case study by Zain Abbas">
+    <meta property="og:description" content="Hand-written HTML, CSS and JavaScript with no templates and no framework, hosted free on GitHub Pages.">
+    <meta property="og:image" content="https://s-zainabbas.github.io/Images/og-card.jpg?v=20261121">
+    <meta name="twitter:card" content="summary_large_image">
+    <script>
+        (function () {
+            var theme;
+            try { theme = localStorage.getItem('theme'); } catch (e) {}
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'" crossorigin>
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="../tailwind.css?v=20261121">
+    <link rel="stylesheet" href="../styles.css?v=20261121f">
+</head>
+<body class="bg-page text-ink">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollProgressBar"></div></div>
+
+    <header class="sub-nav">
+        <div class="sub-nav-inner">
+            <a href="../index.html" class="sub-back"><i class="fas fa-arrow-left" aria-hidden="true"></i> Back to the portfolio</a>
+            <button type="button" id="themeToggle" class="theme-toggle" aria-label="Switch to dark mode">
+                <i class="fas fa-moon" aria-hidden="true"></i>
+                <i class="fas fa-sun" aria-hidden="true"></i>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" tabindex="-1">
+        <div class="cs">
+            <section class="cs-hero">
+                <p class="eyebrow mb-4">Case study · The site you're on</p>
+                <h1 class="cs-title">This portfolio<span class="hl-accent">.</span></h1>
+                <p class="cs-lede">
+                    A single page that shows my work and also is my work. Every line is hand-written HTML, CSS and
+                    JavaScript, with no template and no framework. It has a WebGL hero, animations that follow the
+                    scrollbar, live project previews and a full French version, and it costs nothing to host.
+                </p>
+                <dl class="cs-facts">
+                    <div><dt>Role</dt><dd>Design, development, content</dd></div>
+                    <div><dt>Stack</dt><dd>HTML, CSS, vanilla JS, Tailwind, Three.js</dd></div>
+                    <div><dt>Hosting</dt><dd>GitHub Pages, $0 a month</dd></div>
+                    <div><dt>Timeline</dt><dd>First built in 2020, rebuilt in 2026</dd></div>
+                </dl>
+                <div class="flex flex-wrap gap-3">
+                    <a href="../index.html" class="action-button action-button-primary inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                        Back to the site <i class="fas fa-arrow-right ml-2 text-sm" aria-hidden="true"></i>
+                    </a>
+                    <a href="https://github.com/s-zainabbas/s-zainabbas.github.io" target="_blank" rel="noopener noreferrer" class="action-button action-button-outline inline-flex items-center px-5 py-2.5 rounded-lg font-medium">
+                        <i class="fab fa-github mr-2" aria-hidden="true"></i> Source code
+                    </a>
+                </div>
+            </section>
+
+            <section class="cs-section">
+                <h2>The brief</h2>
+                <p>
+                    A CV says what I've done. I wanted a site that proves it: somewhere a recruiter or a client can see
+                    my experience in a minute, then try the things I've built without leaving the page.
+                </p>
+                <p>
+                    I set myself three rules. <strong>No templates</strong>, so every part is something I can explain.
+                    <strong>No server</strong>, so it stays free and fast. And it has to feel <strong>alive</strong>
+                    (motion, depth, interactive previews) while still being quick on a phone and readable for everyone.
+                </p>
+            </section>
+
+            <section class="cs-section">
+                <h2>How it fits together</h2>
+                <p>
+                    The whole site is static files. One HTML page holds the ten sections. Three plain JavaScript files,
+                    each with one job, add the behaviour. A few trusted libraries load from CDNs, and the only outside
+                    service is the one that delivers contact-form messages to my inbox.
+                </p>
+                <figure class="cs-figure">
+                    <svg viewBox="0 0 760 400" role="img" aria-labelledby="pfArchTitle">
+                        <title id="pfArchTitle">index.html loads three scripts. script.js runs the theme, the 3D hero, scroll reveals, project previews and the contact form, using Three.js and particles.js and sending messages through FormSubmit. features.js runs the timeline, the command menu and optional GoatCounter stats. i18n.js switches between English and French. styles.css and tailwind.css are shared with the case-study pages. Editing, building Tailwind and pushing to main publishes the site on GitHub Pages.</title>
+                        <defs>
+                            <marker id="pArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow"/></marker>
+                            <marker id="pArrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow-accent"/></marker>
+                        </defs>
+
+                        <text x="20" y="10" class="dg-sub">PAGE</text>
+                        <text x="260" y="10" class="dg-sub">BEHAVIOUR</text>
+                        <text x="540" y="10" class="dg-sub">THIRD PARTY</text>
+
+                        <rect x="20" y="56" width="170" height="70" rx="12" class="dg-box-strong"/>
+                        <text x="38" y="86" class="dg-text-inv">index.html</text>
+                        <text x="38" y="106" class="dg-sub-inv">one page · ten sections</text>
+
+                        <rect x="20" y="154" width="170" height="56" rx="12" class="dg-box"/>
+                        <text x="38" y="178" class="dg-text">styles.css + Tailwind</text>
+                        <text x="38" y="196" class="dg-sub">tokens · dark mode</text>
+
+                        <rect x="20" y="238" width="170" height="56" rx="12" class="dg-box"/>
+                        <text x="38" y="262" class="dg-text">Case-study pages</text>
+                        <text x="38" y="280" class="dg-sub">+ subpage.js · 404</text>
+
+                        <rect x="260" y="22" width="200" height="64" rx="12" class="dg-box"/>
+                        <text x="278" y="48" class="dg-text">script.js</text>
+                        <text x="278" y="68" class="dg-sub">theme · 3D hero · reveals · form</text>
+
+                        <rect x="260" y="102" width="200" height="64" rx="12" class="dg-box"/>
+                        <text x="278" y="128" class="dg-text">features.js</text>
+                        <text x="278" y="148" class="dg-sub">timeline · ⌘K menu · stats</text>
+
+                        <rect x="260" y="182" width="200" height="64" rx="12" class="dg-box"/>
+                        <text x="278" y="208" class="dg-text">i18n.js</text>
+                        <text x="278" y="228" class="dg-sub">English ⇄ French</text>
+
+                        <rect x="540" y="22" width="200" height="44" rx="10" class="dg-box"/>
+                        <text x="556" y="49" class="dg-sub">Three.js · particles.js</text>
+                        <rect x="540" y="74" width="200" height="44" rx="10" class="dg-box"/>
+                        <text x="556" y="101" class="dg-sub">Google Fonts · Font Awesome</text>
+                        <rect x="540" y="126" width="200" height="56" rx="12" class="dg-box-accent"/>
+                        <text x="556" y="150" class="dg-text">FormSubmit</text>
+                        <text x="556" y="168" class="dg-sub">contact form → my inbox</text>
+                        <rect x="540" y="190" width="200" height="56" rx="12" class="dg-box"/>
+                        <text x="556" y="214" class="dg-text">GoatCounter</text>
+                        <text x="556" y="232" class="dg-sub">optional, cookie-free stats</text>
+
+                        <path d="M190 80 C225 80 225 54 256 54" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M190 96 C225 96 225 134 256 134" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M190 112 C225 112 225 214 256 214" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M105 126 V150" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M105 210 V234" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M460 44 H536" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M460 66 C500 66 500 154 536 154" class="dg-line-accent" marker-end="url(#pArrowA)"/>
+                        <path d="M460 134 C500 134 500 218 536 218" class="dg-line" marker-end="url(#pArrow)"/>
+
+                        <text x="20" y="338" class="dg-sub">PUBLISHING</text>
+                        <rect x="20" y="348" width="160" height="34" rx="9" class="dg-box"/><text x="36" y="370" class="dg-sub">Edit HTML · CSS · JS</text>
+                        <rect x="210" y="348" width="160" height="34" rx="9" class="dg-box"/><text x="226" y="370" class="dg-sub">npm run build</text>
+                        <rect x="400" y="348" width="160" height="34" rx="9" class="dg-box"/><text x="416" y="370" class="dg-sub">git push to main</text>
+                        <rect x="590" y="348" width="150" height="34" rx="9" class="dg-box-strong"/><text x="606" y="370" class="dg-sub-inv">GitHub Pages (live)</text>
+                        <path d="M180 365 H206" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M370 365 H396" class="dg-line" marker-end="url(#pArrow)"/>
+                        <path d="M560 365 H586" class="dg-line" marker-end="url(#pArrow)"/>
+                    </svg>
+                    <figcaption>No backend and no database. The only build step compiles Tailwind into one small stylesheet; everything else ships exactly as I wrote it.</figcaption>
+                </figure>
+            </section>
+
+            <section class="cs-section">
+                <h2>What happens when the page opens</h2>
+                <p>
+                    First impressions are mostly about the first second. The page is ordered so that something correct
+                    appears straight away, and the heavy parts wait until they're needed.
+                </p>
+                <figure class="cs-figure">
+                    <svg viewBox="0 0 760 190" role="img" aria-labelledby="pfLoadTitle">
+                        <title id="pfLoadTitle">Five steps in order: a tiny inline script sets the theme before first paint; HTML and CSS paint while fonts load in parallel; Three.js and particles.js load deferred; nineteen small init functions run; project previews only start when they scroll into view.</title>
+                        <defs>
+                            <marker id="lArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow"/></marker>
+                        </defs>
+                        <rect x="20" y="20" width="132" height="90" rx="12" class="dg-box-strong"/>
+                        <text x="34" y="48" class="dg-text-inv">1 · Inline script</text>
+                        <text x="34" y="72" class="dg-sub-inv">sets the theme</text>
+                        <text x="34" y="90" class="dg-sub-inv">before first paint</text>
+
+                        <rect x="168" y="20" width="132" height="90" rx="12" class="dg-box"/>
+                        <text x="182" y="48" class="dg-text">2 · First paint</text>
+                        <text x="182" y="72" class="dg-sub">HTML + CSS, fonts</text>
+                        <text x="182" y="90" class="dg-sub">load in parallel</text>
+
+                        <rect x="316" y="20" width="132" height="90" rx="12" class="dg-box"/>
+                        <text x="330" y="48" class="dg-text">3 · Libraries</text>
+                        <text x="330" y="72" class="dg-sub">Three.js and</text>
+                        <text x="330" y="90" class="dg-sub">particles, deferred</text>
+
+                        <rect x="464" y="20" width="132" height="90" rx="12" class="dg-box"/>
+                        <text x="478" y="48" class="dg-text">4 · Start-up</text>
+                        <text x="478" y="72" class="dg-sub">19 small init</text>
+                        <text x="478" y="90" class="dg-sub">functions run</text>
+
+                        <rect x="612" y="20" width="132" height="90" rx="12" class="dg-box-accent"/>
+                        <text x="626" y="48" class="dg-text">5 · On demand</text>
+                        <text x="626" y="72" class="dg-sub">previews start</text>
+                        <text x="626" y="90" class="dg-sub">when on screen</text>
+
+                        <path d="M152 65 H164" class="dg-line" marker-end="url(#lArrow)"/>
+                        <path d="M300 65 H312" class="dg-line" marker-end="url(#lArrow)"/>
+                        <path d="M448 65 H460" class="dg-line" marker-end="url(#lArrow)"/>
+                        <path d="M596 65 H608" class="dg-line" marker-end="url(#lArrow)"/>
+
+                        <path d="M20 146 H736" class="dg-line" marker-end="url(#lArrow)"/>
+                        <text x="20" y="172" class="dg-sub">page requested</text>
+                        <text x="744" y="172" class="dg-sub" text-anchor="end">fully interactive</text>
+                    </svg>
+                    <figcaption>Icons, the 3D scene and the previews never block the first paint, and the saved theme is applied before anything is drawn, so dark mode never flashes white.</figcaption>
+                </figure>
+            </section>
+
+            <section class="cs-section">
+                <h2>Scroll, frame by frame</h2>
+                <p>
+                    Sections don't just fade in once. Their 3D tilt, depth and opacity are tied to the scrollbar, so
+                    scrolling back up plays them in reverse. That means 43 elements recalculated on every frame,
+                    and the first version stuttered.
+                </p>
+                <p>
+                    The cause was a classic one: each frame <strong>read</strong> the position of every element right after
+                    <strong>writing</strong> new transforms, which forces the browser to redo the page layout before it can
+                    answer. The fix was to measure positions only when the layout actually changes, then do nothing but
+                    arithmetic while scrolling.
+                </p>
+                <figure class="cs-figure">
+                    <svg viewBox="0 0 760 300" role="img" aria-labelledby="pfScrollTitle">
+                        <title id="pfScrollTitle">Before: on every scroll the page read the layout of 43 elements, wrote styles, and was forced to recalculate the layout again, so frames dropped. After: positions are measured once when the layout changes and cached; each scroll frame does arithmetic on the cached numbers and writes only transform and opacity, which the GPU compositor handles.</title>
+                        <defs>
+                            <marker id="fArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow"/></marker>
+                            <marker id="fArrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow-accent"/></marker>
+                        </defs>
+
+                        <text x="20" y="16" class="dg-sub">BEFORE · EVERY FRAME</text>
+                        <rect x="20" y="28" width="100" height="44" rx="10" class="dg-box"/><text x="38" y="55" class="dg-sub">scroll</text>
+                        <rect x="140" y="28" width="160" height="44" rx="10" class="dg-box"/><text x="156" y="55" class="dg-sub">read layout × 43</text>
+                        <rect x="320" y="28" width="140" height="44" rx="10" class="dg-box"/><text x="336" y="55" class="dg-sub">write styles</text>
+                        <rect x="480" y="28" width="170" height="44" rx="10" class="dg-box-accent"/><text x="496" y="55" class="dg-sub">forced layout again</text>
+                        <text x="664" y="48" class="dg-sub">dropped</text>
+                        <text x="664" y="64" class="dg-sub">frames</text>
+                        <path d="M120 50 H136" class="dg-line" marker-end="url(#fArrow)"/>
+                        <path d="M300 50 H316" class="dg-line" marker-end="url(#fArrow)"/>
+                        <path d="M460 50 H476" class="dg-line" marker-end="url(#fArrow)"/>
+                        <path d="M565 72 C565 104 220 104 220 76" class="dg-line-accent" marker-end="url(#fArrowA)"/>
+
+                        <text x="20" y="146" class="dg-sub">AFTER · EVERY FRAME</text>
+                        <rect x="20" y="158" width="100" height="44" rx="10" class="dg-box"/><text x="38" y="185" class="dg-sub">scroll</text>
+                        <rect x="140" y="158" width="130" height="44" rx="10" class="dg-box"/><text x="156" y="185" class="dg-sub">one rAF tick</text>
+                        <rect x="290" y="158" width="150" height="44" rx="10" class="dg-box"/><text x="306" y="185" class="dg-sub">maths on cache</text>
+                        <rect x="460" y="158" width="150" height="44" rx="10" class="dg-box"/><text x="476" y="185" class="dg-sub">transform + opacity</text>
+                        <rect x="630" y="158" width="110" height="44" rx="10" class="dg-box-strong"/><text x="646" y="185" class="dg-sub-inv">GPU composite</text>
+                        <path d="M120 180 H136" class="dg-line" marker-end="url(#fArrow)"/>
+                        <path d="M270 180 H286" class="dg-line" marker-end="url(#fArrow)"/>
+                        <path d="M440 180 H456" class="dg-line" marker-end="url(#fArrow)"/>
+                        <path d="M610 180 H626" class="dg-line" marker-end="url(#fArrow)"/>
+
+                        <text x="20" y="236" class="dg-sub">ONLY WHEN THE LAYOUT CHANGES</text>
+                        <rect x="20" y="246" width="250" height="44" rx="10" class="dg-box"/><text x="36" y="273" class="dg-sub">resize · images load · language switch</text>
+                        <rect x="290" y="246" width="150" height="44" rx="10" class="dg-box-accent"/><text x="306" y="273" class="dg-sub">cached positions</text>
+                        <path d="M270 268 H286" class="dg-line" marker-end="url(#fArrow)"/>
+                        <path d="M365 246 V206" class="dg-line-accent" marker-end="url(#fArrowA)"/>
+                    </svg>
+                    <figcaption>The same idea runs the progress bar and the timeline. Finished cards also drop their 3D layer, and the WebGL hero pauses once it's off screen.</figcaption>
+                </figure>
+            </section>
+
+            <section class="cs-section">
+                <h2>Two languages, one page</h2>
+                <p>
+                    I work in Geneva, so French isn't optional. Rather than keep two copies of the site in sync, the page is
+                    written once in English and <code>i18n.js</code> swaps the words in place. Press the
+                    <strong>FR</strong> button, or <code>L</code> anywhere on the page.
+                </p>
+                <figure class="cs-figure">
+                    <svg viewBox="0 0 760 240" role="img" aria-labelledby="pfLangTitle">
+                        <title id="pfLangTitle">The English page and the FR button or L key feed i18n.js, which walks the page's text. It looks each string up in a French dictionary of about 240 entries keyed by the exact English text, keeps the original so switching back is instant, and uses a MutationObserver to translate text that scripts add later.</title>
+                        <defs>
+                            <marker id="iArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow"/></marker>
+                            <marker id="iArrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="dg-arrow-accent"/></marker>
+                        </defs>
+                        <rect x="20" y="40" width="180" height="64" rx="12" class="dg-box"/>
+                        <text x="38" y="66" class="dg-text">Page in English</text>
+                        <text x="38" y="86" class="dg-sub">written once, in HTML</text>
+
+                        <rect x="20" y="140" width="180" height="64" rx="12" class="dg-box"/>
+                        <text x="38" y="166" class="dg-text">FR button · L key</text>
+                        <text x="38" y="186" class="dg-sub">choice remembered</text>
+
+                        <rect x="270" y="88" width="190" height="70" rx="12" class="dg-box-strong"/>
+                        <text x="288" y="118" class="dg-text-inv">i18n.js</text>
+                        <text x="288" y="138" class="dg-sub-inv">walks every text node</text>
+
+                        <rect x="530" y="14" width="210" height="60" rx="12" class="dg-box-accent"/>
+                        <text x="546" y="40" class="dg-text">French dictionary</text>
+                        <text x="546" y="60" class="dg-sub">~240 entries, keyed by English</text>
+
+                        <rect x="530" y="92" width="210" height="60" rx="12" class="dg-box"/>
+                        <text x="546" y="118" class="dg-text">Originals kept</text>
+                        <text x="546" y="138" class="dg-sub">switch back instantly</text>
+
+                        <rect x="530" y="170" width="210" height="60" rx="12" class="dg-box"/>
+                        <text x="546" y="196" class="dg-text">MutationObserver</text>
+                        <text x="546" y="216" class="dg-sub">translates text added later</text>
+
+                        <path d="M200 72 C235 72 235 112 266 112" class="dg-line" marker-end="url(#iArrow)"/>
+                        <path d="M200 172 C235 172 235 134 266 134" class="dg-line" marker-end="url(#iArrow)"/>
+                        <path d="M460 110 C495 110 495 44 526 44" class="dg-line-accent" marker-end="url(#iArrowA)" marker-start="url(#iArrowA)"/>
+                        <path d="M460 123 H526" class="dg-line" marker-end="url(#iArrow)"/>
+                        <path d="M460 136 C495 136 495 200 526 200" class="dg-line" marker-end="url(#iArrow)"/>
+                    </svg>
+                    <figcaption>Form messages, the command menu and the live previews translate too, because anything added to the page later is caught and swapped as it appears.</figcaption>
+                </figure>
+            </section>
+
+            <section class="cs-section">
+                <h2>Decisions worth explaining</h2>
+                <div class="cs-cards">
+                    <div class="cs-card">
+                        <h3>No framework on purpose</h3>
+                        <p>The page is content first, so plain JavaScript keeps it light and every interaction stays mine to explain. Tailwind is only used at build time and compiles down to an 11&nbsp;KB stylesheet.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Live previews, not screenshots</h3>
+                        <p>Game of Life runs on typed arrays and pauses off screen. The moving-average chart uses a seeded random walk, so “new chart” gives fresh but repeatable data.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>A keyboard way around</h3>
+                        <p>Press <code>⌘K</code> (or <code>Ctrl+K</code>) for a command menu that jumps to any section, opens a case study, copies my email or downloads my CV. <code>T</code> switches the theme.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Logos that fit the band</h3>
+                        <p>Partner logos become soft white silhouettes on the grey band. Where a logo had dark lettering inside a shape, like FUNdamental's “FUN”, I cut the letters out so they still read.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Private by default</h3>
+                        <p>No cookies and no tracking scripts. Theme and language are saved in the browser, and visitor stats, when switched on, use GoatCounter, which stores no personal data.</p>
+                    </div>
+                    <div class="cs-card">
+                        <h3>Readable for everyone</h3>
+                        <p>A skip link, labelled controls, real headings and alt text. Decorative motion like the footer stamp stops when a visitor asks for reduced motion.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="cs-section">
+                <h2>Six years of one site</h2>
+                <p>
+                    The site has been rebuilt more than once, but it's always been hand-coded. Each version reflects what I
+                    could do at the time.
+                </p>
+                <figure class="cs-figure">
+                    <svg viewBox="0 0 760 170" role="img" aria-labelledby="pfHistTitle">
+                        <title id="pfHistTitle">2020: the first hand-coded version. 2025: moved to GitHub Pages with version control. 2026: rebuilt with case studies, a French version, a new palette and smoother scrolling.</title>
+                        <path d="M40 60 H720" class="dg-line"/>
+                        <circle cx="100" cy="60" r="9" class="dg-box-strong"/>
+                        <circle cx="380" cy="60" r="9" class="dg-box-strong"/>
+                        <circle cx="640" cy="60" r="11" class="dg-box-accent"/>
+                        <circle cx="640" cy="60" r="4" class="dg-arrow-accent"/>
+
+                        <text x="100" y="36" class="dg-text" text-anchor="middle">2020</text>
+                        <text x="100" y="96" class="dg-text" text-anchor="middle">First version</text>
+                        <text x="100" y="116" class="dg-sub" text-anchor="middle">hand-coded from scratch</text>
+
+                        <text x="380" y="36" class="dg-text" text-anchor="middle">2025</text>
+                        <text x="380" y="96" class="dg-text" text-anchor="middle">On GitHub Pages</text>
+                        <text x="380" y="116" class="dg-sub" text-anchor="middle">version control, free hosting</text>
+
+                        <text x="640" y="36" class="dg-text" text-anchor="middle">2026</text>
+                        <text x="640" y="96" class="dg-text" text-anchor="middle">The rebuild</text>
+                        <text x="640" y="116" class="dg-sub" text-anchor="middle">case studies · French</text>
+                        <text x="640" y="134" class="dg-sub" text-anchor="middle">new palette · smoother scroll</text>
+                    </svg>
+                </figure>
+            </section>
+
+            <section class="cs-section">
+                <h2>Trade-offs</h2>
+                <ul class="cs-list">
+                    <li>The animated background and 3D hero are the site's signature, so they stay on for everyone. To keep them cheap, the particles draw at standard resolution and the hero only renders while visible.</li>
+                    <li>Translating by swapping text means a new English sentence needs a matching French entry, or it stays in English.</li>
+                    <li>Without a server, the contact form relies on FormSubmit to deliver messages. In return there's nothing to host, patch or pay for.</li>
+                    <li>The case-study pages are English only for now.</li>
+                </ul>
+            </section>
+
+            <nav class="cs-next" aria-label="More case studies">
+                <a href="stockify.html"><small>Next case study</small><strong>Stockify</strong></a>
+                <a href="../index.html#projects"><small>Back to</small><strong>All projects</strong></a>
+            </nav>
+        </div>
+    </main>
+
+    <footer class="sub-footer band-storm">
+        &copy;<span id="currentYear">2026</span> Designed &amp; built by Zain Abbas
+    </footer>
+
+    <script src="../subpage.js?v=20261121f"></script>
+</body>
+</html>
